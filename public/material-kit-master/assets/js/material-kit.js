@@ -154,7 +154,7 @@ materialKit = {
       '-o-transform': 'translate3d(0,' + oVal + 'px,0)'
     });
   },
-
+  /*
   checkScrollForTransparentNavbar: debounce(function() {
     if ($(document).scrollTop() > scroll_distance) {
       if (materialKit.misc.transparent) {
@@ -167,7 +167,7 @@ materialKit = {
         $('.navbar-color-on-scroll').addClass('navbar-transparent');
       }
     }
-  }, 17)
+  }, 17)*/
 };
 
 // Returns a function, that, as long as it continues to be invoked, will not

@@ -9,6 +9,10 @@ class UserInfoBase extends Model
     //
     protected $guarded=[];
     //
+    protected $casts = [
+        'default_info'  => 'json',
+    ];
+    //
     public function users()
     {
         return $this->belongsToMany(

@@ -59,4 +59,34 @@ class User extends Authenticatable
             'App\UserInfoBase','user_infos','user_id','base_id'
         )->withPivot('updated_by','info')->using('App\UserInfo');
     }
+
+
+
+    /**
+     * 
+     *
+     * @param  int  $base_id
+     * @return \Illuminate\Http\Response
+     */
+    public function attachInfoBase($base_id)
+    {
+        //
+        return $this->infoBases()->attach($base_id,[
+            'updated_by'=>Auth::id(),
+            'info'=>UserInfoBase::find($base_id)->default_info,
+        ]);
+        
+    }
+
+    /**
+     * 
+     *
+     * @param  int  $base_id
+     * @return \Illuminate\Http\Response
+     */
+    public function detachInfoBase($base_id)
+    {
+        //
+        return $this->infoBases()->detach($base_id);
+    }
 }

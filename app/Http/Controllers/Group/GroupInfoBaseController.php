@@ -108,34 +108,4 @@ class GroupInfoBaseController extends Controller
         $base->delete();
         return redirect()->route('home');
     }
-
-    /**
-     * 
-     *
-     * @param  int  $group_id,$base_id
-     * @return \Illuminate\Http\Response
-     */
-    public function attach($group_id,$base_id)
-    {
-        //
-        $group=Group::find($group_id);
-        $group->infoBases()->attach($base_id,[
-            'updated_by'=>Auth::id(),
-        ]);
-        return redirect()->route('group.info_base.info.edit',[$group_id,$base_id]);
-    }
-
-    /**
-     * 
-     *
-     * @param  int  $group_id,$base_id
-     * @return \Illuminate\Http\Response
-     */
-    public function detach($group_id,$base_id)
-    {
-        //
-        $group=Group::find($group_id);
-        $group->infoBases()->detach($base_id);
-        return redirect()->route('group.show',$group_id);
-    }
 }

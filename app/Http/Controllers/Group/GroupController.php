@@ -8,7 +8,7 @@ use App\Http\Controllers\Controller;
 use App\Models\Group\Group;
 use App\Models\Group\GroupRole;
 use App\Models\Group\GroupMember;
-use App\Models\Group\GroupInfo;
+
 
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
@@ -69,12 +69,8 @@ class GroupController extends Controller
             'name'=>'管理者',
             'password'=>Hash::make($request->password),
         ]); 
-        $group->users()->attach(Auth::id(),[
-            'role_id'=>$role->id,
-        ]);
-        $group->infoBases()->attach(1,[
-            'updated_by'=>Auth::id(),
-        ]);
+        $group->attachUser(Auth::id(),$role->id);
+        $group->attachInfoBase(1);
         $group->location()->create();
         //タイプ別の初期設定
         $this->additionalStore($group);
@@ -90,9 +86,7 @@ class GroupController extends Controller
         $type=$group->type;
         //
         if($type=='shelter'){
-            $group->infoBases()->attach(2,[
-                'updated_by'=>Auth::id(),
-            ]);
+            $group->attachInfoBase(2);
         }
         //
     }
