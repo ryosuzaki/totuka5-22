@@ -33,6 +33,7 @@ class RegisterController extends Controller
      */
     protected function redirectTo()
     {
+        Auth::user()->attachInfoBase(1);
         return route('user.info_base.info.edit',[Auth::id(),1]);
     }
     /**
@@ -73,7 +74,6 @@ class RegisterController extends Controller
             'email' => $data['email'],
             'password' => Hash::make($data['password']),
         ]);
-        $user->attachInfoBase(1);
         return $user;
     }
 }
