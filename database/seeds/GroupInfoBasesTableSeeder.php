@@ -2,6 +2,8 @@
 
 use Illuminate\Database\Seeder;
 
+use App\Models\Group\GroupInfoBase;
+
 class GroupInfoBasesTableSeeder extends Seeder
 {
     /**
@@ -12,17 +14,25 @@ class GroupInfoBasesTableSeeder extends Seeder
     public function run()
     {
         //
-        DB::table('group_info_bases')->insert([
-            [
-                'id' => 1,
-                'name' => '基本情報',
-                'icon'=>'<span class="material-icons">info</span>'
-            ],
-            [
-                'id' => 2,
-                'name' => '混雑状況',
-                'icon'=>'<span class="material-icons">groups</span>'
-            ]
+        GroupInfoBase::create([
+            'id' => 1,
+            'name' => '基本情報',
+            'icon'=>'<span class="material-icons">info</span>',
+            'default_info'=>['info'=>''],
+        ]);
+
+        GroupInfoBase::create([
+            'id' => 2,
+            'name' => '混雑状況',
+            'icon'=>'<span class="material-icons">groups</span>',
+            'default_info'=>['degree'=>'0%','info'=>''],
+        ]);
+
+        GroupInfoBase::create([
+            'id' => 3,
+            'name' => '地点情報',
+            'icon'=>'<span class="material-icons">info</span>',
+            'default_info'=>['type'=>'','info'=>''],
         ]);
     }
 }

@@ -27,6 +27,8 @@ Route::get('group/{group}/users', 'Group\GroupController@users');
 //
 Route::get('group/{group}/roles', 'Group\GroupController@roles');
 //
+Route::post('group/{group}/uploadImg', 'Group\UploadFileController@uploadImg')->name('group.uploadImg');
+//
 Route::get('group/map', 'Group\GroupController@map')->name('group.map');
 //
 Route::get('group/{group}/location/edit', 'Group\GroupLocationController@edit')->name('group.location.edit');

@@ -18,6 +18,7 @@ class CreateGroupInfoBasesTable extends Migration
             $table->timestamps();
             $table->string('name')->index();
             $table->text('icon')->nullable();
+            $table->json('default_info')->default('');
         });
     }
 

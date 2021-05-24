@@ -2,6 +2,8 @@
 
 use Illuminate\Database\Seeder;
 
+use App\UserInfoBase;
+
 class UserInfoBasesTableSeeder extends Seeder
 {
     /**
@@ -12,12 +14,11 @@ class UserInfoBasesTableSeeder extends Seeder
     public function run()
     {
         //
-        DB::table('user_info_bases')->insert([
-            [
-                'id' => 1,
-                'name' => '情報',
-                'icon'=>'<i class="material-icons">health_and_safety</i>',
-            ]
+        UserInfoBase::create([
+            'id' => 1,
+            'name' => '情報',
+            'icon'=>'<i class="material-icons">health_and_safety</i>',
+            'default_info'=>['info'=>''],
         ]);
     }
 }

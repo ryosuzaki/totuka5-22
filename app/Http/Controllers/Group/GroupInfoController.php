@@ -7,7 +7,6 @@ use App\Http\Controllers\Controller;
 
 use App\Models\Group\Group;
 use App\Models\Group\GroupInfoBase;
-use App\Models\Group\GroupInfo;
 
 use Illuminate\Support\Facades\Auth;
 use Validator;
@@ -18,7 +17,6 @@ class GroupInfoController extends Controller
     {
         $this->middleware('auth');
     }
-
     /**
      * Show the form for editing the specified resource.
      *
@@ -31,7 +29,7 @@ class GroupInfoController extends Controller
         $group=Group::find($group_id);
         return view('group.info.edit')->with([
             'group'=>$group,
-            'info'=>$group->infoBases()->where('base_id',$base_id)->first(),
+            'info'=>$group->infoBase($base_id),
             ]);
     }
 
@@ -44,20 +42,38 @@ class GroupInfoController extends Controller
      */
     public function update(Request $request,$group_id,$base_id)
     {
-        //validation
-        $validator = Validator::make($request->all(),[
-
-        ]);
-        if ($validator->fails()) {
-            return back()->withErrors($validator)->withInput();
+        $group=Group::find($group_id);
+        //
+        if($base_id==1){
+            $validator = Validator::make($request->all(),[
+            
+            ]);
+            $group->infoBases()->updateExistingPivot($base_id,[
+                'updated_by'=>Auth::id(),
+                'info'=>$request->toArray()['info'],
+            ]);
         }
         //
-        $group=Group::find($group_id);
-        $group->infoBases()->updateExistingPivot($base_id,[
-            'updated_by'=>Auth::id(),
-            'info'=>$request->toArray()['info'],
-        ]);
-        return redirect()->route('group.show',$group->id);
+        elseif($base_id==2){
+            $validator = Validator::make($request->all(),[
+            
+            ]);
+            $group->infoBases()->updateExistingPivot($base_id,[
+                'updated_by'=>Auth::id(),
+                'info'=>$request->toArray()['info'],
+            ]);
+        }
+        //
+        elseif($base_id==3){
+            $validator = Validator::make($request->all(),[
+            
+            ]);
+            $group->infoBases()->updateExistingPivot($base_id,[
+                'updated_by'=>Auth::id(),
+                'info'=>$request->toArray()['info'],
+            ]);
+        }        
+        return redirect()->route('group.show.'.$group->type,$group->id);
     }
 
     /**
@@ -70,7 +86,7 @@ class GroupInfoController extends Controller
     {
         //
         $group=Group::find($group_id);
-        $group->infoBases()->detach($base_id);
+        $group->detachInfoBase($base_id);
         return redirect()->route('home');
     }
 }

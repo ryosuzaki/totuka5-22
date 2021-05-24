@@ -154,7 +154,7 @@ materialKit = {
       '-o-transform': 'translate3d(0,' + oVal + 'px,0)'
     });
   },
-
+  /*
   checkScrollForTransparentNavbar: debounce(function() {
     if ($(document).scrollTop() > scroll_distance) {
       if (materialKit.misc.transparent) {
@@ -167,7 +167,7 @@ materialKit = {
         $('.navbar-color-on-scroll').addClass('navbar-transparent');
       }
     }
-  }, 17)
+  }, 17)*/
 };
 
 // Returns a function, that, as long as it continues to be invoked, will not
@@ -253,3 +253,43 @@ var BrowserDetect = {
 };
 
 var better_browser = '<div class="container"><div class="better-browser row"><div class="col-md-2"></div><div class="col-md-8"><h3>We are sorry but it looks like your Browser doesn\'t support our website Features. In order to get the full experience please download a new version of your favourite browser.</h3></div><div class="col-md-2"></div><br><div class="col-md-4"><a href="https://www.mozilla.org/ro/firefox/new/" class="btn btn-warning">Mozilla</a><br></div><div class="col-md-4"><a href="https://www.google.com/chrome/browser/desktop/index.html" class="btn ">Chrome</a><br></div><div class="col-md-4"><a href="http://windows.microsoft.com/en-us/internet-explorer/ie-11-worldwide-languages" class="btn">Internet Explorer</a><br></div><br><br><h4>Thank you!</h4></div></div>';
+
+
+
+//
+//
+//
+// FileInput
+$('.form-file-simple .inputFileVisible').click(function() {
+  $(this).siblings('.inputFileHidden').trigger('click');
+});
+
+$('.form-file-simple .inputFileHidden').change(function() {
+  var filename = $(this).val().replace(/C:\\fakepath\\/i, '');
+  $(this).siblings('.inputFileVisible').val(filename);
+});
+
+$('.form-file-multiple .inputFileVisible, .form-file-multiple .input-group-btn').click(function() {
+  $(this).parent().parent().find('.inputFileHidden').trigger('click');
+  $(this).parent().parent().addClass('is-focused');
+});
+
+$('.form-file-multiple .inputFileHidden').change(function() {
+  var names = '';
+  for (var i = 0; i < $(this).get(0).files.length; ++i) {
+    if (i < $(this).get(0).files.length - 1) {
+      names += $(this).get(0).files.item(i).name + ',';
+    } else {
+      names += $(this).get(0).files.item(i).name;
+    }
+  }
+  $(this).siblings('.input-group').find('.inputFileVisible').val(names);
+});
+
+$('.form-file-multiple .btn').on('focus', function() {
+  $(this).parent().siblings().trigger('focus');
+});
+
+$('.form-file-multiple .btn').on('focusout', function() {
+  $(this).parent().siblings().trigger('focusout');
+});

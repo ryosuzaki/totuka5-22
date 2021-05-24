@@ -7,8 +7,7 @@ use App\Http\Controllers\Controller;
 
 use App\Models\Group\Group;
 use App\Models\Group\GroupRole;
-use App\Models\Group\GroupMember;
-use App\Models\Group\GroupInfo;
+
 
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
@@ -40,7 +39,7 @@ class GroupController extends Controller
     public function create($type='basic')
     {
         //
-        return view('group.create')->with(['type'=>$type]);
+        return view('group.create.'.$type)->with(['type'=>$type]);
     }
 
     /**
@@ -51,50 +50,77 @@ class GroupController extends Controller
      */
     public function store(Request $request)
     {
-        //validate
-        $validator = Validator::make($request->all(),[
-            'name'=>'required|max:255',
-            'password'=>'required|alpha_num|min:4|max:255|confirmed'//password_confirmation
-        ]);
-        if ($validator->fails()) {
-            return back()->withErrors($validator)->withInput();
-        }
-        //
-        $group=Group::create([
-            'name'=>$request->name,
-            'type'=>$request->type,
-        ]);
-        $role=$group->roles()->create([
-            'role_rank'=>0,
-            'name'=>'管理者',
-            'password'=>Hash::make($request->password),
-        ]); 
-        $group->users()->attach(Auth::id(),[
-            'role_id'=>$role->id,
-        ]);
-        $group->infoBases()->attach(1,[
-            'updated_by'=>Auth::id(),
-        ]);
-        $group->location()->create();
-        //タイプ別の初期設定
-        $this->additionalStore($group);
-        return redirect()->route('group.info_base.info.edit',[$group->id,1]);
-    }
-
-    /**
-     * グループのタイプ別に行う初期設定
-     * 
-     * @param  Group  $group
-     */
-    function additionalStore($group){
-        $type=$group->type;
-        //
+        $type=$request->type;
+        ///
         if($type=='shelter'){
-            $group->infoBases()->attach(2,[
-                'updated_by'=>Auth::id(),
+            $validator = Validator::make($request->all(),[
+                'name'=>'required|max:255',
+                'password'=>'required|alpha_num|min:4|max:255|confirmed'//password_confirmation
             ]);
+            if ($validator->fails()) {
+                return back()->withErrors($validator)->withInput();
+            }
+            //
+            $group=Group::create([
+                'name'=>$request->name,
+                'type'=>$request->type,
+                'uploaded_files'=>[],
+            ]);
+            $role=$group->roles()->create([
+                'role_rank'=>0,
+                'name'=>'管理者',
+                'password'=>Hash::make($request->password),
+            ]); 
+            $group->attachUser(Auth::id(),$role->id);
+            $group->location()->create();
+            $group->attachInfoBase(1);
+            $group->attachInfoBase(2);
+            return redirect()->route('group.show',$group->id);
         }
         //
+        elseif ($type=='danger_spot') {
+            //
+            $group=Group::create([
+                'name'=>'',
+                'type'=>$type,
+                'uploaded_files'=>['img'=>[]],
+            ]);
+            $role=$group->roles()->create([
+                'role_rank'=>0,
+                'name'=>'作成者',
+                'password'=>Auth::user()->password,
+            ]); 
+            $group->attachUser(Auth::id(),$role->id);
+            $group->location()->create();
+            $group->attachInfoBase(3);
+            
+            return redirect()->route('group.show',$group->id);
+        }
+        //
+        else{
+            $validator = Validator::make($request->all(),[
+                'name'=>'required|max:255',
+                'password'=>'required|alpha_num|min:4|max:255|confirmed'//password_confirmation
+            ]);
+            if ($validator->fails()) {
+                return back()->withErrors($validator)->withInput();
+            }
+            //
+            $group=Group::create([
+                'name'=>$request->name,
+                'type'=>$request->type,
+                'uploaded_files'=>[],
+            ]);
+            $role=$group->roles()->create([
+                'role_rank'=>0,
+                'name'=>'管理者',
+                'password'=>Hash::make($request->password),
+            ]); 
+            $group->attachUser(Auth::id(),$role->id);
+            $group->location()->create();
+            $group->attachInfoBase(1);
+            return redirect()->route('group.show',$group->id);
+        }
     }
 
     /**

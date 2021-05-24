@@ -1,1 +1,1 @@
-ここにユーザの情報の表示するHTMLを書く
+<p class="h4" style="white-space:pre-line;">{{$info->pivot->info['info']}}</p>

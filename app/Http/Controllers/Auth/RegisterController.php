@@ -73,9 +73,7 @@ class RegisterController extends Controller
             'email' => $data['email'],
             'password' => Hash::make($data['password']),
         ]);
-        $user->infoBases()->attach(1,[
-            'updated_by'=>$user->id,
-        ]);
+        $user->attachInfoBase(1);
         return $user;
     }
 }
