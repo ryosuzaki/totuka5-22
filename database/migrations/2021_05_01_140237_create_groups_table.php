@@ -18,6 +18,7 @@ class CreateGroupsTable extends Migration
             $table->timestamps();
             $table->string('name')->index();
             $table->string('type')->index();
+            $table->json('uploaded_files')->default('');
         });
     }
 

@@ -6,6 +6,10 @@ use Illuminate\Notifications\Notifiable;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 
+use App\UserInfoBase;
+
+use Illuminate\Support\Facades\Auth;
+
 class User extends Authenticatable
 {
     use Notifiable;
@@ -24,6 +28,10 @@ class User extends Authenticatable
      */
     protected $hidden = [
          'remember_token','password'
+    ];
+
+    protected $dates = [
+        'last_used',
     ];
 
     /**
@@ -47,46 +55,40 @@ class User extends Authenticatable
             'App\Models\Group\GroupRole','group_users','user_id','role_id'
         )->using('App\Models\Group\GroupUser');
     }
+
     //
     public function questions(){
         return $this->belongsToMany(
             'App\Models\Questionnaire\Question','answers','user_id','question_id'
         )->withPivot('answer')->using('App\Models\Questionnaire\Answer');
     }
+    public function question($question_id){
+        return $this->questions()->where('question_id')->first();
+    }
+
     //
     public function infoBases(){
         return $this->belongsToMany(
             'App\UserInfoBase','user_infos','user_id','base_id'
         )->withPivot('updated_by','info')->using('App\UserInfo');
     }
+    public function infoBase($base_id){
+        return $this->infoBases()->where('base_id',$base_id)->first();
+    }
 
 
-
-    /**
-     * 
-     *
-     * @param  int  $base_id
-     * @return \Illuminate\Http\Response
-     */
+    //
     public function attachInfoBase($base_id)
     {
-        //
         return $this->infoBases()->attach($base_id,[
             'updated_by'=>Auth::id(),
             'info'=>UserInfoBase::find($base_id)->default_info,
         ]);
         
     }
-
-    /**
-     * 
-     *
-     * @param  int  $base_id
-     * @return \Illuminate\Http\Response
-     */
+    //
     public function detachInfoBase($base_id)
     {
-        //
         return $this->infoBases()->detach($base_id);
     }
 }

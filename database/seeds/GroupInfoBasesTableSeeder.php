@@ -27,5 +27,12 @@ class GroupInfoBasesTableSeeder extends Seeder
             'icon'=>'<span class="material-icons">groups</span>',
             'default_info'=>['degree'=>'0%','info'=>''],
         ]);
+
+        GroupInfoBase::create([
+            'id' => 3,
+            'name' => '地点情報',
+            'icon'=>'<span class="material-icons">info</span>',
+            'default_info'=>['type'=>'','info'=>''],
+        ]);
     }
 }
