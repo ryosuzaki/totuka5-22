@@ -7,6 +7,7 @@ use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 
 use App\UserInfoBase;
+use App\Models\Group\Group;
 
 use Illuminate\Support\Facades\Auth;
 
@@ -55,6 +56,13 @@ class User extends Authenticatable
             'App\Models\Group\GroupRole','group_users','user_id','role_id'
         )->using('App\Models\Group\GroupUser');
     }
+    //
+    public function hasRole(Group $group,$role_rank){
+        
+        return $group->users()->where('role_id',$group->role($role_rank)->id)->get()->contains('id',$this->id);
+    }
+
+
 
     //
     public function questions(){
@@ -91,4 +99,5 @@ class User extends Authenticatable
     {
         return $this->infoBases()->detach($base_id);
     }
+
 }

@@ -41,6 +41,10 @@ Route::put('group/{group}/info_base/{info_base}/info', 'Group\GroupInfoControlle
 Route::delete('group/{group}/info_base/{info_base}/info', 'Group\GroupInfoController@destroy')->name('group.info_base.info.destroy');
 
 
+//
+Route::get('group/{group}/user/{user}/like', 'Group\GroupUserController@like')->name('group.user.like');
+Route::get('group/{group}/user/{user}/unlike', 'Group\GroupUserController@unlike')->name('group.user.unlike');
+
 
 //
 Route::get('user/{user}/answers', 'UserController@answers');

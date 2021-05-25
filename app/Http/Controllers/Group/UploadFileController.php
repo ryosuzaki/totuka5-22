@@ -17,7 +17,7 @@ class UploadFileController extends Controller
         $this->middleware('auth');
     }
 
-    //
+    //php artisan storage:linkを行う
     public function uploadImg(Request $request,$group_id){
         //validate
         $validator = Validator::make($request->all(),[
@@ -28,9 +28,9 @@ class UploadFileController extends Controller
         }
         //
         $group=Group::find($group_id);
-        $files=$group->uploaded_files;
+        $files=$group->data;
         $files['img'][]=$request->file('img')->store('public/'.$group->type);
-        $group->uploaded_files=$files;
+        $group->data=$files;
         $group->save();
         return redirect()->back();
     }

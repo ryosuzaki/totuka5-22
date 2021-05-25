@@ -6,8 +6,9 @@
         <label for="input">混雑度</label>
         <input id="input" type="text" class="form-control-plaintext form-control-lg" name="info[degree]" value="" readonly>
     </div> 
-
-    <div id="slider" class="slider"></div>
+    
+    <div id="slider" class="slider mb-5"></div>
+    
 
     <div class="form-group row">
         <label for="info">詳細情報</label>
@@ -33,6 +34,11 @@ noUiSlider.create(slider, {
         'min': 0,
         'max': 100
     },
+    pips: {
+        mode: 'count',
+        values: 5,
+        density: 5
+    }
 });
 slider.noUiSlider.on('update', function( values,handle) {
     input.value = parseInt(values[handle])+"%";

@@ -7,6 +7,7 @@ use App\Http\Controllers\Controller;
 
 use App\Models\Group\Group;
 use App\Models\Group\GroupRole;
+use App\User;
 
 use Illuminate\Support\Facades\Auth;
 
@@ -135,5 +136,22 @@ class GroupUserController extends Controller
         $group_id=$member->group()->id;
         $member->delete();
         return redirect()->route('group.member.index',$group_id);
+    }
+
+
+
+    //
+    public function like($group_id,$user_id){
+        $group=Group::find($group_id);
+        $user=User::find($user_id);
+        $group->attachRole($user,255);
+        return redirect()->back();
+    }
+    //
+    public function unlike($group_id,$user_id){
+        $group=Group::find($group_id);
+        $user=User::find($user_id);
+        $group->detachRole($user,255);
+        return redirect()->back();
     }
 }

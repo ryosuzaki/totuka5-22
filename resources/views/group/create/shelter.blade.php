@@ -11,7 +11,7 @@
                         <input type="hidden" name="type" value="{{$type}}">
                         
                         <div class="form-group row">
-                            <label for="name">グループ名</label>
+                            <label for="name">避難所名</label>
                             <input id="name" type="text" class="form-control @error('name') is-invalid @enderror" name="name" value="{{ old('name') }}" required autofocus>
                             @error('name')
                                 <span class="invalid-feedback" role="alert">

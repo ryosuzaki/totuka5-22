@@ -73,7 +73,7 @@ class GroupInfoController extends Controller
                 'info'=>$request->toArray()['info'],
             ]);
         }        
-        return redirect()->route('group.show.'.$group->type,$group->id);
+        return redirect()->route('group.show',$group->id);
     }
 
     /**

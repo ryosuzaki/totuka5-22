@@ -19,6 +19,7 @@ class CreateGroupUsersTable extends Migration
             $table->unsignedBigInteger('role_id');
             $table->index(['user_id', 'role_id','group_id']);
             $table->timestamps();
+            $table->json('data')->default('');
         });
     }
 

@@ -64,14 +64,14 @@ class GroupController extends Controller
             $group=Group::create([
                 'name'=>$request->name,
                 'type'=>$request->type,
-                'uploaded_files'=>[],
+                'data'=>[],
             ]);
             $role=$group->roles()->create([
                 'role_rank'=>0,
                 'name'=>'管理者',
                 'password'=>Hash::make($request->password),
             ]); 
-            $group->attachUser(Auth::id(),$role->id);
+            $group->attachRole(Auth::user(),0);
             $group->location()->create();
             $group->attachInfoBase(1);
             $group->attachInfoBase(2);
@@ -83,17 +83,21 @@ class GroupController extends Controller
             $group=Group::create([
                 'name'=>'',
                 'type'=>$type,
-                'uploaded_files'=>['img'=>[]],
+                'data'=>['img'=>[]],
             ]);
             $role=$group->roles()->create([
                 'role_rank'=>0,
                 'name'=>'作成者',
-                'password'=>Auth::user()->password,
+                'password'=>Hash::make(Auth::id()),
             ]); 
-            $group->attachUser(Auth::id(),$role->id);
+            $group->roles()->create([
+                'role_rank'=>255,
+                'name'=>'like',
+                'password'=>'',
+            ]); 
+            $group->attachRole(Auth::user(),0);
             $group->location()->create();
             $group->attachInfoBase(3);
-            
             return redirect()->route('group.show',$group->id);
         }
         //
@@ -109,14 +113,14 @@ class GroupController extends Controller
             $group=Group::create([
                 'name'=>$request->name,
                 'type'=>$request->type,
-                'uploaded_files'=>[],
+                'data'=>[],
             ]);
             $role=$group->roles()->create([
                 'role_rank'=>0,
                 'name'=>'管理者',
                 'password'=>Hash::make($request->password),
             ]); 
-            $group->attachUser(Auth::id(),$role->id);
+            $group->attachRole(Auth::user(),0);
             $group->location()->create();
             $group->attachInfoBase(1);
             return redirect()->route('group.show',$group->id);
