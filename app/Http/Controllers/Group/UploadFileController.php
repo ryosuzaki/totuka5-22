@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 
 use App\Models\Group\Group;
+use Illuminate\Support\Facades\Storage;
 
 use Validator;
 
@@ -28,9 +29,27 @@ class UploadFileController extends Controller
         }
         //
         $group=Group::find($group_id);
-        $files=$group->data;
-        $files['img'][]=$request->file('img')->store('public/'.$group->type);
-        $group->data=$files;
+        $data=$group->data;
+        $data['img'][]=$request->file('img')->store('public/'.$group->type);
+        $group->data=$data;
+        $group->save();
+        return redirect()->back();
+    }
+
+    public function deleteImg(Request $request,$group_id){
+        $validator = Validator::make($request->all(),[
+            'img'=>'required|integer',
+        ]);
+        if ($validator->fails()) {
+            return back()->withErrors($validator)->withInput();
+        }
+        $group=Group::find($group_id);
+        $data=$group->data;
+        Storage::delete($data['img'][$request->img]);
+        unset($data['img'][$request->img]);
+        $data['img'] = array_values($data['img']);
+        info($data);
+        $group->data=$data;
         $group->save();
         return redirect()->back();
     }

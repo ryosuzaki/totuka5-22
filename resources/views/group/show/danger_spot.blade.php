@@ -13,11 +13,11 @@
                         <h5>危険地点</h5>
                         <div class="ml-auto">
                             @if(Auth::user()->hasRole($group,255))
-                            <a class="btn btn-danger btn-round btn-sm" href="{{route('group.user.unlike',[$group->id,Auth::id()])}}"><i class="material-icons">thumb_up_off_alt</i>{{$group->usersHaveRole(255)->count()}}</a>
+                            <a class="btn btn-primary btn-round btn-sm" href="{{route('group.user.unlike',[$group->id,Auth::id()])}}"><i class="material-icons">thumb_up_off_alt</i>{{$group->usersHaveRole(255)->count()}}</a>
                             @else
-                            <a class="btn btn-outline-danger btn-round btn-sm" href="{{route('group.user.like',[$group->id,Auth::id()])}}"><i class="material-icons">thumb_up_off_alt</i>{{$group->usersHaveRole(255)->count()}}</a>
+                            <a class="btn btn-outline-primary btn-round btn-sm" href="{{route('group.user.like',[$group->id,Auth::id()])}}"><i class="material-icons">thumb_up_off_alt</i>{{$group->usersHaveRole(255)->count()}}</a>
                             @endif
-                            <a class="btn btn-default btn-sm" href="http://"><i class="material-icons">campaign</i>通報</a>
+                            <a class="btn btn-default btn-sm" href=""><i class="material-icons">campaign</i>通報</a>
                         </div>
                     </div>
                     <div id="carouselExampleIndicators" class="carousel slide" data-ride="carousel">
@@ -63,6 +63,23 @@
                         </div>
                     </form>
                     
+
+                    <form action="{{route('group.deleteImg',$group->id)}}" method="post">
+                        @csrf
+                        <div class="form-row">
+                            <div class="form-group col-8">
+                                <select class="form-control selectpicker" data-style="btn btn-link" id="deleteImg" name="img">
+                                    @for($i=0;$i<count($imgs);$i++)
+                                    <option value="{{$i}}">左から{{$i+1}}枚目の写真</option>
+                                    @endfor
+                                </select>
+                            </div>
+                            <div class="col-4">
+                                <button type="submit" class="btn btn-danger mb-2 w-100">削除</button>
+                            </div>
+                        </div>
+                        
+                    </form>
                 </div>
             </div>
             <div class="card mt-0">
