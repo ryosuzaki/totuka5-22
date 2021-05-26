@@ -71,8 +71,8 @@ Route::resource('group', 'Group\GroupController',['except' => [
 Route::resource('group_info_base','Group\GroupInfoBaseController',['except' => [
 ]]);
 //
-Route::resource('group.group_role', 'Group\GroupRoleController',['except' => [
-]])->shallow();
+Route::resource('group.role', 'Group\GroupRoleController',['except' => [
+]]);
 //
 Route::resource('group.user', 'Group\GroupUserController',['except' => [
 ]]);

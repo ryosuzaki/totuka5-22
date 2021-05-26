@@ -21,15 +21,15 @@ class Group extends Model
             'App\User','group_users','group_id','user_id'
         )->withPivot('data')->using('App\Models\Group\GroupUser');
     }
-    public function usersHaveRole($role_rank){
-        return $this->users()->where('role_id',$this->role($role_rank)->id)->get();
+    public function usersHaveRole($rank){
+        return $this->users()->where('role_id',$this->role($rank)->id)->get();
     }
     //
     public function roles(){
         return $this->hasMany('App\Models\Group\GroupRole','group_id');
     }
-    public function role($role_rank){
-        return $this->roles()->where('role_rank',$role_rank)->first();
+    public function role($rank){
+        return $this->roles()->where('rank',$rank)->first();
     }
 
 
@@ -53,15 +53,15 @@ class Group extends Model
 
 
     //
-    public function attachRole(User $user,$role_rank){
+    public function attachRole(User $user,$rank){
         return $this->users()->attach($user->id,[
-            'role_id'=>$this->role($role_rank)->id,
+            'role_id'=>$this->role($rank)->id,
             'data'=>[],
             ]);
     }
     //
-    public function detachRole(User $user,$role_rank){
-        return $this->users()->where('role_id',$this->role($role_rank)->id)->detach($user->id);
+    public function detachRole(User $user,$rank){
+        return $this->users()->where('role_id',$this->role($rank)->id)->detach($user->id);
     }
     //
     public function detachUser(User $user){

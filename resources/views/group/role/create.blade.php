@@ -8,10 +8,27 @@
                 <div class="card-body">
                     {{$group}}
                     {{$roles[0]}}
-                    <form method="POST" action="{{ route('group.group_role.store',$group->id) }}">
+                    @php
+                    $t=[];
+                    foreach($roles as $role){
+                        $t[]=$role->rank;
+                    }
+                    $ranks=array_diff(range(0,255),$t);
+                    @endphp
+                    
+                    <form method="POST" action="{{ route('group.role.store',$group->id) }}">
                         @csrf
                         <div class="form-group row">
-                            <label for="name">ロール名</label>
+                            <label for="rank">権限ランク</label>
+                            <select class="form-control selectpicker" data-style="btn btn-link" id="rank" name="rank">
+                                @foreach($ranks as $rank)
+                                <option value="{{$rank}}">{{$rank}}</option>
+                                @endforeach
+                            </select>
+                        </div>
+
+                        <div class="form-group row">
+                            <label for="name">役割名</label>
                             <input id="name" type="text" class="form-control @error('name') is-invalid @enderror" name="name" value="{{ old('name') }}" required autofocus>
                             @error('name')
                                 <span class="invalid-feedback" role="alert">
@@ -36,7 +53,7 @@
 
                         <div class="form-group row mb-0">
                             <button type="submit" class="btn btn-primary btn-block">
-                            グループ登録
+                                役割登録
                             </button>
                         </div>
                     </form>

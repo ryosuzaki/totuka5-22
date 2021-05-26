@@ -28,9 +28,9 @@ class GroupUserController extends Controller
     {
         //
         $group=Group::find($group_id);
-        return view('group.member.index')->with([
+        return view('group.user.index.'.$group->type)->with([
             'group'=>$group,
-            'members'=>GroupMember::where('group_id',$group_id)->get(),
+            'users'=>$group->users()->get(),
         ]);
     }
     /**
@@ -43,7 +43,7 @@ class GroupUserController extends Controller
     {
         //
         $group=Group::find($group_id);
-        return view('group.member.create')->with([
+        return view('group.user.create.'.$group->type)->with([
             'group'=>$group,
             'roles'=>$group->roles()->get(),
             ]);

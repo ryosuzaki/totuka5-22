@@ -67,7 +67,7 @@ class GroupController extends Controller
                 'data'=>[],
             ]);
             $role=$group->roles()->create([
-                'role_rank'=>0,
+                'rank'=>0,
                 'name'=>'管理者',
                 'password'=>Hash::make($request->password),
             ]); 
@@ -86,18 +86,43 @@ class GroupController extends Controller
                 'data'=>['img'=>[]],
             ]);
             $role=$group->roles()->create([
-                'role_rank'=>0,
+                'rank'=>0,
                 'name'=>'作成者',
                 'password'=>Hash::make(Auth::id()),
             ]); 
             $group->roles()->create([
-                'role_rank'=>255,
+                'rank'=>255,
                 'name'=>'like',
                 'password'=>'',
             ]); 
             $group->attachRole(Auth::user(),0);
             $group->location()->create();
             $group->attachInfoBase(3);
+            return redirect()->route('group.show',$group->id);
+        }
+        //
+        elseif($type=='nursing_home'){
+            $validator = Validator::make($request->all(),[
+                'name'=>'required|max:255',
+                'password'=>'required|alpha_num|min:4|max:255|confirmed'//password_confirmation
+            ]);
+            if ($validator->fails()) {
+                return back()->withErrors($validator)->withInput();
+            }
+            //
+            $group=Group::create([
+                'name'=>$request->name,
+                'type'=>$request->type,
+                'data'=>[],
+            ]);
+            $role=$group->roles()->create([
+                'rank'=>0,
+                'name'=>'管理者',
+                'password'=>Hash::make($request->password),
+            ]); 
+            $group->attachRole(Auth::user(),0);
+            $group->location()->create();
+            $group->attachInfoBase(1);
             return redirect()->route('group.show',$group->id);
         }
         //
@@ -116,7 +141,7 @@ class GroupController extends Controller
                 'data'=>[],
             ]);
             $role=$group->roles()->create([
-                'role_rank'=>0,
+                'rank'=>0,
                 'name'=>'管理者',
                 'password'=>Hash::make($request->password),
             ]); 

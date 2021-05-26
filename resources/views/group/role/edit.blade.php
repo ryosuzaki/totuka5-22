@@ -7,9 +7,10 @@
             <div class="card">
                 <div class="card-body">
                     {{$role}}
-                    <form method="POST" action="{{route('group_role.update',$role->id)}}">
+                    <form method="POST" action="{{route('group.role.update',$role->id)}}">
                         @csrf
                         {{ method_field('PUT') }}
+
                         <div class="form-group row">
                             <label for="name">ロール名</label>
                             <input id="name" type="text" class="form-control @error('name') is-invalid @enderror" name="name" value="{{$role->name}}" required autofocus>

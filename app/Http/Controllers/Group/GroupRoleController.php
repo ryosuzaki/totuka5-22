@@ -61,14 +61,17 @@ class GroupRoleController extends Controller
     {
         //validation
         $validator = Validator::make($request->all(),[
+            'rank'=>'required|integer',
+            'name'=>'required|max:255',
+            'password'=>'required|alpha_num|min:4|max:255|confirmed'//password_confirmation
         ]);
         if ($validator->fails()) {
             return back()->withErrors($validator)->withInput();
         }
         //
-        GroupRole::create([
-            'group_id'=>$group_id,
-            'role_id'=>$request->role_id,
+        $group=Group::find($group_id);
+        $group->roles()->create([
+            'rank'=>$request->rank,
             'name'=>$request->name,
             'password'=>Hash::make($request->password),
         ]);
@@ -81,12 +84,10 @@ class GroupRoleController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show(Group $group,GroupRole $role)
     {
-        //
-        $role=GroupRole::find($id);
         return view('group.role.show')->with([
-            'group'=>$role->group()->first(),
+            'group'=>$group,
             'role'=>$role,
             ]);
     }
@@ -97,10 +98,11 @@ class GroupRoleController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function edit(Group $group,GroupRole $role)
     {
         return view('group.role.edit')->with([
-            'role'=>GroupRole::find($id),
+            'group'=>$group,
+            'role'=>$role,
             ]);
     }
 
@@ -133,13 +135,10 @@ class GroupRoleController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(Group $group,GroupRole $role)
     {
-        //
-        $role=GroupRole::find($id);
-        $group_id=$role->group()->id;
         $role->delete();
-        return redirect()->route('group.role.index',$role->group()->id);
+        return redirect()->back();
     }
 
     /**

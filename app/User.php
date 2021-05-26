@@ -57,9 +57,9 @@ class User extends Authenticatable
         )->using('App\Models\Group\GroupUser');
     }
     //
-    public function hasRole(Group $group,$role_rank){
+    public function hasRole(Group $group,$rank){
         
-        return $group->users()->where('role_id',$group->role($role_rank)->id)->get()->contains('id',$this->id);
+        return $group->users()->where('role_id',$group->role($rank)->id)->get()->contains('id',$this->id);
     }
 
 
