@@ -29,6 +29,8 @@ Route::get('group/{group}/roles', 'Group\GroupController@roles');
 //
 Route::post('group/{group}/uploadImg', 'Group\UploadFileController@uploadImg')->name('group.uploadImg');
 //
+Route::post('group/{group}/deleteImg', 'Group\UploadFileController@deleteImg')->name('group.deleteImg');
+//
 Route::get('group/map', 'Group\GroupController@map')->name('group.map');
 //
 Route::get('group/{group}/location/edit', 'Group\GroupLocationController@edit')->name('group.location.edit');
@@ -40,6 +42,10 @@ Route::get('group/{group}/info_base/{info_base}/info/edit', 'Group\GroupInfoCont
 Route::put('group/{group}/info_base/{info_base}/info', 'Group\GroupInfoController@update')->name('group.info_base.info.update');
 Route::delete('group/{group}/info_base/{info_base}/info', 'Group\GroupInfoController@destroy')->name('group.info_base.info.destroy');
 
+
+//
+Route::get('group/{group}/user/{user}/like', 'Group\GroupUserController@like')->name('group.user.like');
+Route::get('group/{group}/user/{user}/unlike', 'Group\GroupUserController@unlike')->name('group.user.unlike');
 
 
 //
@@ -65,8 +71,8 @@ Route::resource('group', 'Group\GroupController',['except' => [
 Route::resource('group_info_base','Group\GroupInfoBaseController',['except' => [
 ]]);
 //
-Route::resource('group.group_role', 'Group\GroupRoleController',['except' => [
-]])->shallow();
+Route::resource('group.role', 'Group\GroupRoleController',['except' => [
+]]);
 //
 Route::resource('group.user', 'Group\GroupUserController',['except' => [
 ]]);

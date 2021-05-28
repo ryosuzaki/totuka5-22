@@ -62,7 +62,7 @@ class AnswerController extends Controller
         $user->questions()->attach($question_id,[
             'answer'=>$request->toArray()['answer'],
         ]);
-        return redirect()->route('user.questionnaire',$user_id);
+        return redirect()->route('user.question.answer.index',[$user_id,$question_id]);
     }
 
     /**

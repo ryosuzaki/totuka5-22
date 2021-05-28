@@ -30,7 +30,7 @@ class LoginController extends Controller
     protected function redirectTo()
     {
         $user=Auth::user();
-        $user->lase_used=now();
+        $user->last_used=now();
         $user->save();
         return route('home');
     }

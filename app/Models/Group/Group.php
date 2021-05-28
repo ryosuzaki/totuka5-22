@@ -4,6 +4,7 @@ namespace App\Models\Group;
 use Illuminate\Database\Eloquent\Model;
 
 use App\Models\Group\GroupInfoBase;
+use App\User;
 use Illuminate\Support\Facades\Auth;
 
 class Group extends Model
@@ -12,18 +13,27 @@ class Group extends Model
     protected $guarded = [];
     //
     protected $casts = [
-        'uploaded_files'  => 'json',
+        'data'  => 'json',
     ];
     //
     public function users(){
         return $this->belongsToMany(
             'App\User','group_users','group_id','user_id'
-        )->using('App\Models\Group\GroupUser');
+        )->withPivot('data')->using('App\Models\Group\GroupUser');
+    }
+    public function usersHaveRole($rank){
+        return $this->users()->where('role_id',$this->role($rank)->id)->get();
     }
     //
     public function roles(){
         return $this->hasMany('App\Models\Group\GroupRole','group_id');
     }
+    public function role($rank){
+        return $this->roles()->where('rank',$rank)->first();
+    }
+
+
+
     //
     public function infoBases(){
         return $this->belongsToMany(
@@ -43,15 +53,19 @@ class Group extends Model
 
 
     //
-    public function attachUser($user_id,$role_id){
-        return $this->users()->attach($user_id,[
-            'role_id'=>$role_id,
+    public function attachRole(User $user,$rank){
+        return $this->users()->attach($user->id,[
+            'role_id'=>$this->role($rank)->id,
+            'data'=>[],
             ]);
     }
-
     //
-    public function detachUser($user_id){
-        return $this->users()->detach($user_id);
+    public function detachRole(User $user,$rank){
+        return $this->users()->where('role_id',$this->role($rank)->id)->detach($user->id);
+    }
+    //
+    public function detachUser(User $user){
+        return $this->users()->detach($user->id);
     }
 
     //
