@@ -6,8 +6,7 @@
         <div class="col-md-8">
             <div class="card mb-3">
                 <div class="card-body">
-                    <h3 class="text-center">{{$user->name}}</h3>
-                    <p class="h3 text-center">{{$user->email}}</p>
+                    <h3 class="text-center">{{$group->name}}</h3>
                 </div>
             </div>
             <div class="card mt-0">
@@ -19,14 +18,14 @@
                         </li>
                         @endforeach
                     </ul>
-                    <div class="tab-content tab-space pb-0">
+                    <div class="tab-content tab-space  pb-0">
                         @foreach ($infos as $info)
                         <div class="tab-pane @if($infos[0]==$info) active @endif" id="pill{{$info->id}}">
-                            @include('user.info_base.show.'.$info->id, ['user'=>$user,'info'=>$info])
+                            @include('group.info_base.show.'.$info->id, ['info'=>$info])
                             <div class="row">
-                                <a class="btn btn-outline-primary btn-block mx-auto" href="{{route('user.info_base.info.edit',[$user->id,$info->id])}}">変更</a>
+                                <a class="btn btn-outline-primary btn-block mx-auto" href="{{route('group.info_base.info.edit',[$group->id,$info->id])}}">変更</a>
                             </div> 
-                        </div>
+                        </div>  
                         @endforeach
                     </div>
                 </div>
@@ -35,3 +34,4 @@
     </div>
 </div>
 @endsection
+

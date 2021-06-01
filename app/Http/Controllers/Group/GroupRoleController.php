@@ -140,14 +140,4 @@ class GroupRoleController extends Controller
         $role->delete();
         return redirect()->back();
     }
-
-    /**
-     * Set permissions for this role.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function setPermissions(Request $request, $id){
-        
-    }
 }

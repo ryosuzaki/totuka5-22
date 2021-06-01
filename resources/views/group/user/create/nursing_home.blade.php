@@ -6,7 +6,11 @@
         <div class="col-md-8">
             <div class="card">
                 <div class="card-body">
-                    {{Auth::user()->answerToday()}}
+                    {{$group}}
+                    {{$roles[0]}}
+                    <form method="POST" action="{{ route('group.group_member.store',$group->id) }}">
+                        @csrf
+                    </form>
                 </div>
             </div>
         </div>

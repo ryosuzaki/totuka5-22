@@ -8,16 +8,21 @@
                 <div class="card-body">
                     @php
                     $imgs=$group->data['img'];
+                    $rank=255;
                     @endphp
                     <div class="row">
                         <h5>危険地点</h5>
                         <div class="ml-auto">
-                            @if(Auth::user()->hasRole($group,255))
-                            <a class="btn btn-primary btn-round btn-sm" href="{{route('group.user.unlike',[$group->id,Auth::id()])}}"><i class="material-icons">thumb_up_off_alt</i>{{$group->usersHaveRole(255)->count()}}</a>
-                            @else
-                            <a class="btn btn-outline-primary btn-round btn-sm" href="{{route('group.user.like',[$group->id,Auth::id()])}}"><i class="material-icons">thumb_up_off_alt</i>{{$group->usersHaveRole(255)->count()}}</a>
-                            @endif
+                            @if(Auth::user()->hasGroupRank($group,$rank))
+                            <a class="btn btn-primary btn-round btn-sm" href="{{route('group.user.unlike',[$group->id,Auth::id()])}}"><i class="material-icons">thumb_up_off_alt</i>{{$group->usersHaveRank($rank)->count()}}</a>
                             <a class="btn btn-default btn-sm" href=""><i class="material-icons">campaign</i>通報</a>
+                            @elseif(Auth::user()->group($group->id))
+                            <a class="btn btn-primary btn-round btn-sm text-white">作成者</a>
+                            @else
+                            <a class="btn btn-outline-primary btn-round btn-sm" href="{{route('group.user.like',[$group->id,Auth::id()])}}"><i class="material-icons">thumb_up_off_alt</i>{{$group->usersHaveRank($rank)->count()}}</a>
+                            <a class="btn btn-default btn-sm" href=""><i class="material-icons">campaign</i>通報</a>
+                            @endif
+                            
                         </div>
                     </div>
                     <div id="carouselExampleIndicators" class="carousel slide" data-ride="carousel">

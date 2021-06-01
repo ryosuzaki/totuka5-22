@@ -80,24 +80,9 @@ class UserController extends Controller
         $user=User::find($id);
         $user->groups()->detach();
         $user->groupRoles()->detach();
-        $user->questions()->detach();
+        $user->answers()->delete();
         $user->infoBases()->detach();
         $user->delete();
         return redirect()->route('home');
-    }
-
-    /**
-     * アンケート回答一覧
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function answers($id){
-        //
-        $user=User::find($id);
-        return view('user.answers')->with([
-            'user'=>$user,
-            'answers'=>$user->questions()->get()
-            ]);
     }
 }

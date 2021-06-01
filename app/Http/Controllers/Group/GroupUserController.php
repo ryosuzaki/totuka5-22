@@ -10,6 +10,7 @@ use App\Models\Group\GroupRole;
 use App\User;
 
 use Illuminate\Support\Facades\Auth;
+use Validator;
 
 class GroupUserController extends Controller
 {
@@ -26,7 +27,6 @@ class GroupUserController extends Controller
      */
     public function index($group_id)
     {
-        //
         $group=Group::find($group_id);
         return view('group.user.index.'.$group->type)->with([
             'group'=>$group,
@@ -60,27 +60,27 @@ class GroupUserController extends Controller
     {
         //validation
         $validator = Validator::make($request->all(),[
+            'user_id'=>'required|integer|min:1|exists:users,id',
+            'role_id'=>'required|integer|min:1|exists:group_roles,id',
         ]);
         if ($validator->fails()) {
             return back()->withErrors($validator)->withInput();
         }
         //
-        //checkRolePassword($role_id,$password);
-        $member=GroupMember::create([
-            'group_id'=>$group_id,
-            'user_id'=>$request['user_id'],
-            'role_id'=>$request['role_id'],
+        $group=Group::find($group_id);
+        $group->users()->attach($request->user_id,[
+            'role_id'=>$request->role_id,
         ]);
-        return redirect()->route('group.member.index',$group_id);
+        return redirect()->route('group.user.index',$group_id);
     }
 
     /**
      * Display the specified resource.
      *
-     * @param  int  $member_id
+     * @param  int  $group_id,$user_id
      * @return \Illuminate\Http\Response
      */
-    public function show($member_id)
+    public function show($group_id,$user_id)
     {
         //
 
@@ -89,14 +89,15 @@ class GroupUserController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  int  $member_id
+     * @param  int  $group_id,$user_id
      * @return \Illuminate\Http\Response
      */
-    public function edit($member_id)
+    public function edit($group_id,$user_id)
     {
-        //
-        return view('group.member.edit')->with([
-            'member'=>GroupMember::find($member_id),
+        $group=Group::find($group_id);
+        return view('group.user.edit.'.$group->type)->with([
+                'group'=>$group,
+                'user'=>$group->user($user_id),
             ]);
     }
 
@@ -104,54 +105,41 @@ class GroupUserController extends Controller
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  int  $member_id
+     * @param  int  $group_id,$user_id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $member_id)
+    public function update(Request $request,$group_id,$user_id)
     {
         //validation
         $validator = Validator::make($request->all(),[
+            'role_id'=>'required|integer|min:1|exists:group_roles,id',
         ]);
         if ($validator->fails()) {
             return back()->withErrors($validator)->withInput();
         }
         //
-        //checkRolePassword($role_id,$password);
-        $member=GroupMember::find($member_id)->fill([
-            'role_id'=>$request['role_id'],
-        ])->save();
-        return redirect()->route('group.member.index',$member->group()->first()->id);
+        $group=Group::find($group_id);
+        $group->users()->updateExistingPivot($user_id,[
+            'role_id'=>$request->role_id,
+        ]);
+        return redirect()->route('group.user.index',$group_id);
     }
 
     /**
      * Remove the specified resource from storage.
      *
-     * @param  int  $member_id
+     * @param  int  $group_id,$user_id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($member_id)
+    public function destroy($group_id,$user_id)
     {
         //
-        $member=GroupMember::find($member_id);
-        $group_id=$member->group()->id;
-        $member->delete();
-        return redirect()->route('group.member.index',$group_id);
-    }
-
-
-
-    //
-    public function like($group_id,$user_id){
         $group=Group::find($group_id);
-        $user=User::find($user_id);
-        $group->attachRole($user,255);
-        return redirect()->back();
+        $group->users()->detach($user_id);
+        return redirect()->route('group.user.index',$group_id);
     }
-    //
-    public function unlike($group_id,$user_id){
-        $group=Group::find($group_id);
-        $user=User::find($user_id);
-        $group->detachRole($user,255);
-        return redirect()->back();
-    }
+
+
+
+    
 }

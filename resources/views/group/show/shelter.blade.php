@@ -6,8 +6,24 @@
         <div class="col-md-8">
             <div class="card mb-3">
                 <div class="card-body">
-                    <div class="row"><h5>避難所</h5></div>
+                    @php
+                    $rank=255;
+                    @endphp
+                    <div class="row">
+                        <h5>避難所</h5>
+                        <div class="ml-auto">
+                            @if(Auth::user()->hasGroupRank($group,$rank))
+                            <a class="btn btn-primary btn-round btn-sm" href="{{route('group.user.unfollow',[$group->id,Auth::id()])}}">フォロー中</a>
+                            @elseif(Auth::user()->group($group->id))
+                            <a class="btn btn-primary btn-round btn-sm text-white">参加中</a>
+                            @else
+                            <a class="btn btn-outline-primary btn-round btn-sm" href="{{route('group.user.follow',[$group->id,Auth::id()])}}">フォローする</a>
+                            @endif
+                        </div>
+
+                    </div>
                     <h3 class="text-center">{{$group->name}}</h3>
+                    <h6 class="text-center">{{$group->usersHaveRank($rank)->count()}}人がフォロー中</h6>
                         @php
                         $degree=substr($infos[1]->pivot->info['degree'], 0, -1);
                         @endphp
@@ -20,7 +36,8 @@
                             @elseif($degree=='75')bg-warning
                             @elseif($degree=='100')bg-danger
                             @endif
-                            " role="progressbar" style="width:{{$degree}}%" aria-valuenow={{$degree}} aria-valuemin="0" aria-valuemax="100"></div>
+                            " role="progressbar" style="width:{{$degree}}%" aria-valuenow={{$degree}} aria-valuemin="0" aria-valuemax="100">
+                            </div>
                         </div>
                 </div>
             </div>

@@ -3,6 +3,11 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\User;
+use App\Models\Group\Group;
+
+use Illuminate\Support\Facades\Hash;
+use Validator;
 
 class UserGroupController extends Controller
 {
@@ -14,36 +19,10 @@ class UserGroupController extends Controller
      */
     public function index($user_id)
     {
-        //
         $user=User::find($user_id);
         return view('user.group.index')->with([
             'user'=>$user,
-            'groups'=>$user->groups()->get(),
-            'group_roles'=>$user->groupRoles()->get(),
-        ]);
-    }
-
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @param  int  $user_id
-     * @return \Illuminate\Http\Response
-     */
-    public function create($user_id)
-    {
-        //
-    }
-
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  int  $user_id
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
-    public function store(Request $request,$user_id)
-    {
-        //
+            ]);
     }
 
     /**
@@ -54,13 +33,7 @@ class UserGroupController extends Controller
      */
     public function show($user_id,$group_id)
     {
-        //
-        $user=User::find($user_id);
-        return view('user.group.index')->with([
-            'user'=>$user,
-            'groups'=>$user->groups()->where('group_id',$group_id)->first(),
-            'group_roles'=>$user->groupRoles()->where('group_id',$group_id)->first(),
-        ]);
+
     }
 
     /**
@@ -72,6 +45,12 @@ class UserGroupController extends Controller
     public function edit($user_id,$group_id)
     {
         //
+        $group=Group::find($group_id);
+        $user=User::find($user_id);
+        return view('user.group.edit.'.$group->type)->with([
+                'group'=>$group,
+                'user'=>$user,
+            ]);
     }
 
     /**
@@ -83,7 +62,22 @@ class UserGroupController extends Controller
      */
     public function update(Request $request,$user_id,$group_id)
     {
+        //validation
+        $validator = Validator::make($request->all(),[
+            'role_id'=>'required|integer|min:1|exists:group_roles,id',
+        ]);
+        if ($validator->fails()) {
+            return back()->withErrors($validator)->withInput();
+        }
         //
+        $group=Group::find($group_id);
+        if(!Hash::check($request->password,$group->role($request->role_id)->password)){
+            return back()->withInput();
+        }
+        $group->users()->updateExistingPivot($user_id,[
+            'role_id'=>$request->role_id,
+        ]);
+        return redirect()->route('user.group.index',$user_id);
     }
 
     /**
@@ -97,7 +91,6 @@ class UserGroupController extends Controller
         //
         $user=User::find($user_id);
         $user->groups()->detach($group_id);
-        $user->groupRoles()->detach($group_id);
         return redirect()->route('user.group.index',$user_id);
     }
 }

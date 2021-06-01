@@ -10,7 +10,7 @@ use Illuminate\Support\Facades\Storage;
 
 use Validator;
 
-class UploadFileController extends Controller
+class UploadController extends Controller
 {
     //
     public function __construct()
@@ -48,7 +48,6 @@ class UploadFileController extends Controller
         Storage::delete($data['img'][$request->img]);
         unset($data['img'][$request->img]);
         $data['img'] = array_values($data['img']);
-        info($data);
         $group->data=$data;
         $group->save();
         return redirect()->back();

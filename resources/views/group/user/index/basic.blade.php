@@ -6,7 +6,8 @@
         <div class="col-md-8">
             <div class="card">
                 <div class="card-body">
-                    {{Auth::user()->answerToday()}}
+                    {{$group}}
+                    {{$members[0]}}
                 </div>
             </div>
         </div>

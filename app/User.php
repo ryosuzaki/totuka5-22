@@ -48,30 +48,49 @@ class User extends Authenticatable
     public function groups(){
         return $this->belongsToMany(
             'App\Models\Group\Group','group_users','user_id','group_id'
-        )->using('App\Models\Group\GroupUser');
+        )->withPivot('role_id','data')->using('App\Models\Group\GroupUser');
     }
     //
     public function groupRoles(){
-        return $this->belongsToMany(
-            'App\Models\Group\GroupRole','group_users','user_id','role_id'
-        )->using('App\Models\Group\GroupUser');
+        $roles=[];
+        foreach($this->groups()->get() as $group){
+            $roles[]=$group->role($group->pivot->role_id);
+        }
+        return $roles;
     }
     //
-    public function hasRole(Group $group,$rank){
-        
-        return $group->users()->where('role_id',$group->role($rank)->id)->get()->contains('id',$this->id);
+    public function group($group_id){
+        return $this->groups()->where('id',$group_id)->first();
     }
+    //ユーザーがあるグループに持っている役割
+    public function groupRole(Group $group){
+        return $group->role($this->group($group->id)->pivot->role_id);
+    }
+    //
+    public function groupsHaveType($type){
+        return $this->groups()->where('type',$type)->get();
+    }
+    //
+    public function groupTypes(){
+        $groups=$this->groups()->get();
+        $types=[];
+        foreach($groups as $group){
+            $types[]=$group->type;
+        }
+        return array_unique($types);
+    }
+
+    //ユーザーがあるグループにあるランクの役割を持っているか Bool
+    public function hasGroupRank(Group $group,$rank){
+        return $group->users()->where('role_id',$group->rank2role($rank)->id)->get()->contains('id',$this->id);
+    }
+
 
 
 
     //
-    public function questions(){
-        return $this->belongsToMany(
-            'App\Models\Questionnaire\Question','answers','user_id','question_id'
-        )->withPivot('answer')->using('App\Models\Questionnaire\Answer');
-    }
-    public function question($question_id){
-        return $this->questions()->where('question_id')->first();
+    public function answers(){
+        return $this->hasMany('App\Models\Questionnaire\Answer','user_id');
     }
 
     //

@@ -71,6 +71,11 @@ class GroupController extends Controller
                 'name'=>'管理者',
                 'password'=>Hash::make($request->password),
             ]); 
+            $group->roles()->create([
+                'rank'=>255,
+                'name'=>'フォロワー',
+                'password'=>'',
+            ]); 
             $group->attachRole(Auth::user(),0);
             $group->location()->create();
             $group->attachInfoBase(1);
@@ -87,12 +92,12 @@ class GroupController extends Controller
             ]);
             $role=$group->roles()->create([
                 'rank'=>0,
-                'name'=>'作成者',
+                'name'=>'管理者',
                 'password'=>Hash::make(Auth::id()),
             ]); 
             $group->roles()->create([
                 'rank'=>255,
-                'name'=>'like',
+                'name'=>'いいね',
                 'password'=>'',
             ]); 
             $group->attachRole(Auth::user(),0);
@@ -120,6 +125,11 @@ class GroupController extends Controller
                 'name'=>'管理者',
                 'password'=>Hash::make($request->password),
             ]); 
+            $group->roles()->create([
+                'rank'=>255,
+                'name'=>'フォロワー',
+                'password'=>'',
+            ]); 
             $group->attachRole(Auth::user(),0);
             $group->location()->create();
             $group->attachInfoBase(1);
@@ -145,6 +155,11 @@ class GroupController extends Controller
                 'name'=>'管理者',
                 'password'=>Hash::make($request->password),
             ]); 
+            $group->roles()->create([
+                'rank'=>255,
+                'name'=>'フォロワー',
+                'password'=>'',
+            ]); 
             $group->attachRole(Auth::user(),0);
             $group->location()->create();
             $group->attachInfoBase(1);
@@ -162,7 +177,10 @@ class GroupController extends Controller
     {
         //
         $group=Group::find($id);
-        return view('group.show.'.$group->type)->with(['group'=>$group,'infos'=>$group->infoBases()->get()]);
+        return view('group.show.'.$group->type)->with([
+            'group'=>$group,
+            'infos'=>$group->infoBases()->get(),
+            ]);
     }
 
     /**
@@ -174,7 +192,9 @@ class GroupController extends Controller
     public function edit($id)
     {
         //
-        return view('group.edit')->with(['group'=>Group::find($id)]);
+        return view('group.edit')->with([
+            'group'=>Group::find($id),
+            ]);
     }
 
     /**
@@ -214,50 +234,32 @@ class GroupController extends Controller
         $group->delete();
         return redirect()->route('group.home');
     }
+    
 
-    /**
-     * ユーザ一覧
-     *
-     * @param  int  $group_id,$role_id
-     * @return \Illuminate\Http\Response
-     */
-    public function users($group_id,$role_id){
-        $group=Group::find($group_id);
-        return view('group.users')->with([
-            'group'=>$group,
-            'users'=>$group->roles()->where('role_id',$role_id)->users()->get(),
-            ]);  
-    }
-
-    /**
-     * ロール一覧
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function roles($id){
+    public function showLoginForm($id){
         $group=Group::find($id);
-        return view('group.roles')->with([
+        return view('group.login')->with([
             'group'=>$group,
             'roles'=>$group->roles()->get(),
-            ]);  
-    }
-
-    /**
-     * グループをマップ表示
-     * 
-     * @return \Illuminate\Http\Response
-     */
-    public function map(){
-        $all=Group::all();
-        $groups=[];
-        foreach($all as $group){
-            $groups[]=$group->location()->get();
-        }
-        return view('group.map')->with([
-            'groups'=>$groups,
         ]);
     }
 
+    public function login(Request $request, $id){
+        $validator = Validator::make($request->all(),[
+            'role_id'=>'required|integer',
+            'password'=>'required|alpha_num|min:4|max:255'
+        ]);
+        if ($validator->fails()) {
+            return back()->withErrors($validator)->withInput();
+        }
+        $group=Group::find($id);
+        if(!Hash::check($request->password,$group->role($group_id)->password)){
+            return back()->withInput();
+        }
+        $group->users()->attach(Auth::id(),[
+            'role_id'=>$request->role_id,
+        ]);
+        return redirect()->route('user.group.index',[Auth::id(),$id]);
+    }
     
 }

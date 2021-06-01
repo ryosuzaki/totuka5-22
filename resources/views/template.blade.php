@@ -83,11 +83,8 @@
                   <a class="dropdown-item" href="{{ route('user.show',Auth::id()) }}">
                       ユーザー情報
                   </a>
-                  <a class="dropdown-item" href="{{ route('group.create') }}">
-                      グループ作成
-                  </a>
-                  <a class="dropdown-item" href="{{ route('group.show',1) }}">
-                      グループ作成
+                  <a class="dropdown-item" href="{{ route('user.group.index',Auth::id()) }}">
+                      グループ一覧
                   </a>
                   <a class="dropdown-item" href="{{ route('logout') }}"
                      onclick="event.preventDefault();
