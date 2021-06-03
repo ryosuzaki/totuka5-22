@@ -17,7 +17,8 @@ class CreateUserInfosTable extends Migration
             $table->unsignedBigInteger('user_id');
             $table->unsignedBigInteger('base_id');
             $table->index(['user_id', 'base_id']);
-            $table->unsignedBigInteger('updated_by');
+            $table->unsignedBigInteger('created_by')->nullable();
+            $table->unsignedBigInteger('updated_by')->nullable();
             $table->timestamps();
             $table->json('info')->nullable();
         });

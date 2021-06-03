@@ -12,6 +12,7 @@
                             <thead>
                             <tr>
                                 <th>ユーザー名</th>
+                                <th>メールアドレス</th>
                                 <th>役割</th>
                                 <th>アクション</th>
                             </tr>
@@ -19,7 +20,8 @@
                             <tbody>
                                 @foreach ($users as $user)
                                 <tr>
-                                    <td>{{$user->name}}</td>
+                                    <td><a href="{{route('group.user.show',[$group->id,$user->id])}}">{{$user->name}}</a></td>
+                                    <td>{{$user->email}}</td>
                                     <td>{{$user->groupRole($group)->name}}</td>
                                     <td class="p-1">
                                     <a class="btn btn-success btn-sm btn-round text-white" href="{{route('group.user.edit',[$group->id,$user->id])}}"><i class="material-icons">edit</i></a>
@@ -29,11 +31,11 @@
                                     <div class="modal-dialog" role="document">
                                         <div class="modal-content">
                                         <div class="modal-body">
-                                            本当に退会させますか？
+                                            本当に退出させますか？
                                         </div>
                                         <div class="modal-footer">
                                             <button type="button" class="btn btn-secondary" data-dismiss="modal">やめる</button>
-                                            <a class="btn btn-danger text-white" href="{{route('group.user.destroy',[$group->id,$user->id])}}">退会させる</a>
+                                            <a class="btn btn-danger text-white" href="{{route('group.user.destroy',[$group->id,$user->id])}}">退出させる</a>
                                         </div>
                                         </div>
                                     </div>

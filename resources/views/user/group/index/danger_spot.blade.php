@@ -15,6 +15,7 @@
                 <td>{{$user->groupRole($group)->name}}</td>                                    
                 <td class="p-1">
             
+                
                 </td>
             </tr>
             @endforeach

@@ -12,6 +12,8 @@ class Group extends Model
     //
     protected $guarded = [];
     //
+    public $guard_name;
+    //
     protected $casts = [
         'data'  => 'json',
     ];
@@ -21,10 +23,16 @@ class Group extends Model
         'danger_spot'=>'危険地点',
         'nursing_home'=>'介護事業者',
     ];
+    //
     public static function groupType($type){
         return self::$types[$type];
     }
-        
+     //
+    public static function setup($data){
+        $group=Group::create($data);
+        $group->$guard_name="group".$group->id;
+        return $group;
+    }
 
     //
     public function users(){

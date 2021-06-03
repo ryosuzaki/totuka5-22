@@ -8,7 +8,7 @@
                 <div class="card-body">
                     @php
                     $imgs=$group->data['img'];
-                    $rank=255;
+                    $rank=App\Http\Controllers\Group\LikeController::$rank;
                     @endphp
                     <div class="row">
                         <h5>危険地点</h5>

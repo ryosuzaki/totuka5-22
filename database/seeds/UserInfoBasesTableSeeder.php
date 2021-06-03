@@ -16,7 +16,7 @@ class UserInfoBasesTableSeeder extends Seeder
         //
         UserInfoBase::create([
             'id' => 1,
-            'name' => '情報',
+            'name' => '身辺情報',
             'icon'=>'<i class="material-icons">health_and_safety</i>',
             'default_info'=>['info'=>''],
         ]);

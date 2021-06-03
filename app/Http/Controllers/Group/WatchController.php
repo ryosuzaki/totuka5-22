@@ -8,19 +8,19 @@ use App\Http\Controllers\Controller;
 use App\Models\Group\Group;
 use App\User;
 
-class FollowController extends Controller
+class WatchController extends Controller
 {
     //
     public static $rank=255;
     //
-    public function follow($group_id,$user_id){
+    public function watch($group_id,$user_id){
         $group=Group::find($group_id);
         $user=User::find($user_id);
         $group->attachRole($user,self::$rank);
         return redirect()->back();
     }
     //
-    public function unfollow($group_id,$user_id){
+    public function unwatch($group_id,$user_id){
         $group=Group::find($group_id);
         $user=User::find($user_id);
         $group->detachRole($user,self::$rank);

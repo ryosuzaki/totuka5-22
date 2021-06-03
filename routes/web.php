@@ -43,8 +43,8 @@ Route::delete('group/{group}/info_base/{info_base}/info', 'Group\GroupInfoContro
 Route::get('group/{group}/user/{user}/like', 'Group\LikeController@like')->name('group.user.like');
 Route::get('group/{group}/user/{user}/unlike', 'Group\LikeController@unlike')->name('group.user.unlike');
 //
-Route::get('group/{group}/user/{user}/follow', 'Group\FollowController@follow')->name('group.user.follow');
-Route::get('group/{group}/user/{user}/unfollow', 'Group\FollowController@unfollow')->name('group.user.unfollow');
+Route::get('group/{group}/user/{user}/watch', 'Group\WatchController@watch')->name('group.user.watch');
+Route::get('group/{group}/user/{user}/unwatch', 'Group\WatchController@unwatch')->name('group.user.unwatch');
 
 
 Route::post('user/{user}/info_base/{info_base}/attach', 'UserInfoBaseController@attach')->name('user.info_base.attach');

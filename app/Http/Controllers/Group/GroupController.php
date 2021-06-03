@@ -73,7 +73,7 @@ class GroupController extends Controller
             ]); 
             $group->roles()->create([
                 'rank'=>255,
-                'name'=>'フォロワー',
+                'name'=>'ウォッチャー',
                 'password'=>'',
             ]); 
             $group->attachRole(Auth::user(),0);
@@ -92,7 +92,7 @@ class GroupController extends Controller
             ]);
             $role=$group->roles()->create([
                 'rank'=>0,
-                'name'=>'管理者',
+                'name'=>'作成者',
                 'password'=>Hash::make(Auth::id()),
             ]); 
             $group->roles()->create([
@@ -127,7 +127,7 @@ class GroupController extends Controller
             ]); 
             $group->roles()->create([
                 'rank'=>255,
-                'name'=>'フォロワー',
+                'name'=>'ウォッチャー',
                 'password'=>'',
             ]); 
             $group->attachRole(Auth::user(),0);
@@ -157,7 +157,7 @@ class GroupController extends Controller
             ]); 
             $group->roles()->create([
                 'rank'=>255,
-                'name'=>'フォロワー',
+                'name'=>'ウォッチャー',
                 'password'=>'',
             ]); 
             $group->attachRole(Auth::user(),0);

@@ -17,7 +17,8 @@ class CreateGroupInfosTable extends Migration
             $table->unsignedBigInteger('group_id');
             $table->unsignedBigInteger('base_id');
             $table->index(['base_id', 'group_id']);
-            $table->unsignedBigInteger('updated_by');
+            $table->unsignedBigInteger('created_by')->nullable();
+            $table->unsignedBigInteger('updated_by')->nullable();
             $table->timestamps();
             $table->json('info')->nullable();
         });
