@@ -5,11 +5,10 @@
     //例    
     <div>
         <h2>基本情報</h2>
-        
-        <h4>【氏名】</h4>
+
+        【氏名】
         <input type="text" class="form-control" name="info[you1]" value="">
-        <div>
-        <h4>【性別】</h4>
+        <div>【性別】
             <div class="form-check form-check-radio">
                 <label class="form-check-label">
                     <input type="radio" class="form-check-input" name="info[you2]" value="男">男
@@ -19,6 +18,7 @@
                 </label>
             </div>
             <div class="form-check form-check-radio">
+
                 <label class="form-check-label">
                     <input type="radio" class="form-check-input" name="info[you2]" value="女">女
                     <span class="circle">
@@ -36,6 +36,8 @@
                 </div>
                 <div class="form-group row">
                     <input type="number" placeholder="day" class="form-control" name="info[you5]" value="">日
+
+
                 </div>
             </div>【住所】
             <div class="form-group col-md-6">
@@ -52,7 +54,9 @@
             </div>
         【電話番号】
             <div>
+
                 <input type="tel" class="form-control" name="info[you9]" value="">
+
             </div>
             【位置情報サービス】
             <div class="form-check form-check-radio">
@@ -111,6 +115,7 @@
                 <input type="text" class="form-control" name="info[fami7]" value="">
             </div>
         </div>【電話番号】
+
         <div class="form-group">
         <input type="tel" class="form-control" name="info[fami8]" value="">
         </div>
@@ -118,6 +123,7 @@
         <div class="form-group">
         <input type="email" class="form-control" name="info[fami9]" id="exampleFormControlInput1" placeholder="name@example.com">
         </div>
+
     </div>
     <div>
         <h2>住まい</h2>
