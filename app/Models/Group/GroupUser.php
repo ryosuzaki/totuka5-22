@@ -12,8 +12,4 @@ class GroupUser extends Pivot
     protected $casts = [
         'data'  => 'json',
     ];
-    //
-    public function roles(){
-        return $this->hasMany('App\Models\Group\GroupRole','role_id');
-    }
 }

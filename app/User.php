@@ -11,10 +11,12 @@ use App\Models\Group\Group;
 
 use Illuminate\Support\Facades\Auth;
 
+use Spatie\Permission\Traits\HasRoles;
+
 class User extends Authenticatable
 {
     use Notifiable;
-
+    use HasRoles;
     /**
      * The attributes that are mass assignable.
      *
@@ -47,9 +49,14 @@ class User extends Authenticatable
     //
     public function groups(){
         return $this->belongsToMany(
-            'App\Models\Group\Group','group_users','user_id','group_id'
+            'App\Models\Group\Group','group_user','user_id','group_id'
         )->withPivot('role_id','data')->using('App\Models\Group\GroupUser');
     }
+    //
+    public function group($group_id){
+        return $this->groups()->where('id',$group_id)->first();
+    }
+    
     //
     public function groupRoles(){
         $roles=[];
@@ -58,10 +65,7 @@ class User extends Authenticatable
         }
         return $roles;
     }
-    //
-    public function group($group_id){
-        return $this->groups()->where('id',$group_id)->first();
-    }
+    
     //ユーザーがあるグループに持っている役割
     public function groupRole(Group $group){
         return $group->role($this->group($group->id)->pivot->role_id);

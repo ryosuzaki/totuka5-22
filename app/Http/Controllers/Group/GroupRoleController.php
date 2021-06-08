@@ -9,7 +9,6 @@ use App\Models\Group\Group;
 use App\Models\Group\GroupRole;
 
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\Hash;
 use Validator;
 
 class GroupRoleController extends Controller
@@ -30,7 +29,7 @@ class GroupRoleController extends Controller
         $group=Group::find($group_id);
         return view('group.role.index')->with([
             'group'=>$group,
-            'roles'=>$group->roles()->get(),
+            'roles'=>$group->groupRoles()->get(),
         ]);
     }
 
@@ -46,7 +45,7 @@ class GroupRoleController extends Controller
         $group=Group::find($group_id);
         return view('group.role.create')->with([
             'group'=>$group,
-            'roles'=>$group->roles()->get(),
+            'roles'=>$group->groupRoles()->get(),
             ]);
     }
 
@@ -61,7 +60,6 @@ class GroupRoleController extends Controller
     {
         //validation
         $validator = Validator::make($request->all(),[
-            'rank'=>'required|integer',
             'name'=>'required|max:255',
             'password'=>'required|alpha_num|min:4|max:255|confirmed'//password_confirmation
         ]);
@@ -70,11 +68,7 @@ class GroupRoleController extends Controller
         }
         //
         $group=Group::find($group_id);
-        $group->roles()->create([
-            'rank'=>$request->rank,
-            'name'=>$request->name,
-            'password'=>Hash::make($request->password),
-        ]);
+        $group->groupRoles()->create($request->name,$request->password);
         return redirect()->route('group.role.index',$group_id);
     }
 
@@ -122,10 +116,8 @@ class GroupRoleController extends Controller
             return back()->withErrors($validator)->withInput();
         }
         //
-        $role=GroupRole::find($id)->fill([
-            'name'=>$request->name,
-            'password'=>Hash::make($request->password),
-        ])->save();
+        $role=GroupRole::find($id);
+        $role->changeName($request->name);
         return redirect()->route('group.role.index',$role->group()->id);
     }
 

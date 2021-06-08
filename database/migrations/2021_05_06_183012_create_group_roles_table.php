@@ -14,13 +14,11 @@ class CreateGroupRolesTable extends Migration
     public function up()
     {
         Schema::create('group_roles', function (Blueprint $table) {
-            $table->bigIncrements('id');
-            $table->unsignedBigInteger('group_id');
-            $table->unsignedTinyInteger('rank');
-            $table->index(['rank', 'group_id']);
+            $table->unsignedBigInteger('id')->index();
+            $table->unsignedBigInteger('group_id')->index();
             $table->string('name');
+            $table->unique(['name','group_id']);
             $table->timestamps();
-            $table->json('permissions')->nullable();
             $table->string('password');
         });
     }

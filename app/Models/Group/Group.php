@@ -18,30 +18,37 @@ class Group extends Model
         'data'  => 'json',
     ];
     //
-    public static $types=[
+    public static $format_types=[
         'shelter'=>'避難所',
         'danger_spot'=>'危険地点',
         'nursing_home'=>'介護事業者',
     ];
     //
-    public static function groupType($type){
-        return self::$types[$type];
+    public static $default_data=[
+        'shelter'=>[],
+        'danger_spot'=>['img'=>[]],
+        'nursing_home'=>[],
+    ];
+    //
+    public static function formatType($type){
+        return self::$format_types[$type];
     }
-     //
-    public static function setup($data){
-        $group=Group::create($data);
-        $group->$guard_name="group".$group->id;
-        return $group;
+    //
+    public static function create($name,$type,$data=null){
+        if($data==null){
+            $data=self::$default_data[$type];
+        }
+        return parent::create([
+            'name'=>$name,
+            'type'=>$type,
+            'data'=>$data,
+        ]);
     }
-
     //
     public function users(){
         return $this->belongsToMany(
-            'App\User','group_users','group_id','user_id'
+            'App\User','group_user','group_id','user_id'
         )->withPivot('role_id','data')->using('App\Models\Group\GroupUser');
-    }
-    public function usersHaveRank($rank){
-        return $this->users()->where('role_id',$this->rank2role($rank)->id)->get();
     }
     public function usersHaveRole($role_id){
         return $this->users()->where('role_id',$role_id)->get();
@@ -51,16 +58,12 @@ class Group extends Model
         return $this->users()->where('user_id',$user_id)->first();
     }
     //
-    public function roles(){
+    public function groupRoles(){
         return $this->hasMany('App\Models\Group\GroupRole','group_id');
     }
     //
-    public function role($role_id){
+    public function groupRole($role_id){
         return $this->roles()->where('id',$role_id)->first();
-    }
-    //
-    public function rank2role($rank){
-        return $this->roles()->where('rank',$rank)->first();
     }
 
     //
@@ -80,18 +83,6 @@ class Group extends Model
 
 
 
-
-    //
-    public function attachRole(User $user,$rank){
-        return $this->users()->attach($user->id,[
-            'role_id'=>$this->rank2role($rank)->id,
-            'data'=>[],
-            ]);
-    }
-    //
-    public function detachRole(User $user,$rank){
-        return $this->users()->where('role_id',$this->rank2role($rank)->id)->detach($user->id);
-    }
     //
     public function detachUser(User $user){
         return $this->users()->detach($user->id);
