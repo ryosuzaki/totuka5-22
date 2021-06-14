@@ -33,8 +33,8 @@ class RegisterController extends Controller
      */
     protected function redirectTo()
     {
-        Auth::user()->attachInfoBase(1);
-        return route('user.info_base.info.edit',[Auth::id(),1]);
+        Auth::user()->createInfoBase(4);
+        return route('user.show');
     }
     /**
      * Create a new controller instance.

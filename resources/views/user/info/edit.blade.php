@@ -6,7 +6,7 @@
         <div class="col-md-8">
             <div class="card">
                 <div class="card-body">
-                    @include('user.info_base.edit.'.$info->id, ['user'=>$user,'info' => $info])
+                    @include('info.info_base.edit.'.$base->getTemplate()->id, ['user'=>$user,'base' => $base])
                 </div>
             </div>
         </div>

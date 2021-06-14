@@ -36,9 +36,8 @@ class GroupController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create($type='basic')
+    public function create($type)
     {
-        //
         return view('group.create.'.$type)->with(['type'=>$type]);
     }
 
@@ -51,7 +50,7 @@ class GroupController extends Controller
     public function store(Request $request)
     {
         $type=$request->type;
-        ///
+        //
         if($type=='shelter'){
             $validator = Validator::make($request->all(),[
                 'name'=>'required|max:255',
@@ -61,24 +60,19 @@ class GroupController extends Controller
                 return back()->withErrors($validator)->withInput();
             }
             //
-            $group=Group::create($request->name,$type);
-            $admin=$group->groupRoles()->create('管理者',$request->password); 
-            $watcher=$group->groupRoles()->create('ウォッチャー',''); 
-            Auth::user()->assignRole($admin->id);
+            $group=Group::setup(Auth::user(),$request->name,$type,$request->password);
+            $group->createGroupRole('ウォッチャー',''); 
             $group->location()->create();
-            $group->attachInfoBase(1);
-            $group->attachInfoBase(2);
+            $group->createInfoBase(1);
+            $group->createInfoBase(2);
             return redirect()->route('group.show',$group->id);
         }
         //
         elseif ($type=='danger_spot') {
-            //
-            $group=Group::create('',$type);
-            $admin=$group->groupRoles()->create('管理者',Auth::id()); 
-            $like=$group->groupRoles()->create('いいね',''); 
-            Auth::user()->assignRole($admin->id);
+            $group=Group::setup(Auth::user(),'',$type,Auth::id());
+            $group->createGroupRole('いいね',''); 
             $group->location()->create();
-            $group->attachInfoBase(3);
+            $group->createInfoBase(3);
             return redirect()->route('group.show',$group->id);
         }
         //
@@ -91,30 +85,9 @@ class GroupController extends Controller
                 return back()->withErrors($validator)->withInput();
             }
             //
-            $group=Group::create($request->name,$type);
-            $admin=$group->groupRoles()->create('管理者',$request->password); 
-            $watcher=$group->groupRoles()->create('ウォッチャー',''); 
-            Auth::user()->assignRole($admin->id);
+            $group=Group::setup(Auth::user(),$request->name,$type,$request->password);
             $group->location()->create();
-            $group->attachInfoBase(1);
-            return redirect()->route('group.show',$group->id);
-        }
-        //
-        else{
-            $validator = Validator::make($request->all(),[
-                'name'=>'required|max:255',
-                'password'=>'required|alpha_num|min:4|max:255|confirmed'//password_confirmation
-            ]);
-            if ($validator->fails()) {
-                return back()->withErrors($validator)->withInput();
-            }
-            //
-            $group=Group::create($request->name,$type);
-            $admin=$group->groupRoles()->create('管理者',$request->password); 
-            $watcher=$group->groupRoles()->create('ウォッチャー',''); 
-            Auth::user()->assignRole($admin->id);
-            $group->location()->create();
-            $group->attachInfoBase(1);
+            $group->createInfoBase(1);
             return redirect()->route('group.show',$group->id);
         }
     }
@@ -127,11 +100,10 @@ class GroupController extends Controller
      */
     public function show($id)
     {
-        //
         $group=Group::find($id);
-        return view('group.show.'.$group->type)->with([
+        return view('group.show.'.$group->getTypeName())->with([
             'group'=>$group,
-            'infos'=>$group->infoBases()->get(),
+            'bases'=>$group->infoBases()->get(),
             ]);
     }
 

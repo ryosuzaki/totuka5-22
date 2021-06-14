@@ -6,45 +6,54 @@ use Illuminate\Http\Request;
 use App\User;
 use App\Models\Group\Group;
 
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Validator;
 
 class UserGroupController extends Controller
 {
     /**
-     * Display a listing of the resource.
+     * 参加グループ一覧
      *
      * @param  int  $user_id
      * @return \Illuminate\Http\Response
      */
-    public function index($user_id)
+    public function index()
     {
-        $user=User::find($user_id);
         return view('user.group.index')->with([
-            'user'=>$user,
+            'user'=>Auth::user(),
             ]);
     }
 
     /**
-     * Display the specified resource.
+     * グループに参加
      *
-     * @param  int  $user_id,$group_id
      * @return \Illuminate\Http\Response
      */
-    public function show($user_id,$group_id)
+    public function create()
     {
-
+        
     }
 
     /**
-     * Show the form for editing the specified resource.
+     * グループに参加
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Illuminate\Http\Response
+     */
+    public function store(Request $request)
+    {
+       
+    }
+
+    /**
+     * 役割などを変更
      *
      * @param  int  $user_id,$group_id
      * @return \Illuminate\Http\Response
      */
-    public function edit($user_id,$group_id)
+    public function edit($group_id)
     {
-        //
         $group=Group::find($group_id);
         $user=User::find($user_id);
         return view('user.group.edit.'.$group->type)->with([
@@ -54,7 +63,7 @@ class UserGroupController extends Controller
     }
 
     /**
-     * Update the specified resource in storage.
+     * 役割などを変更
      *
      * @param  \Illuminate\Http\Request  $request
      * @param  int  $user_id,$group_id
@@ -81,7 +90,7 @@ class UserGroupController extends Controller
     }
 
     /**
-     * Remove the specified resource from storage.
+     * 退会
      *
      * @param  int  $user_id,$group_id
      * @return \Illuminate\Http\Response

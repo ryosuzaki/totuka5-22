@@ -12,41 +12,55 @@ use Illuminate\Support\Facades\Hash;
 class GroupRole extends Model
 {
     //
-    protected $guarded=[
-        'id',
-        'group_id',
-    ];
+    protected $guarded=[];
     
     //
     protected $hidden = [
         'password',
     ];
+
     //
-    public static function create($name,$password){
-        $role=Role::create([
-            'name'=>'group'.$this->group_id.$name,
-        ]);
-        return parent::create([
-            'id'=>$role->id,
-            'group_id'=>$this->group_id,
-            'name'=>$name,
-            'password'=>Hash::make($password),
-        ]);
+    public $incrementing = false; 
+
+
+
+
+    //
+    public function group(){
+        return $this->belongsTo('App\Models\Group\Group', 'group_id');
     }
+    //
+    public function permissions(){
+        return $this->getRole()->permissions();
+    }
+    //
+    public function users(){
+        return $this->belongsToMany(
+            'App\User','group_role_user','role_id','user_id'
+        )->withPivot('group_id')->using('App\Models\Group\GroupUser');
+    }
+
+
+
+    
+
+
+
+
+
     //
     public function getRole(){
-        return Role::find($this->id);
+        return Role::findById($this->id);
     }
-    //
-    public function getRoleName(){
-        return 'group'.$this->group_id.$this->name;
-    }
-    //
-    public function getName(){
-        return $this->name;
-    }
+
+
+
     //
     public function changeName($name){
+        //管理者は変更不能
+        if($this->name=='管理者'){
+            return false;
+        }
         $this->getRole()->fill([
             'name'=>'group'.$this->group_id.$name,
         ])->save();
@@ -54,8 +68,11 @@ class GroupRole extends Model
             'name'=>$name,
         ])->save();
     }
+
+
+
     //
-    public function checkPassword($password){
+    public function checkPassword($password):Bool{
         return Hash::check($password,$this->password);
     }
     //
@@ -66,19 +83,9 @@ class GroupRole extends Model
     }
 
 
-    //
-    public function permissions(){
-        return $this->getRole()->permissions();
-    }
-    //
-    public function users(){
-        return $this->getRole()->users();
-    }
+    
 
 
 
-    //
-    public function group(){
-        return $this->belongsTo('App\Models\Group\Group', 'group_id');
-    }
+    
 }

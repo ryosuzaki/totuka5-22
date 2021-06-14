@@ -13,18 +13,18 @@
             <div class="card mt-0">
                 <div class="card-body">
                     <ul class="nav nav-pills nav-pills-primary">
-                        @foreach ($infos as $info)
+                        @foreach ($bases as $base)
                         <li class="nav-item mx-auto">
-                            <a class="nav-link @if($infos[0]==$info) active @endif" href="#pill{{$info->id}}" data-toggle="tab">{{$info->name}}</a>
+                            <a class="nav-link @if($bases[0]==$base) active @endif" href="#pill{{$base->id}}" data-toggle="tab">{{$base->name}}</a>
                         </li>
                         @endforeach
                     </ul>
                     <div class="tab-content tab-space pb-0">
-                        @foreach ($infos as $info)
-                        <div class="tab-pane @if($infos[0]==$info) active @endif" id="pill{{$info->id}}">
-                            @include('user.info_base.show.'.$info->id, ['user'=>$user,'info'=>$info])
+                        @foreach ($bases as $base)
+                        <div class="tab-pane @if($bases[0]==$base) active @endif" id="pill{{$base->id}}">
+                            @include('info.info_base.show.'.$base->getTemplate()->id, ['user'=>$user,'base'=>$base])
                             <div class="row">
-                                <a class="btn btn-outline-primary btn-block mx-auto" href="{{route('user.info_base.info.edit',[$user->id,$info->id])}}">変更</a>
+                                <a class="btn btn-outline-primary btn-block mx-auto" href="{{route('user.info_base.info.edit',$base->id)}}">変更</a>
                             </div> 
                         </div>
                         @endforeach

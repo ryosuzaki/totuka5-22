@@ -50,16 +50,14 @@ Route::get('group/{group}/user/{user}/unwatch', 'Group\WatchController@unwatch')
 Route::post('user/{user}/info_base/{info_base}/attach', 'UserInfoBaseController@attach')->name('user.info_base.attach');
 Route::post('user/{user}/info_base/{info_base}/detach', 'UserInfoBaseController@detach')->name('user.info_base.detach');
 
-Route::get('user/{user}/info_base/{info_base}/info/edit', 'UserInfoController@edit')->name('user.info_base.info.edit');
-Route::put('user/{user}/info_base/{info_base}/info', 'UserInfoController@update')->name('user.info_base.info.update');
-Route::delete('user/{user}/info_base/{info_base}/info', 'UserInfoController@destroy')->name('user.info_base.info.destroy');
+
 
 
 
 
 
 //
-Route::get('group/create/{type?}', 'Group\GroupController@create')->name('group.create');
+Route::get('group/create/{type}', 'Group\GroupController@create')->name('group.create');
 Route::resource('group', 'Group\GroupController',['except' => [
     'create'
 ]]);
@@ -78,21 +76,32 @@ Route::resource('group.user', 'Group\GroupUserController',['except' => [
 
 
 
+//user
+//ログインユーザのみのアクセスにするため
+Route::get('user', 'UserController@show')->name('user.show');
+Route::get('user/edit', 'UserController@edit')->name('user.edit');
+Route::put('user', 'UserController@update')->name('user.update');
+Route::delete('user', 'UserController@destroy')->name('user.destroy');
+
+//user info_base info
+Route::get('user/info_base/{info_base}/info/edit', 'UserInfoController@edit')->name('user.info_base.info.edit');
+Route::put('user/info_base/{info_base}/info', 'UserInfoController@update')->name('user.info_base.info.update');
+Route::delete('user/info_base/{info_base}/info', 'UserInfoController@destroy')->name('user.info_base.info.destroy');
 
 //
+Route::get('user/group', 'UserGroupController@index')->name('user.group.index');
+Route::get('user/group/create', 'UserGroupController@create')->name('user.group.create');
+Route::post('user/group', 'UserGroupController@store')->name('user.group.store');
+Route::get('user/group/{group}/edit', 'UserGroupController@edit')->name('user.group.edit');
+Route::put('user/group/{group}', 'UserGroupController@update')->name('user.group.update');
+Route::delete('user/group/{group}', 'UserGroupController@destroy')->name('user.group.destroy');
 
 
-
-
-Route::resource('user','UserController',['except' => [
-]]);
 
 Route::resource('user_info_base','UserInfoBaseController',['except' => [
 ]]);
 
-//
-Route::resource('user.group', 'UserGroupController',['except' => [
-]]);
+
 
 
 Route::resource('user.answer','Questionnaire\AnswerController',['except' => [

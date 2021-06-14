@@ -13,12 +13,13 @@ class CreateGroupUserTable extends Migration
      */
     public function up()
     {
-        Schema::create('group_user', function (Blueprint $table) {
+        Schema::create('group_role_user', function (Blueprint $table) {
+            $table->bigIncrements('id');
             $table->unsignedBigInteger('user_id');
             $table->unsignedBigInteger('group_id');
-            $table->index(['user_id','group_id']);
+            $table->unsignedBigInteger('role_id');
+            $table->index(['user_id','group_id','role_id']);
             $table->timestamps();
-            $table->json('data')->default('');
         });
     }
 

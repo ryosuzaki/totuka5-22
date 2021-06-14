@@ -6,8 +6,9 @@ use Illuminate\Notifications\Notifiable;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 
-use App\UserInfoBase;
 use App\Models\Group\Group;
+
+use App\Traits\InfoFuncs;
 
 use Illuminate\Support\Facades\Auth;
 
@@ -17,6 +18,7 @@ class User extends Authenticatable
 {
     use Notifiable;
     use HasRoles;
+    use InfoFuncs;
     /**
      * The attributes that are mass assignable.
      *
@@ -46,30 +48,58 @@ class User extends Authenticatable
         
     ];
 
+
+
+
     //
     public function groups(){
         return $this->belongsToMany(
-            'App\Models\Group\Group','group_user','user_id','group_id'
-        )->withPivot('role_id','data')->using('App\Models\Group\GroupUser');
+            'App\Models\Group\Group','group_role_user','user_id','group_id'
+        )->withPivot('role_id')->using('App\Models\Group\GroupUser');
     }
     //
-    public function group($group_id){
-        return $this->groups()->where('id',$group_id)->first();
+    public function hasGroup(int $id){
+        return $this->groups()->contains('id',$id);
     }
-    
+    //
+    //
+    public function joinGroup(int $group_id,$role,string $password){
+        $group=Group::find($group_id);
+        if($group->hasRole($role_id)){
+            if($group->groupRoles()->where('id',$role_id)->first()->checkPassword($password)){
+                $this->assignRole($role_id);
+                return $this->groups()->attach($group_id,['role_id'=>$role_id]);
+            }else{
+                return false;
+            }
+        }else{
+            return false;
+        }
+    }
+    //
+    public function leaveGroup(int $group_id){
+        if($this->hasGroup($group_id)){
+            $role_id=$this->groupRoles()->where('group_id',$group_id)->first()->id;
+            $this->removeRole($role_id);
+            return $this->groups()->detach($group_id);
+        }else{
+            return false;
+        }
+    }
+    //
+    public function hasGroupRole(int $group_id,string $role_name){
+        return $this->hasRole('group'.$group_id.$role_name);
+    }
+
+
+
     //
     public function groupRoles(){
-        $roles=[];
-        foreach($this->groups()->get() as $group){
-            $roles[]=$group->role($group->pivot->role_id);
-        }
-        return $roles;
+        return $this->belongsToMany(
+            'App\Models\Group\GroupRole','group_role_user','user_id','role_id'
+        )->withPivot('group_id')->using('App\Models\Group\GroupUser');
     }
     
-    //ユーザーがあるグループに持っている役割
-    public function groupRole(Group $group){
-        return $group->role($this->group($group->id)->pivot->role_id);
-    }
     //
     public function groupsHaveType($type){
         return $this->groups()->where('type',$type)->get();
@@ -84,43 +114,10 @@ class User extends Authenticatable
         return array_unique($types);
     }
 
-    //ユーザーがあるグループにあるランクの役割を持っているか Bool
-    public function hasGroupRank(Group $group,$rank){
-        return $group->users()->where('role_id',$group->rank2role($rank)->id)->get()->contains('id',$this->id);
-    }
-
-
-
+    
 
     //
     public function answers(){
         return $this->hasMany('App\Models\Questionnaire\Answer','user_id');
     }
-
-    //
-    public function infoBases(){
-        return $this->belongsToMany(
-            'App\UserInfoBase','user_infos','user_id','base_id'
-        )->withPivot('updated_by','info')->using('App\UserInfo');
-    }
-    public function infoBase($base_id){
-        return $this->infoBases()->where('base_id',$base_id)->first();
-    }
-
-
-    //
-    public function attachInfoBase($base_id)
-    {
-        return $this->infoBases()->attach($base_id,[
-            'updated_by'=>Auth::id(),
-            'info'=>UserInfoBase::find($base_id)->default_info,
-        ]);
-        
-    }
-    //
-    public function detachInfoBase($base_id)
-    {
-        return $this->infoBases()->detach($base_id);
-    }
-
 }

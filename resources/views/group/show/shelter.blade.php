@@ -6,17 +6,11 @@
         <div class="col-md-8">
             <div class="card mb-3">
                 <div class="card-body">
-                    @php
-                    $rank=App\Http\Controllers\Group\WatchController::$rank;
-                    @endphp
-                    {{$group->guardName()}}
                     <div class="row">
                         <h5>避難所</h5>
                         <div class="ml-auto">
-                            @if(Auth::user()->hasGroupRank($group,$rank))
+                            @if(Auth::user()->hasGroupRole($group->id,'ウォッチャー'))
                             <a class="btn btn-primary btn-round btn-sm" href="{{route('group.user.unwatch',[$group->id,Auth::id()])}}">ウォッチ中</a>
-                            @elseif(Auth::user()->group($group->id))
-                            <a class="btn btn-primary btn-round btn-sm text-white">参加中</a>
                             @else
                             <a class="btn btn-outline-primary btn-round btn-sm" href="{{route('group.user.watch',[$group->id,Auth::id()])}}">ウォッチする</a>
                             @endif
@@ -24,9 +18,10 @@
 
                     </div>
                     <h3 class="text-center">{{$group->name}}</h3>
-                    <h6 class="text-center">{{$group->usersHaveRank($rank)->count()}}人がウォッチ中</h6>
+                    <h6 class="text-center">{{$group->usersHaveRole('ウォッチャー')->count()}}人がウォッチ中</h6>
                         @php
-                        $degree=substr($infos[1]->pivot->info['degree'], 0, -1);
+                        info($group->info(2)->info['degree']);
+                        $degree=substr($group->info(2)->info['degree'], 0, -1);
                         @endphp
                         <div class="row"><p class="h5 mx-auto">混雑度：<strong>{{$degree}}%</strong></p></div>
                         

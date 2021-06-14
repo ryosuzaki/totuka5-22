@@ -7,7 +7,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Validator;
 use App\User;
-use App\UserInfoBase;
+use App\Models\Info\InfoBase;
 
 class UserInfoController extends Controller
 {
@@ -19,16 +19,15 @@ class UserInfoController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  int  $user_id,$base_id
+     * @param int $base_id
      * @return \Illuminate\Http\Response
      */
-    public function edit($user_id,$base_id)
+    public function edit(int $base_id)
     {
-        //
-        $user=User::find($user_id);
+        $user=Auth::user();
         return view('user.info.edit')->with([
             'user'=>$user,
-            'info'=>$user->infoBases()->where('base_id',$base_id)->first()
+            'base'=>$user->getInfoBase($base_id),
             ]);
     }
 
@@ -36,12 +35,12 @@ class UserInfoController extends Controller
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  int  $user_id,$base_id
+     * @param int $base_id
+     * 
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request,$user_id,$base_id)
+    public function update(Request $request,int $base_id)
     {
-        //validation
         $validator = Validator::make($request->all(),[
             
         ]);
@@ -49,25 +48,22 @@ class UserInfoController extends Controller
             return back()->withErrors($validator)->withInput();
         }
         //
-        $user=User::find($user_id);
+        $user=Auth::user();
         $user->infoBases()->updateExistingPivot($base_id,[
             'updated_by'=>Auth::id(),
             'info'=>$request->toArray()['info'],
         ]);
-        return redirect()->route('user.show',$user_id);
+        return redirect()->route('user.show');
     }
 
     /**
      * Remove the specified resource from storage.
      *
-     * @param  int  $user_id,$base_id
+     * @param  int $base_id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($user_id,$base_id)
+    public function destroy(int $base_id)
     {
-        //
-        $user=User::find($user_id);
-        $user->infoBases()->detach($base_id);
-        return redirect()->route('home');
+        
     }
 }

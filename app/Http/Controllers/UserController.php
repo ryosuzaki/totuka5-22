@@ -23,12 +23,12 @@ class UserController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show()
     {
-        $user=User::find($id);
+        $user=Auth::user();
         return view('user.show')->with([
             'user'=>$user,
-            'infos'=>$user->infoBases()->get()
+            'bases'=>$user->infoBases()->get(),
             ]);
     }
 
@@ -38,35 +38,32 @@ class UserController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function edit()
     {
-        //
-        return view('user.edit')->with(['user'=>User::find($id)]);
+        return view('user.edit')->with(['user'=>Auth::user()]);
     }
 
     /**
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request)
     {
-        //validation
         $validator = Validator::make($request->all(),[
             'name' => ['required', 'string', 'max:255'],
-            'email' => ['required', 'string', 'email', 'max:255'],
+            'email' => ['required', 'string', 'email', 'max:255','unique:users,email'],
         ]);
         if ($validator->fails()) {
             return back()->withErrors($validator)->withInput();
         }
-        $user=User::find($id);
+        $user=Auth::user();
         $user->fill([
             'name'=>$request['name'],
             'email'=>$request['email'],
         ])->save();
-        return redirect()->route('user.show',$id);
+        return redirect()->route('user.show');
     }
     /**
      * Remove the specified resource from storage.
@@ -74,15 +71,8 @@ class UserController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy()
     {
-        //
-        $user=User::find($id);
-        $user->groups()->detach();
-        $user->groupRoles()->detach();
-        $user->answers()->delete();
-        $user->infoBases()->detach();
-        $user->delete();
-        return redirect()->route('home');
+        
     }
 }
