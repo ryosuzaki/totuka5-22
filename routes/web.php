@@ -58,8 +58,9 @@ Route::post('user/{user}/info_base/{info_base}/detach', 'UserInfoBaseController@
 
 //
 Route::get('group/create/{type}', 'Group\GroupController@create')->name('group.create');
+Route::get('group/{group}/{index?}', 'Group\GroupController@show')->name('group.show');
 Route::resource('group', 'Group\GroupController',['except' => [
-    'create'
+    'create','show'
 ]]);
 //
 Route::resource('group_info_base','Group\GroupInfoBaseController',['except' => [
@@ -84,9 +85,9 @@ Route::put('user', 'UserController@update')->name('user.update');
 Route::delete('user', 'UserController@destroy')->name('user.destroy');
 
 //user info_base info
-Route::get('user/info_base/{info_base}/info/edit', 'UserInfoController@edit')->name('user.info_base.info.edit');
-Route::put('user/info_base/{info_base}/info', 'UserInfoController@update')->name('user.info_base.info.update');
-Route::delete('user/info_base/{info_base}/info', 'UserInfoController@destroy')->name('user.info_base.info.destroy');
+Route::get('info_base/{info_base}/info/edit', 'Info\InfoController@edit')->name('info_base.info.edit');
+Route::put('info_base/{info_base}/info', 'Info\InfoController@update')->name('info_base.info.update');
+Route::delete('info_base/{info_base}/info', 'Info\InfoController@destroy')->name('info_base.info.destroy');
 
 //
 Route::get('user/group', 'UserGroupController@index')->name('user.group.index');

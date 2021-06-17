@@ -59,7 +59,7 @@ class User extends Authenticatable
     }
     //
     public function hasGroup(int $id){
-        return $this->groups()->contains('id',$id);
+        return $this->groups()->get()->contains('id',$id);
     }
     //
     //
@@ -90,7 +90,14 @@ class User extends Authenticatable
     public function hasGroupRole(int $group_id,string $role_name){
         return $this->hasRole('group'.$group_id.$role_name);
     }
-
+    //
+    public function getGroupRole(int $group_id){
+        return $this->groupRoles()->find($group_id);
+    }
+    //
+    public function getRoleId(int $group_id){
+        return $this->getGroupRole($group_id)->pivot()->role_id;
+    }
 
 
     //
@@ -102,14 +109,21 @@ class User extends Authenticatable
     
     //
     public function groupsHaveType($type){
-        return $this->groups()->where('type',$type)->get();
+        $groups=$this->groups()->get();
+        $out=[];
+        foreach($groups as $group){
+            if($group->getTypeName()==$type){
+                $out[]=$group;
+            }
+        }
+        return $out;
     }
     //
     public function groupTypes(){
         $groups=$this->groups()->get();
         $types=[];
         foreach($groups as $group){
-            $types[]=$group->type;
+            $types[]=$group->getType();
         }
         return array_unique($types);
     }

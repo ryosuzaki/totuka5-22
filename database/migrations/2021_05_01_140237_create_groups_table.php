@@ -22,6 +22,7 @@ class CreateGroupsTable extends Migration
 
         Schema::create('group_roles', function (Blueprint $table) {
             $table->unsignedBigInteger('id');
+            $table->unsignedInteger('index');
             $table->unsignedBigInteger('group_id');
             $table->string('name');
             $table->unique(['name','group_id']);

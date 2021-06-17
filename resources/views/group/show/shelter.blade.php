@@ -20,7 +20,6 @@
                     <h3 class="text-center">{{$group->name}}</h3>
                     <h6 class="text-center">{{$group->usersHaveRole('ウォッチャー')->count()}}人がウォッチ中</h6>
                         @php
-                        info($group->info(2)->info['degree']);
                         $degree=substr($group->info(2)->info['degree'], 0, -1);
                         @endphp
                         <div class="row"><p class="h5 mx-auto">混雑度：<strong>{{$degree}}%</strong></p></div>
@@ -40,21 +39,22 @@
             <div class="card mt-0">
                 <div class="card-body">
                     <ul class="nav nav-pills nav-pills-primary">
-                        @foreach ($infos as $info)
+                        @foreach ($bases as $base)
                         <li class="nav-item mx-auto">
-                            <a class="nav-link @if($infos[0]==$info) active @endif" href="#pill{{$info->id}}" data-toggle="tab">{{$info->name}}</a>
+                            <a class="nav-link @if($base->index==$index) active @endif" @if($base->index!=$index) href="{{route('group.show',[$group->id,$base->index])}}"@endif>{{$base->name}}</a>
                         </li>
                         @endforeach
                     </ul>
                     <div class="tab-content tab-space pb-0">
-                        @foreach ($infos as $info)
-                        <div class="tab-pane @if($infos[0]==$info) active @endif" id="pill{{$info->id}}">
-                            @include('group.info_base.show.'.$info->id, ['group'=>$group,'info'=>$info])
+                        <div class="tab-pane active">
+                            @php
+                            $base=$group->getInfoBaseByIndex($index);
+                            @endphp
+                            @include('info.info.show.'.$base->getTemplate()->id, ['base'=>$base,'info'=>$base->info()])
                             <div class="row">
-                                <a class="btn btn-outline-primary btn-block mx-auto" href="{{route('group.info_base.info.edit',[$group->id,$info->id])}}">変更</a>
+                                <a class="btn btn-outline-primary btn-block mx-auto" href="{{route('info_base.info.edit',$base->id)}}">変更</a>
                             </div> 
                         </div>
-                        @endforeach
                     </div>
                 </div>
             </div>

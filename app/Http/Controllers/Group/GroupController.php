@@ -36,7 +36,7 @@ class GroupController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create($type)
+    public function create(string $type)
     {
         return view('group.create.'.$type)->with(['type'=>$type]);
     }
@@ -95,15 +95,16 @@ class GroupController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  int  $id
+     * @param  int  $group_id
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show(int $group_id,int $index=0)
     {
-        $group=Group::find($id);
+        $group=Group::find($group_id);
         return view('group.show.'.$group->getTypeName())->with([
             'group'=>$group,
             'bases'=>$group->infoBases()->get(),
+            'index'=>$index,
             ]);
     }
 

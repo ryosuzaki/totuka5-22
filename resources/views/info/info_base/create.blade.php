@@ -6,7 +6,7 @@
         <div class="col-md-8">
             <div class="card">
                 <div class="card-body">
-                <form method="POST" action="{{ route('user_info_base.store') }}">
+                    <form method="POST" action="{{ route('group_info_base.store') }}">
                         @csrf
                         <div class="form-group row">
                             <label for="name">情報ベース名</label>

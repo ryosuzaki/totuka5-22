@@ -40,7 +40,7 @@ class Group extends Model
         ]);
         $admin=$group->createGroupRole('管理者',$admin_password)->getRole();
         $admin->givePermissionTo('group.*');
-        $user->assignRole($admin->id);
+        $group->inviteUser($user->id,$admin->id);
         return $group;
     }
     //
@@ -65,10 +65,18 @@ class Group extends Model
 
     //
     public function inviteUser(int $user_id,int $role_id){
+        $user=User::find($user_id);
+        if ($user->hasGroup($this->id)) {
+            $this->removeUser($user_id);
+        }        
+        $user->assignRole($role_id);
         return $this->users()->attach($user_id,['role_id'=>$role_id]);
     }
     //
     public function removeUser(int $user_id){
+        $user=User::find($user_id);
+        $role_id=$user->getRoleId($user_id);
+        $user->removeRole($role_id);
         return $this->users()->detach($user_id);
     }
 
@@ -81,6 +89,7 @@ class Group extends Model
         ]);        
         return GroupRole::create([
             'id'=>$role->id,
+            'index'=>$this->groupRoles()->count(),
             'group_id'=>$this->id,
             'name'=>$name,
             'password'=>Hash::make($password),
@@ -108,7 +117,7 @@ class Group extends Model
     }
     //
     public function getType(){
-        return $this->type();
+        return $this->type()->first();
     }
     //
     public function getTypeName(){

@@ -6,7 +6,10 @@
         <div class="col-md-8">
             <div class="card">
                 <div class="card-body">
-                    {{$bases}}
+                    {{$user->name}}
+                    {{$user->email}}
+        
+                    <a href="{{route('user.edit',Auth::id())}}">編集</a>
                 </div>
             </div>
         </div>

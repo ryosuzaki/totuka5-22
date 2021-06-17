@@ -8,6 +8,8 @@ use Illuminate\Support\Facades\Auth;
 use Validator;
 
 use App\Models\Info\InfoBase;
+use App\User;
+use App\Models\Group\Group;
 
 class InfoController extends Controller
 {
@@ -48,10 +50,16 @@ class InfoController extends Controller
             return back()->withErrors($validator)->withInput();
         }
         //
-        InfoBase::find($base_id)->updateInfo($base_id,[
-            'info'=>$request->toArray()['info'],
-        ]);
-        return redirect()->back();
+        $base=InfoBase::find($base_id);
+        $model=$base->model()->first();
+        $base->updateInfo($request->toArray()['info']);
+        info($request->toArray()['info']);
+        if ($model instanceof User) {
+            return redirect()->route('user.show');
+        }elseif ($model instanceof Group) {
+            return redirect()->route('group.show',$model->id);
+        }
+        
     }
 
     /**

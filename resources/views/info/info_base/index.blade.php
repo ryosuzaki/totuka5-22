@@ -6,7 +6,9 @@
         <div class="col-md-8">
             <div class="card">
                 <div class="card-body">
-                    @include('info.info_base.edit.'.$base->getTemplate()->id, ['user'=>$user,'base' => $base])
+                    @foreach ($bases as $base)
+                    {{$base}}
+                    @endforeach
                 </div>
             </div>
         </div>
