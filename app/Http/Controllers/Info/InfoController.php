@@ -53,7 +53,6 @@ class InfoController extends Controller
         $base=InfoBase::find($base_id);
         $model=$base->model()->first();
         $base->updateInfo($request->toArray()['info']);
-        info($request->toArray()['info']);
         if ($model instanceof User) {
             return redirect()->route('user.show');
         }elseif ($model instanceof Group) {

@@ -47,7 +47,6 @@ class GroupRole extends Model
 
 
 
-
     //
     public function getRole(){
         return Role::findById($this->id);

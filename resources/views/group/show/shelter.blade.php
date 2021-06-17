@@ -10,9 +10,11 @@
                         <h5>避難所</h5>
                         <div class="ml-auto">
                             @if(Auth::user()->hasGroupRole($group->id,'ウォッチャー'))
-                            <a class="btn btn-primary btn-round btn-sm" href="{{route('group.user.unwatch',[$group->id,Auth::id()])}}">ウォッチ中</a>
+                            <a class="btn btn-primary btn-round btn-sm" href="{{route('group.unwatch',$group->id)}}">ウォッチ中</a>
+                            @elseif(Auth::user()->hasGroup($group->id))
+                            <a class="btn btn-primary text-white btn-round btn-sm">参加中</a>
                             @else
-                            <a class="btn btn-outline-primary btn-round btn-sm" href="{{route('group.user.watch',[$group->id,Auth::id()])}}">ウォッチする</a>
+                            <a class="btn btn-outline-primary btn-round btn-sm" href="{{route('group.watch',$group->id)}}">ウォッチする</a>
                             @endif
                         </div>
 

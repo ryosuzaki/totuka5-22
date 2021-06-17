@@ -64,11 +64,12 @@ class Group extends Model
 
 
     //
-    public function inviteUser(int $user_id,int $role_id){
+    public function inviteUser(int $user_id,string $role_name){
         $user=User::find($user_id);
+        $role_id=$this->getGroupRoleByName($role_name)->id;
         if ($user->hasGroup($this->id)) {
             $this->removeUser($user_id);
-        }        
+        }
         $user->assignRole($role_id);
         return $this->users()->attach($user_id,['role_id'=>$role_id]);
     }
@@ -102,6 +103,10 @@ class Group extends Model
     //
     public function groupRoles(){
         return $this->hasMany('App\Models\Group\GroupRole','group_id');
+    }
+    //
+    public function getGroupRoleByName(string $name){
+        return $this->groupRoles()->where('name',$name)->first();
     }
     //
     public function usersHaveRole(string $role_name){

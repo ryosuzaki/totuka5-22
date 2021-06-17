@@ -11,19 +11,15 @@ use App\User;
 class WatchController extends Controller
 {
     //
-    public static $rank=255;
-    //
-    public function watch($group_id,$user_id){
+    public function watch($group_id){
         $group=Group::find($group_id);
-        $user=User::find($user_id);
-        $group->attachRole($user,self::$rank);
+        $group->inviteUser(Auth::id(),'ウォッチャー');
         return redirect()->back();
     }
     //
-    public function unwatch($group_id,$user_id){
+    public function unwatch($group_id){
         $group=Group::find($group_id);
-        $user=User::find($user_id);
-        $group->detachRole($user,self::$rank);
+        $group->removeUser(Auth::id());
         return redirect()->back();
     }
 }
