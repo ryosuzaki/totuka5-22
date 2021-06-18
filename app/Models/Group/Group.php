@@ -40,7 +40,7 @@ class Group extends Model
         ]);
         $admin=$group->createGroupRole('管理者',$admin_password)->getRole();
         $admin->givePermissionTo('group.*');
-        $group->inviteUser($user->id,$admin->id);
+        $group->inviteUser($user->id,'管理者');
         return $group;
     }
     //
