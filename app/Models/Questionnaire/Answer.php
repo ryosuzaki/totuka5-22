@@ -4,7 +4,6 @@ namespace App\Models\Questionnaire;
 
 use Illuminate\Database\Eloquent\Model;
 
-use App\Models\Questionnaire\Question;
 use App\User;
 
 class Answer extends Model

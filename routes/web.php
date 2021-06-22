@@ -24,33 +24,19 @@ Route::get('/home', 'HomeController@index')->name('home');
 
 //
 Route::post('group/{group}/uploadImg', 'Group\UploadController@uploadImg')->name('group.uploadImg');
-//
-Route::post('group/{group}/deleteImg', 'Group\UploadController@deleteImg')->name('group.deleteImg');
+Route::delete('group/{group}/deleteImg', 'Group\UploadController@deleteImg')->name('group.deleteImg');
 //
 Route::get('group/map', 'Group\MapController@map')->name('group.map');
 //
 Route::get('group/{group}/location/edit', 'Group\GroupLocationController@edit')->name('group.location.edit');
 Route::put('group/{group}/location', 'Group\GroupLocationController@update')->name('group.location.update');
 
-
 //
-Route::get('group/{group}/info_base/{info_base}/info/edit', 'Group\GroupInfoController@edit')->name('group.info_base.info.edit');
-Route::put('group/{group}/info_base/{info_base}/info', 'Group\GroupInfoController@update')->name('group.info_base.info.update');
-Route::delete('group/{group}/info_base/{info_base}/info', 'Group\GroupInfoController@destroy')->name('group.info_base.info.destroy');
-
-
-//
-Route::get('group/{group}/user/{user}/like', 'Group\LikeController@like')->name('group.user.like');
-Route::get('group/{group}/user/{user}/unlike', 'Group\LikeController@unlike')->name('group.user.unlike');
+Route::get('group/{group}/like', 'Group\LikeController@like')->name('group.like');
+Route::get('group/{group}/unlike', 'Group\LikeController@unlike')->name('group.unlike');
 //
 Route::get('group/{group}/watch', 'Group\WatchController@watch')->name('group.watch');
 Route::get('group/{group}/unwatch', 'Group\WatchController@unwatch')->name('group.unwatch');
-
-
-Route::post('user/{user}/info_base/{info_base}/attach', 'UserInfoBaseController@attach')->name('user.info_base.attach');
-Route::post('user/{user}/info_base/{info_base}/detach', 'UserInfoBaseController@detach')->name('user.info_base.detach');
-
-
 
 
 
@@ -58,7 +44,7 @@ Route::post('user/{user}/info_base/{info_base}/detach', 'UserInfoBaseController@
 
 //
 Route::get('group/create/{type}', 'Group\GroupController@create')->name('group.create');
-Route::get('group/{group}/{index?}', 'Group\GroupController@show')->name('group.show');
+Route::get('group/{group}/show/{index?}', 'Group\GroupController@show')->name('group.show');
 Route::resource('group', 'Group\GroupController',['except' => [
     'create','show'
 ]]);
@@ -84,7 +70,7 @@ Route::get('user/edit', 'UserController@edit')->name('user.edit');
 Route::put('user', 'UserController@update')->name('user.update');
 Route::delete('user', 'UserController@destroy')->name('user.destroy');
 
-//user info_base info
+//info_base info
 Route::get('info_base/{info_base}/info/edit', 'Info\InfoController@edit')->name('info_base.info.edit');
 Route::put('info_base/{info_base}/info', 'Info\InfoController@update')->name('info_base.info.update');
 Route::delete('info_base/{info_base}/info', 'Info\InfoController@destroy')->name('info_base.info.destroy');

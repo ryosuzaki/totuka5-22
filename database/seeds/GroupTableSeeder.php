@@ -19,15 +19,24 @@ class GroupTableSeeder extends Seeder
         //
         GroupType::create([
             'name'=>'shelter',
-            'formatted_name'=>'避難所'
+            'formatted_name'=>'避難所',
+            'need_location'=>true,
+            'required_info'=>[1,2],
+            'available_info'=>[],
         ]);
         GroupType::create([
             'name'=>'danger_spot',
-            'formatted_name'=>'危険地点'
+            'formatted_name'=>'危険地点',
+            'need_location'=>true,
+            'required_info'=>[3],
+            'available_info'=>[],
         ]);
         GroupType::create([
             'name'=>'nursing_home',
-            'formatted_name'=>'介護施設'
+            'formatted_name'=>'介護施設',
+            'need_location'=>false,
+            'required_info'=>[1],
+            'available_info'=>[],
         ]);
           
     }

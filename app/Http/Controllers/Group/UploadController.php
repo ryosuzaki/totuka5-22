@@ -21,7 +21,6 @@ class UploadController extends Controller
 
     //php artisan storage:linkを行う
     public function uploadImg(Request $request,$group_id){
-        //validate
         $validator = Validator::make($request->all(),[
             'img'=>'required|mimes:jpg,png|max:10240',
         ]);
@@ -30,27 +29,19 @@ class UploadController extends Controller
         }
         //
         $group=Group::find($group_id);
-        $data=$group->data;
-        $data['img'][]=$request->file('img')->store('public/'.$group->type);
-        $group->data=$data;
-        $group->save();
+        $group->uploadImg($request->file('img'));
         return redirect()->back();
     }
 
     public function deleteImg(Request $request,$group_id){
         $validator = Validator::make($request->all(),[
-            'img'=>'required|integer',
+            'id'=>'required|integer',
         ]);
         if ($validator->fails()) {
             return back()->withErrors($validator)->withInput();
         }
         $group=Group::find($group_id);
-        $data=$group->data;
-        Storage::delete($data['img'][$request->img]);
-        unset($data['img'][$request->img]);
-        $data['img'] = array_values($data['img']);
-        $group->data=$data;
-        $group->save();
+        $group->deleteImg($request->id);
         return redirect()->back();
     }
 }

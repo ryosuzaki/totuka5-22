@@ -20,9 +20,7 @@ class GroupRole extends Model
     ];
 
     //
-    public $incrementing = false; 
-
-
+    public $incrementing = false;
 
 
     //
@@ -37,12 +35,11 @@ class GroupRole extends Model
     public function users(){
         return $this->belongsToMany(
             'App\User','group_role_user','role_id','user_id'
-        )->withPivot('group_id')->using('App\Models\Group\GroupUser');
+        )->withPivot('group_id')->withTimestamps();
     }
 
 
 
-    
 
 
 
@@ -57,7 +54,7 @@ class GroupRole extends Model
     //
     public function changeName($name){
         //管理者は変更不能
-        if($this->name=='管理者'){
+        if($this->name==$this->group()->fisrt()->creator){
             return false;
         }
         $this->getRole()->fill([
@@ -71,7 +68,7 @@ class GroupRole extends Model
 
 
     //
-    public function checkPassword($password):Bool{
+    public function checkPassword($password){
         return Hash::check($password,$this->password);
     }
     //

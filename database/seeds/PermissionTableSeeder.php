@@ -20,37 +20,31 @@ class PermissionTableSeeder extends Seeder
         Permission::create(['name'=>'groups.create']);
 
         Permission::create(['name'=>'group.*']);
-        Permission::create(['name'=>'group.view']);
         Permission::create(['name'=>'group.update']);
         Permission::create(['name'=>'group.delete']);
 
-        Permission::create(['name'=>'group.info_bases.*']);
-        Permission::create(['name'=>'group.info_bases.viewAny']);
-        Permission::create(['name'=>'group.info_bases.create']);
+        Permission::create(['name'=>'group_info_bases.*']);
+        Permission::create(['name'=>'group_info_bases.create']);
+        Permission::create(['name'=>'group_info_bases.delete']);
 
-        Permission::create(['name'=>'group.info_base.*']);
+        Permission::create(['name'=>'group_info_base.*']);
         for($i=0;$i<5;$i++){
-            Permission::create(['name'=>'group.info_base.'.$i.'.*']);
-            Permission::create(['name'=>'group.info_base.'.$i.'.view']);
-            Permission::create(['name'=>'group.info_base.'.$i.'.update']);
-            Permission::create(['name'=>'group.info_base.'.$i.'.delete']);
+            Permission::create(['name'=>'group_info_base.'.$i.'.*']);
+            Permission::create(['name'=>'group_info_base.'.$i.'.view']);
+            Permission::create(['name'=>'group_info_base.'.$i.'.update']);
         }
-        Permission::create(['name'=>'group.roles.*']);
-        Permission::create(['name'=>'group.roles.viewAny']);
-        Permission::create(['name'=>'group.roles.create']);
+        Permission::create(['name'=>'group_roles.*']);
+        Permission::create(['name'=>'group_roles.viewAny']);
+        Permission::create(['name'=>'group_roles.create']);
+        Permission::create(['name'=>'group_roles.delete']);
 
-        Permission::create(['name'=>'group.role.*']);
+        Permission::create(['name'=>'group_role.*']);
         for($i=0;$i<10;$i++){
-            Permission::create(['name'=>'group.role.'.$i.'.*']);
-            Permission::create(['name'=>'group.role.'.$i.'.view']);
-            Permission::create(['name'=>'group.role.'.$i.'.update']);
-            Permission::create(['name'=>'group.role.'.$i.'.delete']);
-
-            Permission::create(['name'=>'group.role.'.$i.'.users.*']);
-            Permission::create(['name'=>'group.role.'.$i.'.users.viewAny']);
-            Permission::create(['name'=>'group.role.'.$i.'.users.update']);
-            Permission::create(['name'=>'group.role.'.$i.'.users.invite']);
-            Permission::create(['name'=>'group.role.'.$i.'.users.remove']);
+            Permission::create(['name'=>'group_role.'.$i.'.*']);
+            Permission::create(['name'=>'group_role.'.$i.'.update']);
+            Permission::create(['name'=>'group_role.'.$i.'.viewUsers']);
+            Permission::create(['name'=>'group_role.'.$i.'.inviteUser']);
+            Permission::create(['name'=>'group_role.'.$i.'.removeUser']);
         }
     }
 }

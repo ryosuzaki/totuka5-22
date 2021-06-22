@@ -28,6 +28,8 @@ class CreateInfoTable extends Migration
             $table->unsignedBigInteger('info_template_id');
             $table->unsignedBigInteger('model_id');
             $table->string('model_type');
+            $table->index(['model_type','model_id']);
+            $table->unique(['index','model_id','model_type']);
             $table->timestamps();
             $table->string('name')->index();
         });

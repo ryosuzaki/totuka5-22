@@ -8,7 +8,11 @@ class GroupType extends Model
 {
     //
     protected $guarded = ['id','name'];
-
+    //
+    protected $casts = [
+        'required_info'=>'json',
+        'available_info'=>'json',
+    ];
     
     //
     public static function findByName($name){

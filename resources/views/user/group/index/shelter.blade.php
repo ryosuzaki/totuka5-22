@@ -15,7 +15,7 @@
                 <td class="p-1">
                 
                 <a class="btn btn-success btn-sm btn-round text-white" href="{{route('user.group.edit',[$user->id,$group->id])}}"><i class="material-icons">edit</i></a>
-                <a class="btn btn-info btn-sm btn-round text-white" href="{{route('group.user.index',[$group->id])}}"><i class="material-icons">groups</i></a>
+                <a class="btn btn-info btn-sm btn-round text-white" href="{{route('group.user.index',$group->id)}}"><i class="material-icons">groups</i></a>
                 <a class="btn btn-danger btn-round btn-sm text-white" data-toggle="modal" data-target="#{{$group->id}}"><i class="material-icons">logout</i></a>
                 <div class="modal fade" id="{{$group->id}}" tabindex="-1" role="dialog" aria-labelledby="{{$group->id}}Label" aria-hidden="true">
                     <div class="modal-dialog" role="document">

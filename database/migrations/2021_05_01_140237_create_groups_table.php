@@ -21,17 +21,18 @@ class CreateGroupsTable extends Migration
         });
 
         Schema::create('group_roles', function (Blueprint $table) {
-            $table->unsignedBigInteger('id');
+            $table->unsignedBigInteger('id')->index()->unique();
             $table->unsignedInteger('index');
-            $table->unsignedBigInteger('group_id');
+            $table->unsignedBigInteger('group_id')->index();
             $table->string('name');
             $table->unique(['name','group_id']);
+            $table->unique(['index','group_id']);
             $table->timestamps();
             $table->string('password');
         });
 
         Schema::create('group_locations', function (Blueprint $table) {
-            $table->unsignedBigInteger('group_id');
+            $table->unsignedBigInteger('id')->index()->unique();
             $table->timestamps();
             $table->float('longitude',10,7)->nullable();
             $table->float('latitude',10,7)->nullable();
@@ -42,6 +43,9 @@ class CreateGroupsTable extends Migration
             $table->string('name')->index()->unique();
             $table->timestamps();
             $table->string('formatted_name');
+            $table->boolean('need_location');
+            $table->json('required_info');
+            $table->json('available_info');
         });
     }
 

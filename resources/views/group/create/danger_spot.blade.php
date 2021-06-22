@@ -9,6 +9,8 @@
                     <form method="POST" action="{{ route('group.store') }}">
                         @csrf
                         <input type="hidden" name="type" value="{{$type}}">
+                        
+
                         <div class="form-group row mb-0">
                             <button type="submit" class="btn btn-primary btn-block">
                             危険地点投稿

@@ -8,21 +8,19 @@ use App\Http\Controllers\Controller;
 use App\Models\Group\Group;
 use App\User;
 
+use Illuminate\Support\Facades\Auth;
+
 class LikeController extends Controller
 {
-    public static $rank=255;
     //
-    public function like($group_id,$user_id){
-        $group=Group::find($group_id);
-        $user=User::find($user_id);
-        $group->attachRole($user,self::$rank);
+    public static $name='いいね';
+    public function like($group_id){
+        Auth::user()->attachExtraGroup($group_id,$this->name);
         return redirect()->back();
     }
     //
-    public function unlike($group_id,$user_id){
-        $group=Group::find($group_id);
-        $user=User::find($user_id);
-        $group->detachRole($user,self::$rank);
+    public function unlike($group_id){
+        Auth::user()->detachExtraGroup($group_id,$this->name);
         return redirect()->back();
     }
 }

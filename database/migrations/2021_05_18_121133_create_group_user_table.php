@@ -14,11 +14,29 @@ class CreateGroupUserTable extends Migration
     public function up()
     {
         Schema::create('group_role_user', function (Blueprint $table) {
-            $table->bigIncrements('id');
             $table->unsignedBigInteger('user_id');
             $table->unsignedBigInteger('group_id');
             $table->unsignedBigInteger('role_id');
             $table->index(['user_id','group_id','role_id']);
+            $table->unique(['group_id','user_id']);
+            $table->timestamps();
+        });
+
+        Schema::create('group_join_requests', function (Blueprint $table) {
+            $table->unsignedBigInteger('user_id');
+            $table->unsignedBigInteger('group_id');
+            $table->unsignedBigInteger('role_id');
+            $table->index(['user_id','group_id','role_id']);
+            $table->unique(['group_id','user_id']);
+            $table->timestamps();
+        });
+
+        Schema::create('extra_group_users', function (Blueprint $table) {
+            $table->unsignedBigInteger('user_id');
+            $table->unsignedBigInteger('group_id');
+            $table->string('name');
+            $table->index(['user_id','group_id']);
+            $table->unique(['name','group_id','user_id']);
             $table->timestamps();
         });
     }
@@ -30,6 +48,8 @@ class CreateGroupUserTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('group_user');
+        Schema::dropIfExists('group_role_user');
+        Schema::dropIfExists('group_join_requests');
+        Schema::dropIfExists('extra_group_users');
     }
 }

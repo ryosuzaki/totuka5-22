@@ -28,9 +28,9 @@ class GroupUserController extends Controller
     public function index($group_id)
     {
         $group=Group::find($group_id);
-        return view('group.user.index.'.$group->type)->with([
+        return view('group.user.index.'.$group->getTypeName())->with([
             'group'=>$group,
-            'users'=>$group->users()->get(),
+            'roles'=>$group->groupRoles()->get(),
         ]);
     }
     /**
@@ -41,11 +41,10 @@ class GroupUserController extends Controller
      */
     public function create($group_id)
     {
-        //
         $group=Group::find($group_id);
-        return view('group.user.create.'.$group->type)->with([
+        return view('group.user.create.'.$group->getTypeName())->with([
             'group'=>$group,
-            'roles'=>$group->roles()->get(),
+            'roles'=>$group->groupRoles()->get(),
             ]);
     }
 
@@ -58,7 +57,6 @@ class GroupUserController extends Controller
      */
     public function store(Request $request,$group_id)
     {
-        //validation
         $validator = Validator::make($request->all(),[
             'user_id'=>'required|integer|min:1|exists:users,id',
             'role_id'=>'required|integer|min:1|exists:group_roles,id',
@@ -68,9 +66,7 @@ class GroupUserController extends Controller
         }
         //
         $group=Group::find($group_id);
-        $group->users()->attach($request->user_id,[
-            'role_id'=>$request->role_id,
-        ]);
+        $group->requestJoin($request->user_id,$request->role_id);
         return redirect()->route('group.user.index',$group_id);
     }
 
@@ -82,8 +78,11 @@ class GroupUserController extends Controller
      */
     public function show($group_id,$user_id)
     {
-        //
-
+        $group=Group::find($group_id);
+        return view('group.user.show.'.$group->getTypeName())->with([
+            'group'=>$group,
+            'user'=>$group->getUser($user_id),
+            ]);
     }
 
     /**
@@ -95,9 +94,9 @@ class GroupUserController extends Controller
     public function edit($group_id,$user_id)
     {
         $group=Group::find($group_id);
-        return view('group.user.edit.'.$group->type)->with([
+        return view('group.user.edit.'.$group->getTypeName())->with([
                 'group'=>$group,
-                'user'=>$group->user($user_id),
+                'user'=>$group->getUser($user_id),
             ]);
     }
 
@@ -110,7 +109,6 @@ class GroupUserController extends Controller
      */
     public function update(Request $request,$group_id,$user_id)
     {
-        //validation
         $validator = Validator::make($request->all(),[
             'role_id'=>'required|integer|min:1|exists:group_roles,id',
         ]);
@@ -119,9 +117,7 @@ class GroupUserController extends Controller
         }
         //
         $group=Group::find($group_id);
-        $group->users()->updateExistingPivot($user_id,[
-            'role_id'=>$request->role_id,
-        ]);
+        $group->inviteUser($user_id,$request->role_id);
         return redirect()->route('group.user.index',$group_id);
     }
 
@@ -133,13 +129,8 @@ class GroupUserController extends Controller
      */
     public function destroy($group_id,$user_id)
     {
-        //
         $group=Group::find($group_id);
-        $group->users()->detach($user_id);
+        $group->removeUser($user_id);
         return redirect()->route('group.user.index',$group_id);
     }
-
-
-
-    
 }

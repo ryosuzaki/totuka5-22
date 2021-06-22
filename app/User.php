@@ -55,48 +55,52 @@ class User extends Authenticatable
     public function groups(){
         return $this->belongsToMany(
             'App\Models\Group\Group','group_role_user','user_id','group_id'
-        )->withPivot('role_id')->using('App\Models\Group\GroupUser');
+        )->withPivot('role_id')->withTimestamps();
     }
     //
     public function hasGroup(int $id){
         return $this->groups()->get()->contains('id',$id);
     }
     //
+    public function getGroup(int $id){
+        return $this->groups()->find($id);
+    }
+
+
+    //
     //
     public function joinGroup(int $group_id,$role,string $password){
         $group=Group::find($group_id);
-        if($group->hasRole($role_id)){
-            if($group->groupRoles()->where('id',$role_id)->first()->checkPassword($password)){
-                $this->assignRole($role_id);
-                return $this->groups()->attach($group_id,['role_id'=>$role_id]);
-            }else{
-                return false;
-            }
-        }else{
-            return false;
+        if($group->getGroupRole($group_id)->checkPassword($password)){
+            return $group->inviteUser($this->id,$role);
         }
     }
     //
     public function leaveGroup(int $group_id){
-        if($this->hasGroup($group_id)){
-            $role_id=$this->groupRoles()->where('group_id',$group_id)->first()->id;
-            $this->removeRole($role_id);
-            return $this->groups()->detach($group_id);
-        }else{
-            return false;
+        $group=Group::find($group_id);
+        return $group->removeUser($this->id);
+    }
+
+
+    //
+    public function hasGroupRole(int $group_id,$role){
+        if (is_string($role)) {
+            return $this->groupRoles()->wherePivot('group_id',$group_id)->get()->contains('name',$role);
+        }elseif(is_int($role)){
+            return $this->groupRoles()->wherePivot('group_id',$group_id)->get()->contains('id',$role);
         }
     }
     //
-    public function hasGroupRole(int $group_id,string $role_name){
-        return $this->hasRole('group'.$group_id.$role_name);
-    }
-    //
     public function getGroupRole(int $group_id){
-        return $this->groupRoles()->find($group_id);
+        return $this->groupRoles()->wherePivot('group_id',$group_id)->first();
     }
     //
-    public function getRoleId(int $group_id){
-        return $this->getGroupRole($group_id)->pivot()->role_id;
+    public function getRole(int $group_id){
+        return $this->getGroupRole($group_id)->getRole();
+    }
+    //
+    public function hasGroupPermissionTo(int $group_id,$permission){
+        return $this->getRole($group_id)->hasPermissionTo($permission);
     }
 
 
@@ -104,11 +108,11 @@ class User extends Authenticatable
     public function groupRoles(){
         return $this->belongsToMany(
             'App\Models\Group\GroupRole','group_role_user','user_id','role_id'
-        )->withPivot('group_id')->using('App\Models\Group\GroupUser');
+        )->withPivot('group_id')->withTimestamps();
     }
     
     //
-    public function groupsHaveType($type){
+    public function groupsHaveType(string $type){
         $groups=$this->groups()->get();
         $out=[];
         foreach($groups as $group){
@@ -133,5 +137,47 @@ class User extends Authenticatable
     //
     public function answers(){
         return $this->hasMany('App\Models\Questionnaire\Answer','user_id');
+    }
+
+
+
+
+    //
+    public function groupsRequestJoin(){
+        return $this->belongsToMany(
+            'App\Models\Group\Group','group_join_requests','user_id','group_id'
+        )->withPivot('role_id')->withTimestamps();
+    }
+    //
+    public function acceptJoinRequest(int $group_id){
+        $group=$this->groupsRequestJoin()->find($group_id);
+        $role_id=$group->pivot()->role_id;
+        return $group->inviteUser($this->id,$role_id);
+    }
+    //
+    public function deniedJoinRequest(int $group_id){
+        return $this->groupsRequestJoin()->detach($group_id);
+    }
+
+
+
+
+    //
+    public function extraGroups(){
+        return $this->belongsToMany(
+            'App\Models\Group\Group','extra_group_users','user_id','group_id'
+        )->withPivot('name')->withTimestamps();
+    }
+    //
+    public function attachExtraGroup(int $group_id,string $extra_name){
+        return $this->extraGroups()->attach($group_id,['name'=>$extra_name]);
+    }
+    //
+    public function detachExtraGroup(int $group_id,string $extra_name){
+        return $this->extraGroups()->wherePivot('name',$extra_name)->detach($group_id);
+    }
+    //
+    public function hasExtraGroup(int $group_id,string $extra_name){
+        return $this->extraGroups()->wherePivot('name',$extra_name)->get()->contains('id',$group_id);
     }
 }

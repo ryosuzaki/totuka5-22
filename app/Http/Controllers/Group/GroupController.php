@@ -53,15 +53,14 @@ class GroupController extends Controller
         //
         if($type=='shelter'){
             $validator = Validator::make($request->all(),[
-                'name'=>'required|max:255',
+                'name'=>'required|string|max:255',
                 'password'=>'required|alpha_num|min:4|max:255|confirmed'//password_confirmation
             ]);
             if ($validator->fails()) {
                 return back()->withErrors($validator)->withInput();
             }
             //
-            $group=Group::setup(Auth::user(),$request->name,$type,$request->password);
-            $group->createGroupRole('ウォッチャー',''); 
+            $group=Group::setUp(Auth::id(),$request->name,$type,$request->password);
             $group->location()->create();
             $group->createInfoBase(1);
             $group->createInfoBase(2);
@@ -69,8 +68,7 @@ class GroupController extends Controller
         }
         //
         elseif ($type=='danger_spot') {
-            $group=Group::setup(Auth::user(),'',$type,Auth::id());
-            $group->createGroupRole('いいね',''); 
+            $group=Group::setUp(Auth::id(),'',$type,Auth::id());
             $group->location()->create();
             $group->createInfoBase(3);
             return redirect()->route('group.show',$group->id);
@@ -78,14 +76,14 @@ class GroupController extends Controller
         //
         elseif($type=='nursing_home'){
             $validator = Validator::make($request->all(),[
-                'name'=>'required|max:255',
+                'name'=>'required|string|max:255',
                 'password'=>'required|alpha_num|min:4|max:255|confirmed'//password_confirmation
             ]);
             if ($validator->fails()) {
                 return back()->withErrors($validator)->withInput();
             }
             //
-            $group=Group::setup(Auth::user(),$request->name,$type,$request->password);
+            $group=Group::setUp(Auth::id(),$request->name,$type,$request->password);
             $group->location()->create();
             $group->createInfoBase(1);
             return redirect()->route('group.show',$group->id);
@@ -116,7 +114,6 @@ class GroupController extends Controller
      */
     public function edit($id)
     {
-        //
         return view('group.edit')->with([
             'group'=>Group::find($id),
             ]);
@@ -158,33 +155,6 @@ class GroupController extends Controller
         $group->groupRoles()->delete();
         $group->delete();
         return redirect()->route('group.home');
-    }
-    
-
-    public function showLoginForm($id){
-        $group=Group::find($id);
-        return view('group.login')->with([
-            'group'=>$group,
-            'roles'=>$group->groupRoles()->get(),
-        ]);
-    }
-
-    public function login(Request $request, $id){
-        $validator = Validator::make($request->all(),[
-            'role_id'=>'required|integer',
-            'password'=>'required|alpha_num|min:4|max:255'
-        ]);
-        if ($validator->fails()) {
-            return back()->withErrors($validator)->withInput();
-        }
-        $group=Group::find($id);
-        if(!Hash::check($request->password,$group->role($group_id)->password)){
-            return back()->withInput();
-        }
-        $group->users()->attach(Auth::id(),[
-            'role_id'=>$request->role_id,
-        ]);
-        return redirect()->route('user.group.index',[Auth::id(),$id]);
     }
     
 }
