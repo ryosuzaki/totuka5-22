@@ -74,7 +74,6 @@ class GroupRoleController extends Controller
                 $role->givePermissionTo($permisson);
             }
         }
-        info($role->permissions()->get());
         return redirect()->route('group.role.index',$group_id);
     }
 
@@ -87,7 +86,7 @@ class GroupRoleController extends Controller
     public function show(int $group_id,int $role_id)
     {
         $group=Group::find($group_id);
-        info($group->getGroupRole($role_id)->permissions()->get());
+        info($group->getGroupRole($role_id)->getRole()->permissions()->get());
         return view('group.role.show')->with([
             'group'=>$group,
             'role'=>$group->getGroupRole($role_id),
@@ -118,10 +117,11 @@ class GroupRoleController extends Controller
      */
     public function update(Request $request,int $group_id,int $role_id)
     {
+        info($request);
         $validator = Validator::make($request->all(),[
             'name'=>'required|max:255',
-            'now_password'=>'required|alpha_num|min:4|max:255',
-            'password'=>'required|alpha_num|min:4|max:255|confirmed',
+            'now_password'=>'nullable|alpha_num|min:4|max:255',
+            'password'=>'nullable|alpha_num|min:4|max:255|confirmed',
             'permissions.*'=>'required|string',
         ]);
         if ($validator->fails()) {
@@ -136,15 +136,17 @@ class GroupRoleController extends Controller
             $group_role->changeName($request->name);
         }
         //
-        if($request->password!=''&&$group_role->checkPassword($request->now_password)){
+        if($request->password&&$group_role->checkPassword($request->now_password)){
             $group_role->changePassword($request->password);
         }
         //
-        foreach($request->permissions as $permisson=>$bool){
-            if($bool&&!$role->hasPermissionTo($permisson)){
+        foreach($role->permissions()->get() as $permisson){
+            $role->revokePermissionTo($permisson->id);
+        }
+        //
+        foreach($request->permissions as $permisson){
+            if(!$role->hasPermissionTo($permisson)){
                 $role->givePermissionTo($permisson);
-            }elseif(!$bool&&$role->hasPermissionTo($permisson)){
-                $role->revokePermissionTo($permisson);
             }
         }
         return redirect()->route('group.role.index',$group_id);

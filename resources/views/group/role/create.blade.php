@@ -4,11 +4,10 @@
 <div class="row justify-content-center">
     <div class="col-md-8">
         <form method="POST" action="{{ route('group.role.store',$group->id) }}">
+        @csrf
             <div class="card">
                 <div class="card-body">
                     
-                    
-                        @csrf
                         <div class="form-group row">
                             <label for="name">役割名</label>
                             <input id="name" type="text" class="form-control @error('name') is-invalid @enderror" name="name" value="{{ old('name') }}" required autofocus>
@@ -18,9 +17,10 @@
                                 </span>
                             @enderror
                         </div>
+                        
                         <div class="form-group row">
                             <label for="password">パスワード</label>
-                                <input id="password" type="password" class="form-control @error('password') is-invalid @enderror" name="password" required autocomplete="new-password">
+                                <input id="password" type="password" class="form-control @error('password') is-invalid @enderror" name="password" required>
                                 @error('password')
                                     <span class="invalid-feedback" role="alert">
                                         <strong>{{ $message }}</strong>
@@ -30,7 +30,7 @@
 
                         <div class="form-group row">
                             <label for="password-confirm">パスワードを再入力</label>
-                            <input id="password-confirm" type="password" class="form-control" name="password_confirmation" required autocomplete="new-password">
+                            <input id="password-confirm" type="password" class="form-control" name="password_confirmation" required>
                         </div>   
                     
                 </div>
@@ -43,7 +43,7 @@
                     
                     
                     <div>
-                        <input class="all-selected d-none" type="checkbox" name="permissions[]" value="group.*">
+                        <input class="all-selected" type="checkbox" name="permissions[]" value="group.*">
                         <div class="permissions">
                             <p class="h5">{{$group->getType()->formatted_name}}</p>
                             <div class="form-check">
@@ -68,7 +68,7 @@
                         </div>
                         
 
-                        <input class="all-selected d-none" type="checkbox" name="permissions[]" value="group_info_bases.*">
+                        <input class="all-selected" type="checkbox" name="permissions[]" value="group_info_bases.*">
                         <div class="permissions">
                             <p class="h5 mt-5">情報</p>
                             <div class="form-check">
@@ -93,10 +93,10 @@
                         
 
 
-                        <input class="all-selected d-none" type="checkbox" name="permissions[]" value="group_info_base.*">
+                        <input class="all-selected" type="checkbox" name="permissions[]" value="group_info_base.*">
                         <div class="permissions">
                             @foreach($group->infoBases()->get() as $base)
-                            <input class="all-selected d-none" type="checkbox" name="permissions[]" value="group_info_base.{{$base->index}}.*">
+                            <input class="all-selected" type="checkbox" name="permissions[]" value="group_info_base.{{$base->index}}.*">
                             <div class="permissions">
                                 <p class="h5 mt-4">{{$base->name}}</p>
                                 <div class="form-check">
@@ -123,7 +123,7 @@
 
 
 
-                        <input class="all-selected d-none" type="checkbox" name="permissions[]" value="group_roles.*">
+                        <input class="all-selected" type="checkbox" name="permissions[]" value="group_roles.*">
                         <div class="permissions">
                             <p class="h5 mt-5">役割</p>
                             <div class="form-check">
@@ -160,11 +160,11 @@
 
 
 
-                        <input class="all-selected d-none" type="checkbox" name="permissions[]" value="group_role.*">
+                        <input class="all-selected" type="checkbox" name="permissions[]" value="group_role.*">
                         <div class="permissions">
                             @foreach($group->groupRoles()->get() as $role)
                             @if($role->name!=$group->creator)
-                            <input class="all-selected d-none" type="checkbox" name="permissions[]" value="group_role.{{$role->index}}.*">
+                            <input class="all-selected" type="checkbox" name="permissions[]" value="group_role.{{$role->index}}.*">
                             <div class="permissions">
                                 <p class="h5 mt-4">{{$role->name}}</p>
                                 <div class="form-check">
@@ -209,7 +209,7 @@
                         </div>
                         <div class="form-group row mt-5 mb-0">
                             <button type="submit" class="btn btn-primary btn-block">
-                                役割登録
+                                役割更新
                             </button>
                         </div>
                     </div>
@@ -217,6 +217,7 @@
                     
                     <script type="module">
                     $(function() {
+                        $("input[name='permissions[]'].all-selected").addClass("d-none");
                         $("input[name='permissions[]']").on('change', function() {
                         if ($(this).closest('div.permissions').find("input[name='permissions[]']").length == $(this).closest('div.permissions').find("input[name='permissions[]']:checked").length) {
                             $(this).closest('div.permissions').prev("input[name='permissions[]'].all-selected").prop('checked', true).change();
