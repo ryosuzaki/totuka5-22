@@ -16,9 +16,9 @@
                         </thead>
                         <tbody>
                             @foreach ($roles as $role)
-                            @if($role->name!=$group->creator)
+                            @if($role->role_name!=$group->creator)
                             <tr>
-                                <td>{{$role->name}}</td>
+                                <td>{{$role->role_name}}</td>
                                 <td class="row">
                                 <a class="btn btn-success btn-sm btn-round text-white" href="{{route('group.user.create',$group->id)}}"><i class="material-icons">person_add</i>追加</a>
                                 <a class="btn btn-primary btn-sm btn-round text-white" href="{{route('group.role.edit',[$group->id,$role->id])}}"><i class="material-icons">edit</i>編集</a>

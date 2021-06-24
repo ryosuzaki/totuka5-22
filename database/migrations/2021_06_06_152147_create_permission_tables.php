@@ -34,8 +34,15 @@ class CreatePermissionTables extends Migration
             $table->string('name');       // For MySQL 8.0 use string('name', 125);
             $table->string('guard_name'); // For MySQL 8.0 use string('guard_name', 125);
             $table->timestamps();
-
             $table->unique(['name', 'guard_name']);
+            //
+            $table->string('role_name')->nullable();
+            $table->unsignedInteger('index')->nullable();
+            $table->unsignedBigInteger('model_id')->nullable();
+            $table->string('model_type')->nullable();
+            $table->unique(['role_name', 'model_id','model_type']);
+            $table->unique(['index', 'model_id','model_type']);
+            $table->string('password')->nullable();
         });
 
         Schema::create($tableNames['model_has_permissions'], function (Blueprint $table) use ($tableNames, $columnNames) {

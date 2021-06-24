@@ -162,15 +162,15 @@
 
                         <input class="all-selected" type="checkbox" name="permissions[]" value="group_role.*">
                         <div class="permissions">
-                            @foreach($group->groupRoles()->get() as $role)
-                            @if($role->name!=$group->creator)
+                            @foreach($group->roles()->get() as $role)
+                            @if($role->role_name!=$group->creator)
                             <input class="all-selected" type="checkbox" name="permissions[]" value="group_role.{{$role->index}}.*">
                             <div class="permissions">
-                                <p class="h5 mt-4">{{$role->name}}</p>
+                                <p class="h5 mt-4">{{$role->role_name}}</p>
                                 <div class="form-check">
                                     <label class="form-check-label col-12">
                                         <input class="form-check-input" type="checkbox" name="permissions[]" value="group_role.{{$role->index}}.update">
-                                        {{$role->name}}の編集
+                                        {{$role->role_name}}の編集
                                         <span class="form-check-sign">
                                             <span class="check"></span>
                                         </span>
@@ -179,7 +179,7 @@
                                 <div class="form-check">
                                     <label class="form-check-label col-12">
                                         <input class="form-check-input" type="checkbox" name="permissions[]" value="group_role.{{$role->index}}.viewUsers">
-                                        {{$role->name}}を持つユーザーの閲覧
+                                        {{$role->role_name}}を持つユーザーの閲覧
                                         <span class="form-check-sign">
                                             <span class="check"></span>
                                         </span>
@@ -188,7 +188,7 @@
                                 <div class="form-check">
                                     <label class="form-check-label col-12">
                                         <input class="form-check-input" type="checkbox" name="permissions[]" value="group_role.{{$role->index}}.inviteUser">
-                                        {{$role->name}}に招待する
+                                        {{$role->role_name}}に招待する
                                         <span class="form-check-sign">
                                             <span class="check"></span>
                                         </span>
@@ -197,7 +197,7 @@
                                 <div class="form-check">
                                     <label class="form-check-label col-12">
                                         <input class="form-check-input" type="checkbox" name="permissions[]" value="group_role.{{$role->index}}.removeUser">
-                                        {{$role->name}}から退会させる
+                                        {{$role->role_name}}から退会させる
                                         <span class="form-check-sign">
                                             <span class="check"></span>
                                         </span>

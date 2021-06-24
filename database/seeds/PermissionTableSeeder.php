@@ -39,7 +39,7 @@ class PermissionTableSeeder extends Seeder
         Permission::create(['name'=>'group_roles.delete']);
 
         Permission::create(['name'=>'group_role.*']);
-        for($i=0;$i<10;$i++){
+        for($i=1;$i<10;$i++){
             Permission::create(['name'=>'group_role.'.$i.'.*']);
             Permission::create(['name'=>'group_role.'.$i.'.update']);
             Permission::create(['name'=>'group_role.'.$i.'.viewUsers']);

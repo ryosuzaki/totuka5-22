@@ -21,12 +21,12 @@
                         <tbody>
                             @foreach($roles as $role)
                             @php
-                            $users=$group->usersHaveRole($role->id);
+                            $users=$group->usersHaveRole($role->id)->get();
                             @endphp
                                 @foreach ($users as $user)
                                 <tr>
                                     <td>{{$user->name}}</td>
-                                    <td>{{$role->name}}</td>
+                                    <td>{{$role->role_name}}</td>
                                     <td class="p-1"><a href="{{route('group.user.edit',[$group->id,$user->id])}}">edit</a></td>
                                 </tr>
                                 @endforeach

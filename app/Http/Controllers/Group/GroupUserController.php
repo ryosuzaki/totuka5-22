@@ -6,7 +6,7 @@ use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 
 use App\Models\Group\Group;
-use App\Models\Group\GroupRole;
+
 use App\User;
 
 use Illuminate\Support\Facades\Auth;
@@ -30,7 +30,7 @@ class GroupUserController extends Controller
         $group=Group::find($group_id);
         return view('group.user.index.'.$group->getTypeName())->with([
             'group'=>$group,
-            'roles'=>$group->groupRoles()->get(),
+            'roles'=>$group->roles()->get(),
         ]);
     }
     /**
@@ -44,7 +44,7 @@ class GroupUserController extends Controller
         $group=Group::find($group_id);
         return view('group.user.create.'.$group->getTypeName())->with([
             'group'=>$group,
-            'roles'=>$group->groupRoles()->get(),
+            'roles'=>$group->roles()->get(),
             ]);
     }
 
@@ -55,18 +55,21 @@ class GroupUserController extends Controller
      * @param  $group_id
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request,$group_id)
+    public function store(Request $request,int $group_id)
     {
         $validator = Validator::make($request->all(),[
             'user_id'=>'required|integer|min:1|exists:users,id',
-            'role_id'=>'required|integer|min:1|exists:group_roles,id',
+            'role_id'=>'required|integer|min:1|exists:roles,id',
         ]);
         if ($validator->fails()) {
             return back()->withErrors($validator)->withInput();
         }
         //
         $group=Group::find($group_id);
-        $group->requestJoin($request->user_id,$request->role_id);
+        if($group->hasUser((int)$request->user_id)){
+            return redirect()->back();
+        }
+        $group->requestJoin((int)$request->user_id,(int)$request->role_id);
         return redirect()->route('group.user.index',$group_id);
     }
 
@@ -97,6 +100,7 @@ class GroupUserController extends Controller
         return view('group.user.edit.'.$group->getTypeName())->with([
                 'group'=>$group,
                 'user'=>$group->getUser($user_id),
+                'roles'=>$group->roles()->get(),
             ]);
     }
 
@@ -110,14 +114,17 @@ class GroupUserController extends Controller
     public function update(Request $request,$group_id,$user_id)
     {
         $validator = Validator::make($request->all(),[
-            'role_id'=>'required|integer|min:1|exists:group_roles,id',
+            'role_id'=>'required|integer|min:1|exists:roles,id',
         ]);
         if ($validator->fails()) {
             return back()->withErrors($validator)->withInput();
         }
         //
         $group=Group::find($group_id);
-        $group->inviteUser($user_id,$request->role_id);
+        if(!$group->hasUser($user_id)){
+            return redirect()->back();
+        }
+        $group->requestJoin($user_id,(int)$request->role_id);
         return redirect()->route('group.user.index',$group_id);
     }
 

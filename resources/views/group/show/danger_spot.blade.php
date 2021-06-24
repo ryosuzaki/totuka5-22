@@ -12,7 +12,7 @@
                     <h5>危険地点</h5>
                     <div class="ml-auto">
                         @if(Auth::user()->hasGroup($group->id))
-                        <a class="btn btn-primary btn-round btn-sm text-white">参加者</a>
+                        <a class="btn btn-primary btn-round btn-sm text-white">作成者</a>
                         @elseif(Auth::user()->hasExtraGroup($group->id,$role_name))
                         <a class="btn btn-primary btn-round btn-sm" href="{{route('group.unlike',$group->id)}}"><i class="material-icons">thumb_up_off_alt</i>{{$group->countExtraUsers($role_name)}}</a>
                         <a class="btn btn-default btn-sm" href=""><i class="material-icons">campaign</i>通報</a>
@@ -52,7 +52,7 @@
                 <form action="{{route('group.uploadImg',$group->id)}}" method="post" enctype="multipart/form-data">
                     @csrf
                     <div class="form-row">
-                        <div class="form-group form-file-upload form-file-multiple col-8">
+                        <div class="form-group form-file-upload form-file-multiple col-6">
                             <input type="file" name="img" multiple="" class="inputFileHidden">
                             <div class="input-group">
                                 <input type="text" class="form-control inputFileVisible" placeholder="写真を選択">
@@ -63,30 +63,30 @@
                                 </span>
                             </div>
                         </div>
-                        <div class="col-4 pt-3">
+                        <div class="col-6 pt-3">
                             <button type="submit" class="btn btn-primary mb-2 w-100">投稿</button>
                         </div>
                     </div>
                 </form>
                 
-
+                @if(Auth::user()->hasRoleInGroup($group->creator,$group->id))
                 <form action="{{route('group.deleteImg',$group->id)}}" method="post">
                     @csrf
                     @method('DELETE')
                     <div class="form-row">
-                        <div class="form-group col-8">
+                        <div class="form-group col-6">
                             <select class="form-control selectpicker" data-style="btn btn-link" id="deleteImg" name="id">
                                 @for($i=0;$i<count($imgs);$i++)
                                 <option value="{{$imgs[$i]->id}}">左から{{$i+1}}枚目の写真</option>
                                 @endfor
                             </select>
                         </div>
-                        <div class="col-4">
+                        <div class="col-6">
                             <button type="submit" class="btn btn-danger mb-2 w-100">削除</button>
                         </div>
                     </div>
-                    
                 </form>
+                @endif
             </div>
         </div>
         <div class="card mt-0">

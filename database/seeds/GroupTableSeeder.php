@@ -23,6 +23,13 @@ class GroupTableSeeder extends Seeder
             'need_location'=>true,
             'required_info'=>[1,2],
             'available_info'=>[],
+            'creator_permissions'=>[
+                'group.*',
+                'group_info_bases.*',
+                'group_info_base.*',
+                'group_roles.*',
+                'group_role.*',
+            ],
         ]);
         GroupType::create([
             'name'=>'danger_spot',
@@ -30,6 +37,7 @@ class GroupTableSeeder extends Seeder
             'need_location'=>true,
             'required_info'=>[3],
             'available_info'=>[],
+            'creator_permissions'=>['group.*'],
         ]);
         GroupType::create([
             'name'=>'nursing_home',
@@ -37,6 +45,13 @@ class GroupTableSeeder extends Seeder
             'need_location'=>false,
             'required_info'=>[1],
             'available_info'=>[],
+            'creator_permissions'=>[
+                'group.*',
+                'group_info_bases.*',
+                'group_info_base.*',
+                'group_roles.*',
+                'group_role.*',
+            ],
         ]);
           
     }

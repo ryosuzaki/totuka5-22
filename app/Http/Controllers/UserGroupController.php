@@ -69,11 +69,10 @@ class UserGroupController extends Controller
      * @param  int  $user_id,$group_id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request,$user_id,$group_id)
+    public function update(Request $request,$group_id)
     {
-        //validation
         $validator = Validator::make($request->all(),[
-            'role_id'=>'required|integer|min:1|exists:group_roles,id',
+            'role_id'=>'required|integer|min:1|exists:roles,id',
         ]);
         if ($validator->fails()) {
             return back()->withErrors($validator)->withInput();
@@ -95,11 +94,22 @@ class UserGroupController extends Controller
      * @param  int  $user_id,$group_id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($user_id,$group_id)
+    public function destroy($group_id)
     {
         //
         $user=User::find($user_id);
         $user->groups()->detach($group_id);
         return redirect()->route('user.group.index',$user_id);
+    }
+
+    //
+    public function acceptJoinRequest(int $group_id){
+        Auth::user()->acceptJoinRequest($group_id);
+        return redirect()->back();
+    }
+    //
+    public function deniedJoinRequest(int $group_id){
+        Auth::user()->deniedJoinRequest($group_id);
+        return redirect()->back();
     }
 }

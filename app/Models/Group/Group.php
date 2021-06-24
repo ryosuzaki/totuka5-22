@@ -34,23 +34,31 @@ class Group extends Model
     //
     protected $guarded = ['id'];
     //
-    public $creator='作成者';
+    public string $creator='作成者';
+    //$unique_name{{$this->id}}
+    public string $unique_name='group';
+    //$upload_path{{$this->id}}
+    public string $upload_path='group';
 
     
     //
-    public static function setUp(int $user_id,string $name,string $type,string $admin_password){
+    public static function setUp(int $user_id,string $name,string $type,string $creator_password){
         $type=GroupType::findByName($type);
         $group=parent::create([
             'group_type_id'=>$type->id,
             'name'=>$name,
         ]);
-        $admin=$group->createGroupRole($group->creator,$admin_password)->getRole();
-        $admin->givePermissionTo('group.*');
-        $admin->givePermissionTo('group_info_bases.*');
-        $admin->givePermissionTo('group_info_base.*');
-        $admin->givePermissionTo('group_roles.*');
-        $admin->givePermissionTo('group_role.*');
-        $admin->revokePermissionTo('group_role.0.*');
+        //
+        $group->unique_name=$group->unique_name.$group->id;
+        //
+        $group->upload_path=$group->upload_path.$group->id;
+        //
+        $creator=$group->createRole($group->creator,$creator_password);
+        //
+        foreach($type->creator_permissions as $permission){
+            $creator->givePermissionTo($permission);
+        }
+        //
         $group->inviteUser($user_id,$group->creator);
         return $group;
     }
@@ -72,6 +80,14 @@ class Group extends Model
         return $this->users()->get()->contains('id',$id);
     }
     //
+    public function hasUserInRole(int $user_id,$role){
+        if (is_string($role)) {
+            return $this->users()->wherePivot('role_id',$this->getRole($role)->id)->get()->contains('id',$user_id);
+        }elseif(is_int($role)){
+            return $this->users()->wherePivot('role_id',$role)->get()->contains('id',$user_id);
+        }
+    }
+    //
     public function getUser(int $id){
         return $this->users()->find($id);
     }
@@ -81,11 +97,7 @@ class Group extends Model
     //
     public function inviteUser(int $user_id,$role){
         $user=User::find($user_id);
-        if(is_string($role)){
-            $role_id=$this->getGroupRole($role)->id;
-        }elseif(is_int($role)){
-            $role_id=$role;
-        }
+        $role_id=$this->getRole($role)->id;
         if ($user->hasGroup($this->id)) {
             $this->removeUser($user_id);
         }
@@ -95,9 +107,9 @@ class Group extends Model
     //
     public function removeUser(int $user_id){
         $user=User::find($user_id);
-        $role_id=$user->getGroupRole($this->id)->id;
+        $role_id=$user->getRole($this->id)->id;
         $user->removeRole($role_id);
-        return $this->users()->detach($user_id);
+        return $this->users()->detach($user->id);
     }
 
 
@@ -105,40 +117,48 @@ class Group extends Model
 
 
     //
-    public function createGroupRole(string $name,string $password){
-        $role=Role::create([
-            'name'=>'group'.$this->id.$name,
-        ]);        
-        return GroupRole::create([
-            'id'=>$role->id,
-            'index'=>$this->groupRoles()->count(),
-            'group_id'=>$this->id,
-            'name'=>$name,
+    public function createRole(string $name,string $password){
+        return $this->roles()->create([
+            'name'=>$this->unique_name.$name,
+            'role_name'=>$name,
+            'index'=>$this->calcRoleIndex(),
             'password'=>Hash::make($password),
         ]);
     }
     //
-    public function deleteGroupRole(int $role_id){
-        Role::destroy($role_id);
-        $this->users()->wherePivot('role_id',$role_id)->detach();
-        return GroupRole::destroy($role_id);
+    public function deleteRole($role){
+        $role=$this->getRole($role);
+        $this->users()->wherePivot('role_id',$role->id)->detach();
+        $role->permissions()->detach();
+        $role->users()->detach();
+        return $role->delete();
     }
     //
-    public function groupRoles(){
-        return $this->hasMany('App\Models\Group\GroupRole','group_id');
+    public function roles(){
+        return $this->morphMany('App\Models\Role','model');
     }
     //
-    public function getGroupRole($role){
+    public function getRole($role){
         if (is_string($role)) {
-            return $this->groupRoles()->where('name',$role)->first();
+            return $this->roles()->where('role_name',$role)->first();
         }elseif(is_int($role)){
-            return $this->groupRoles()->find($role);
+            return $this->roles()->find($role);
         }
     }
     //
-    public function UsersHaveRole($role){
-        $role_id=$this->getGroupRole($role)->id;
-        return $this->users()->wherePivot('role_id',$role_id)->get();
+    public function usersHaveRole($role){
+        $role=$this->getRole($role);
+        return $this->users()->wherePivot('role_id',$role->id);
+    }
+    //
+    private function calcRoleIndex(){
+        $index=$this->roles()->pluck('index');
+        for($i=0;$i<100;$i++){
+            $diff=collect(range(50*$i, 50*($i+1)))->diff($index);
+            if($diff->isNotEmpty()){
+                return $diff->min();
+            }
+        }
     }
 
 
@@ -173,7 +193,7 @@ class Group extends Model
 
     //
     public function uploadImg(UploadedFile $img){
-        return $this->trait_uploadImg($img,'group'.$this->id);
+        return $this->trait_uploadImg($img,$this->upload_path);
     }
     
 
@@ -203,8 +223,14 @@ class Group extends Model
     }
     //
     public function requestJoin(int $user_id,$role){
-        $role_id=$this->getGroupRole($role)->id;
-        return $this->usersRequestJoin()->attach($user_id,['role_id',$role_id]);
+        if($this->hasUserInRole($user_id,$this->creator)){
+            return false;
+        }
+        if($this->hasUser($user_id)){
+            $this->removeUser($user_id);
+        }
+        $role=$this->getRole($role);
+        return $this->usersRequestJoin()->attach($user_id,['role_id'=>$role->id]);
     }
 
 
@@ -214,7 +240,7 @@ class Group extends Model
     //
     public function extraUsers(){
         return $this->belongsToMany(
-            'App\Models\Group\Group','extra_group_users','group_id','user_id'
+            'App\User','extra_group_users','group_id','user_id'
         )->withPivot('name')->withTimestamps();
     }
     //

@@ -15,12 +15,12 @@ class LikeController extends Controller
     //
     public static $name='いいね';
     public function like($group_id){
-        Auth::user()->attachExtraGroup($group_id,$this->name);
+        Auth::user()->attachExtraGroup($group_id,self::$name);
         return redirect()->back();
     }
     //
     public function unlike($group_id){
-        Auth::user()->detachExtraGroup($group_id,$this->name);
+        Auth::user()->detachExtraGroup($group_id,self::$name);
         return redirect()->back();
     }
 }

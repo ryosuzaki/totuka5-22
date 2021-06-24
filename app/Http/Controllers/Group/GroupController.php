@@ -6,7 +6,6 @@ use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 
 use App\Models\Group\Group;
-use App\Models\Group\GroupRole;
 
 
 use Illuminate\Support\Facades\Auth;
@@ -49,45 +48,24 @@ class GroupController extends Controller
      */
     public function store(Request $request)
     {
-        $type=$request->type;
-        //
-        if($type=='shelter'){
-            $validator = Validator::make($request->all(),[
-                'name'=>'required|string|max:255',
-                'password'=>'required|alpha_num|min:4|max:255|confirmed'//password_confirmation
-            ]);
-            if ($validator->fails()) {
-                return back()->withErrors($validator)->withInput();
-            }
-            //
-            $group=Group::setUp(Auth::id(),$request->name,$type,$request->password);
-            $group->location()->create();
-            $group->createInfoBase(1);
-            $group->createInfoBase(2);
-            return redirect()->route('group.show',$group->id);
+        $validator = Validator::make($request->all(),[
+            'name'=>'required|string|max:255',
+            'password'=>'required|alpha_num|min:4|max:255|confirmed'//password_confirmation
+        ]);
+        if ($validator->fails()) {
+            return back()->withErrors($validator)->withInput();
         }
         //
-        elseif ($type=='danger_spot') {
-            $group=Group::setUp(Auth::id(),'',$type,Auth::id());
+        $type_name=$request->type;
+        $group=Group::setUp(Auth::id(),$request->name,$type_name,$request->password);
+        $type=$group->getType();
+        if($type->need_location){
             $group->location()->create();
-            $group->createInfoBase(3);
-            return redirect()->route('group.show',$group->id);
         }
-        //
-        elseif($type=='nursing_home'){
-            $validator = Validator::make($request->all(),[
-                'name'=>'required|string|max:255',
-                'password'=>'required|alpha_num|min:4|max:255|confirmed'//password_confirmation
-            ]);
-            if ($validator->fails()) {
-                return back()->withErrors($validator)->withInput();
-            }
-            //
-            $group=Group::setUp(Auth::id(),$request->name,$type,$request->password);
-            $group->location()->create();
-            $group->createInfoBase(1);
-            return redirect()->route('group.show',$group->id);
+        foreach($type->required_info as $id){
+            $group->createInfoBase($id);
         }
+        return redirect()->route('group.show',$group->id);
     }
 
     /**

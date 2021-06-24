@@ -12,6 +12,7 @@ class GroupType extends Model
     protected $casts = [
         'required_info'=>'json',
         'available_info'=>'json',
+        'creator_permissions'=>'json',
     ];
     
     //

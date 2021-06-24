@@ -14,7 +14,7 @@ trait InfoFuncs
     public function createInfoBase(int $template_id){
         $template=InfoTemplate::find($template_id);
         $base=$this->infoBases()->create([
-            'index'=>$this->infoBases()->count(),
+            'index'=>$this->calcInfoBaseIndex(),
             'info_template_id'=>$template->id,
             'name'=>$template->name,
         ]);
@@ -22,6 +22,16 @@ trait InfoFuncs
             'info'=>$template->default,
         ]);
         return $base;
+    }
+    //
+    private function calcInfoBaseIndex(){
+        $index=$this->infoBases()->pluck('index');
+        for($i=0;$i<100;$i++){
+            $diff=collect(range(50*$i, 50*($i+1)))->diff($index);
+            if($diff->isNotEmpty()){
+                return $diff->min();
+            }
+        }
     }
     //
     public function deleteInfoBase(int $base_id){

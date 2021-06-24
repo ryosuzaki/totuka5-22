@@ -6,7 +6,7 @@
         <div class="card">
             <div class="card-body">
                 <h4>避難所 {{$group->name}}</h4>
-                <form method="POST" action="{{ route('group.user.join_request',$group->id) }}">
+                <form method="POST" action="{{ route('group.user.store',$group->id) }}">
                     @csrf
                     <div class="form-group">
                         <label for="user_id">ユーザーID</label>
@@ -22,7 +22,9 @@
                         <label for="role">役割</label>
                         <select class="form-control selectpicker" data-style="btn btn-link" id="role" name="role_id">
                             @foreach($roles as $role)
-                            <option value="{{$role->id}}">{{$role->name}}</option>
+                            @if($role->role_name!=$group->creator)
+                            <option value="{{$role->id}}">{{$role->role_name}}</option>
+                            @endif
                             @endforeach
                         </select>
                     </div>

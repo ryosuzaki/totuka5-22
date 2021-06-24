@@ -12,7 +12,7 @@
             @foreach($groups as $group)
             <tr>
                 <td><a href="{{route('group.show',$group->id)}}">ページへ</a></td>
-                <td>{{$user->getGroupRole($group->id)->name}}</td>                                    
+                <td>{{$user->getRoleByGroup($group->id)->role_name}}</td>                                        
                 <td class="p-1">
             
                 

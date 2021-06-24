@@ -28,7 +28,7 @@ class GroupRoleController extends Controller
         $group=Group::find($group_id);
         return view('group.role.index')->with([
             'group'=>$group,
-            'roles'=>$group->groupRoles()->get(),
+            'roles'=>$group->roles()->get(),
         ]);
     }
 
@@ -43,7 +43,7 @@ class GroupRoleController extends Controller
         $group=Group::find($group_id);
         return view('group.role.create')->with([
             'group'=>$group,
-            'roles'=>$group->groupRoles()->get(),
+            'roles'=>$group->roles()->get(),
             ]);
     }
 
@@ -66,8 +66,7 @@ class GroupRoleController extends Controller
         }
         //
         $group=Group::find($group_id);
-        $group_role=$group->createGroupRole($request->name,$request->password);
-        $role=$group_role->getRole();
+        $role=$group->createRole($request->name,$request->password);
         //
         foreach($request->permissions as $permisson){
             if(!$role->hasPermissionTo($permisson)){
@@ -86,10 +85,9 @@ class GroupRoleController extends Controller
     public function show(int $group_id,int $role_id)
     {
         $group=Group::find($group_id);
-        info($group->getGroupRole($role_id)->getRole()->permissions()->get());
         return view('group.role.show')->with([
             'group'=>$group,
-            'role'=>$group->getGroupRole($role_id),
+            'role'=>$group->getRole($role_id),
             ]);
     }
 
@@ -104,7 +102,7 @@ class GroupRoleController extends Controller
         $group=Group::find($group_id);
         return view('group.role.edit')->with([
             'group'=>$group,
-            'role'=>$group->getGroupRole($role_id),
+            'role'=>$group->getRole($role_id),
             ]);
     }
 
@@ -117,7 +115,6 @@ class GroupRoleController extends Controller
      */
     public function update(Request $request,int $group_id,int $role_id)
     {
-        info($request);
         $validator = Validator::make($request->all(),[
             'name'=>'required|max:255',
             'now_password'=>'nullable|alpha_num|min:4|max:255',
@@ -129,15 +126,14 @@ class GroupRoleController extends Controller
         }
         //
         $group=Group::find($group_id);
-        $group_role=$group->getGroupRole($role_id);
-        $role=$group_role->getRole();
+        $role=$group->getRole($role_id);
         //
-        if($group_role->name!=$request->name){
-            $group_role->changeName($request->name);
+        if($role->role_name!=$request->name){
+            $role->changeName($request->name);
         }
         //
-        if($request->password&&$group_role->checkPassword($request->now_password)){
-            $group_role->changePassword($request->password);
+        if($request->password&&$role->checkPassword($request->now_password)){
+            $role->changePassword($request->password);
         }
         //
         foreach($role->permissions()->get() as $permisson){
@@ -161,7 +157,7 @@ class GroupRoleController extends Controller
     public function destroy(int $group_id,int $role_id)
     {
         $group=Group::find($group_id);
-        $group->deleteGroupRole($role_id);
+        $group->deleteRole($role_id);
         return redirect()->back();
     }
 }

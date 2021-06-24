@@ -52,7 +52,7 @@ Route::resource('group', 'Group\GroupController',['except' => [
 Route::resource('group_info_base','Group\GroupInfoBaseController',['except' => [
 ]]);
 //
-Route::resource('group.role', 'Group\GroupRoleController',['except' => [
+Route::resource('group.role', 'Group\RoleController',['except' => [
 ]]);
 //
 
@@ -82,6 +82,9 @@ Route::post('user/group', 'UserGroupController@store')->name('user.group.store')
 Route::get('user/group/{group}/edit', 'UserGroupController@edit')->name('user.group.edit');
 Route::put('user/group/{group}', 'UserGroupController@update')->name('user.group.update');
 Route::delete('user/group/{group}', 'UserGroupController@destroy')->name('user.group.destroy');
+
+Route::get('user/group/{group}/accept_join_request', 'UserGroupController@acceptJoinRequest')->name('user.group.accept_join_request');
+Route::get('user/group/{group}/denied_join_request', 'UserGroupController@deniedJoinRequest')->name('user.group.denied_join_request');
 
 
 

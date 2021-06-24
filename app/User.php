@@ -7,6 +7,7 @@ use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 
 use App\Models\Group\Group;
+use App\Models\Group\GroupType;
 
 use App\Traits\InfoFuncs;
 
@@ -67,11 +68,12 @@ class User extends Authenticatable
     }
 
 
-    //
+
+
     //
     public function joinGroup(int $group_id,$role,string $password){
         $group=Group::find($group_id);
-        if($group->getGroupRole($group_id)->checkPassword($password)){
+        if($group->getRole($role)->checkPassword($password)){
             return $group->inviteUser($this->id,$role);
         }
     }
@@ -83,53 +85,48 @@ class User extends Authenticatable
 
 
     //
-    public function hasGroupRole(int $group_id,$role){
+    public function hasRoleInGroup($role,int $group_id){
         if (is_string($role)) {
-            return $this->groupRoles()->wherePivot('group_id',$group_id)->get()->contains('name',$role);
+            return $this->rolesThroughGroup()->wherePivot('group_id',$group_id)->get()->contains('role_name',$role);
         }elseif(is_int($role)){
-            return $this->groupRoles()->wherePivot('group_id',$group_id)->get()->contains('id',$role);
+            return $this->rolesThroughGroup()->wherePivot('group_id',$group_id)->get()->contains('id',$role);
         }
     }
     //
-    public function getGroupRole(int $group_id){
-        return $this->groupRoles()->wherePivot('group_id',$group_id)->first();
-    }
-    //
-    public function getRole(int $group_id){
-        return $this->getGroupRole($group_id)->getRole();
-    }
-    //
-    public function hasGroupPermissionTo(int $group_id,$permission){
-        return $this->getRole($group_id)->hasPermissionTo($permission);
+    public function getRoleByGroup(int $group_id){
+        return $this->rolesThroughGroup()->wherePivot('group_id',$group_id)->first();
     }
 
 
     //
-    public function groupRoles(){
+    public function rolesThroughGroup(){
         return $this->belongsToMany(
-            'App\Models\Group\GroupRole','group_role_user','user_id','role_id'
+            'App\Models\Role','group_role_user','user_id','role_id'
         )->withPivot('group_id')->withTimestamps();
     }
     
     //
-    public function groupsHaveType(string $type){
-        $groups=$this->groups()->get();
+    public function groupsHaveType($type){
+        if (is_string($type)) {
+            $type=GroupType::findByName($type);
+        }elseif(is_int($type)){
+            $type=GroupType::find($type);
+        }
         $out=[];
-        foreach($groups as $group){
-            if($group->getTypeName()==$type){
+        foreach($this->groups()->get() as $group){
+            if($group->group_type_id==$type->id){
                 $out[]=$group;
             }
         }
-        return $out;
+        return collect($out);
     }
     //
     public function groupTypes(){
-        $groups=$this->groups()->get();
         $types=[];
-        foreach($groups as $group){
+        foreach($this->groups()->get() as $group){
             $types[]=$group->getType();
         }
-        return array_unique($types);
+        return collect(array_unique($types));
     }
 
     
@@ -151,8 +148,9 @@ class User extends Authenticatable
     //
     public function acceptJoinRequest(int $group_id){
         $group=$this->groupsRequestJoin()->find($group_id);
-        $role_id=$group->pivot()->role_id;
-        return $group->inviteUser($this->id,$role_id);
+        $role_id=$group->pivot->role_id;
+        $group->inviteUser($this->id,$role_id);
+        return $this->groupsRequestJoin()->detach($group_id);
     }
     //
     public function deniedJoinRequest(int $group_id){
