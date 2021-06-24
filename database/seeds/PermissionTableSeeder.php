@@ -15,6 +15,8 @@ class PermissionTableSeeder extends Seeder
     public function run()
     {
         //
+        Role::create(['name'=>'SuperAdmin']);
+
         Permission::create(['name'=>'groups.*']);
         Permission::create(['name'=>'groups.viewAny']);
         Permission::create(['name'=>'groups.create']);

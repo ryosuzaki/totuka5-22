@@ -16,16 +16,6 @@ class InfoBaseController extends Controller
     {
         $this->middleware('auth');
     }
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function index()
-    {
-        //
-        return view('user.info_base.index')->with(['bases'=>UserInfoBase::all()]);
-    }
 
     /**
      * Show the form for creating a new resource.
@@ -35,7 +25,7 @@ class InfoBaseController extends Controller
     public function create()
     {
         //
-        return view('user.info_base.create');
+        return view('info_base.create');
     }
 
     /**

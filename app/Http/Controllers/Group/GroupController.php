@@ -92,8 +92,10 @@ class GroupController extends Controller
      */
     public function edit($id)
     {
+        $group=Group::find($id);
+        $this->authorize('update',$group);
         return view('group.edit')->with([
-            'group'=>Group::find($id),
+            'group'=>$group,
             ]);
     }
 
@@ -112,7 +114,8 @@ class GroupController extends Controller
         if ($validator->fails()) {
             return back()->withErrors($validator)->withInput();
         }
-        Group::find($id)->fill([
+        $group=Group::find($id);
+        $group->fill([
             'name'=>$request->name,
         ])->save();
         return redirect()->route('group.show', $id);

@@ -12,6 +12,10 @@ use Illuminate\Support\Facades\Auth;
 
 class LikeController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware('auth');
+    }
     //
     public static $name='いいね';
     public function like($group_id){

@@ -48,14 +48,11 @@ Route::get('group/{group}/show/{index?}', 'Group\GroupController@show')->name('g
 Route::resource('group', 'Group\GroupController',['except' => [
     'create','show'
 ]]);
-//
-Route::resource('group_info_base','Group\GroupInfoBaseController',['except' => [
-]]);
+
 //
 Route::resource('group.role', 'Group\RoleController',['except' => [
 ]]);
 //
-
 Route::resource('group.user', 'Group\GroupUserController',['except' => [
 ]]);
     
@@ -76,6 +73,11 @@ Route::put('info_base/{info_base}/info', 'Info\InfoController@update')->name('in
 Route::delete('info_base/{info_base}/info', 'Info\InfoController@destroy')->name('info_base.info.destroy');
 
 //
+Route::resource('model.info_base', 'Info\InfoBaseController',['except' => [
+]]);
+
+
+//
 Route::get('user/group', 'UserGroupController@index')->name('user.group.index');
 Route::get('user/group/create', 'UserGroupController@create')->name('user.group.create');
 Route::post('user/group', 'UserGroupController@store')->name('user.group.store');
@@ -85,11 +87,6 @@ Route::delete('user/group/{group}', 'UserGroupController@destroy')->name('user.g
 
 Route::get('user/group/{group}/accept_join_request', 'UserGroupController@acceptJoinRequest')->name('user.group.accept_join_request');
 Route::get('user/group/{group}/denied_join_request', 'UserGroupController@deniedJoinRequest')->name('user.group.denied_join_request');
-
-
-
-Route::resource('user_info_base','UserInfoBaseController',['except' => [
-]]);
 
 
 

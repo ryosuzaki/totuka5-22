@@ -6,12 +6,12 @@ use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 
 use App\Models\Group\Group;
-use App\Models\Group\GroupRole;
+use App\Models\Role;
 
 use Illuminate\Support\Facades\Auth;
 use Validator;
 
-class GroupRoleController extends Controller
+class RoleController extends Controller
 {
     public function __construct()
     {

@@ -14,7 +14,6 @@ use Validator;
 
 class GroupUserController extends Controller
 {
-    //
     public function __construct()
     {
         $this->middleware('auth');

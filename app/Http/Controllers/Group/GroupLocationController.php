@@ -10,7 +10,10 @@ use App\Models\Group\GroupLocation;
 
 class GroupLocationController extends Controller
 {
-    
+    public function __construct()
+    {
+        $this->middleware('auth');
+    }
     /**
      * Show the form for editing the specified resource.
      *
