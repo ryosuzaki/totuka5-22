@@ -126,9 +126,12 @@ class GroupController extends Controller
      */
     public function destroy(Group $group)
     {
-        $group->infoBases()->detach();
-        $group->users()->detach();
-        $group->groupRoles()->delete();
+        foreach($group->infoBases()->get() as $base){
+            $group->deleteInfoBase($base->id);
+        }
+        foreach($group->roles()->get() as $role){
+            $group->deleteRole($role->id);
+        }
         $group->delete();
         return redirect()->route('group.home');
     }
