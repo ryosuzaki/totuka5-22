@@ -25,7 +25,11 @@
                         </div>
                         <div class="modal-footer">
                             <button type="button" class="btn btn-secondary" data-dismiss="modal">やめる</button>
-                            <a class="btn btn-danger text-white" href="{{route('user.group.destroy',$group->id)}}">退出</a>
+                            <form action="{{route('user.group.destroy',$group->id)}}" method="post">
+                                @csrf
+                                @method('delete')
+                                <button type="submit" class="btn btn-danger text-white">退出</button>
+                            </form>
                         </div>
                         </div>
                     </div>

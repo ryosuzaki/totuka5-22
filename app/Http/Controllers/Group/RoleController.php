@@ -23,9 +23,8 @@ class RoleController extends Controller
      * @param int $group_id
      * @return \Illuminate\Http\Response
      */
-    public function index(int $group_id)
+    public function index(Group $group)
     {
-        $group=Group::find($group_id);
         return view('group.role.index')->with([
             'group'=>$group,
             'roles'=>$group->roles()->get(),
@@ -38,9 +37,8 @@ class RoleController extends Controller
      * @param int $group_id
      * @return \Illuminate\Http\Response
      */
-    public function create(int $group_id)
+    public function create(Group $group)
     {
-        $group=Group::find($group_id);
         return view('group.role.create')->with([
             'group'=>$group,
             'roles'=>$group->roles()->get(),
@@ -54,7 +52,7 @@ class RoleController extends Controller
      * @param int $group_id
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request,int $group_id)
+    public function store(Request $request,Group $group)
     {
         $validator = Validator::make($request->all(),[
             'name'=>'required|max:255',
@@ -65,7 +63,6 @@ class RoleController extends Controller
             return back()->withErrors($validator)->withInput();
         }
         //
-        $group=Group::find($group_id);
         $role=$group->createRole($request->name,$request->password);
         //
         foreach($request->permissions as $permisson){
@@ -82,9 +79,8 @@ class RoleController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show(int $group_id,int $role_id)
+    public function show(Group $group,int $role_id)
     {
-        $group=Group::find($group_id);
         return view('group.role.show')->with([
             'group'=>$group,
             'role'=>$group->getRole($role_id),
@@ -97,9 +93,8 @@ class RoleController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit(int $group_id,int $role_id)
+    public function edit(Group $group,int $role_id)
     {
-        $group=Group::find($group_id);
         return view('group.role.edit')->with([
             'group'=>$group,
             'role'=>$group->getRole($role_id),
@@ -113,7 +108,7 @@ class RoleController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request,int $group_id,int $role_id)
+    public function update(Request $request,Group $group,int $role_id)
     {
         $validator = Validator::make($request->all(),[
             'name'=>'required|max:255',
@@ -125,7 +120,6 @@ class RoleController extends Controller
             return back()->withErrors($validator)->withInput();
         }
         //
-        $group=Group::find($group_id);
         $role=$group->getRole($role_id);
         //
         if($role->role_name!=$request->name){
@@ -154,9 +148,8 @@ class RoleController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy(int $group_id,int $role_id)
+    public function destroy(Group $group,int $role_id)
     {
-        $group=Group::find($group_id);
         $group->deleteRole($role_id);
         return redirect()->back();
     }

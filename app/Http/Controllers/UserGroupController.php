@@ -95,14 +95,12 @@ class UserGroupController extends Controller
     /**
      * 退会
      *
-     * @param  int  $user_id,$group_id
+     * @param  int $group_id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($group_id)
+    public function destroy(int $group_id)
     {
-        //
-        $user=User::find($user_id);
-        $user->groups()->detach($group_id);
+        Auth::user()->leaveGroup($group_id);
         return redirect()->route('user.group.index',$user_id);
     }
 

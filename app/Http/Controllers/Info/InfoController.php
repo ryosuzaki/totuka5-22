@@ -21,12 +21,11 @@ class InfoController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param int $base_id
+     * @param InfoBase $base
      * @return \Illuminate\Http\Response
      */
-    public function edit(int $base_id)
+    public function edit(InfoBase $base)
     {
-        $base=InfoBase::find($base_id);
         return view('info.info.edit')->with([
             'base'=>$base,
             'info'=>$base->info(),
@@ -37,11 +36,11 @@ class InfoController extends Controller
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param int $base_id
+     * @param InfoBase $base
      * 
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request,int $base_id)
+    public function update(Request $request,InfoBase $base)
     {
         $validator = Validator::make($request->all(),[
             
@@ -50,7 +49,6 @@ class InfoController extends Controller
             return back()->withErrors($validator)->withInput();
         }
         //
-        $base=InfoBase::find($base_id);
         $model=$base->model()->first();
         $base->updateInfo($request->toArray()['info']);
         if ($model instanceof User) {
@@ -64,10 +62,10 @@ class InfoController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  int $base_id
+     * @param InfoBase $base
      * @return \Illuminate\Http\Response
      */
-    public function destroy(int $base_id)
+    public function destroy(InfoBase $base)
     {
         
     }

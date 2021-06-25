@@ -22,7 +22,6 @@ class GroupLocationController extends Controller
      */
     public function edit($id)
     {
-        //
         return view('group.location.edit')->with(['group'=>Group::find($id)]);
     }
 

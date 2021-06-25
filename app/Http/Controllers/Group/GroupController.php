@@ -71,12 +71,11 @@ class GroupController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  int  $group_id
+     * @param  Group $group
      * @return \Illuminate\Http\Response
      */
-    public function show(int $group_id,int $index=0)
+    public function show(Group $group,int $index=0)
     {
-        $group=Group::find($group_id);
         return view('group.show.'.$group->getTypeName())->with([
             'group'=>$group,
             'bases'=>$group->infoBases()->get(),
@@ -87,12 +86,11 @@ class GroupController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  int  $id
+     * @param  Group $group
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function edit(Group $group)
     {
-        $group=Group::find($id);
         $this->authorize('update',$group);
         return view('group.edit')->with([
             'group'=>$group,
@@ -103,10 +101,10 @@ class GroupController extends Controller
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
+     * @param  Group $group
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request,Group $group)
     {
         $validator = Validator::make($request->all(),[
             'name'=>'required|max:255',
@@ -114,23 +112,20 @@ class GroupController extends Controller
         if ($validator->fails()) {
             return back()->withErrors($validator)->withInput();
         }
-        $group=Group::find($id);
         $group->fill([
             'name'=>$request->name,
         ])->save();
-        return redirect()->route('group.show', $id);
+        return redirect()->route('group.show',$group->id);
     }
 
     /**
      * Remove the specified resource from storage.
      *
-     * @param  int  $id
+     * @param Group $group
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(Group $group)
     {
-        //
-        $group=Group::find($id);
         $group->infoBases()->detach();
         $group->users()->detach();
         $group->groupRoles()->delete();

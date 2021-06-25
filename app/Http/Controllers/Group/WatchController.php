@@ -17,6 +17,7 @@ class WatchController extends Controller
     }
     //
     public static $name='ウォッチャー';
+    //
     public function watch(int $group_id){
         Auth::user()->attachExtraGroup($group_id,self::$name);
         return redirect()->back();
