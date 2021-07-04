@@ -1,29 +1,32 @@
 @extends('template')
 
 @section('content')
-<div class="container">
-    <div class="row justify-content-center">
-        <div class="col-md-8">
-            <div class="card">
-                <div class="card-body">
-                <form method="POST" action="{{ route('user_info_base.store') }}">
-                        @csrf
-                        <div class="form-group row">
-                            <label for="name">情報ベース名</label>
-                            <input id="name" type="text" class="form-control @error('name') is-invalid @enderror" name="name" value="{{ old('name') }}" required autocomplete="name" autofocus>
-                            @error('name')
-                                <span class="invalid-feedback" role="alert">
-                                    <strong>{{ $message }}</strong>
-                                </span>
-                            @enderror
-                        </div>                       
-                        <div class="form-group row mb-0">
-                            <button type="submit" class="btn btn-primary btn-block">
-                            情報ベース登録
-                            </button>
-                        </div>
-                    </form>
-                </div>
+<div class="row justify-content-center">
+    <div class="col-md-8">
+        <div class="card">
+            <div class="card-body">
+
+                <nav aria-label="breadcrumb" role="navigation">
+                    <ol class="breadcrumb">
+                        <li class="breadcrumb-item"><a href="#">ホーム</a></li>
+                        <li class="breadcrumb-item"><a href="#">{{Auth::user()->name}}</a></li>
+                        <li class="breadcrumb-item"><a href="#">情報一覧</a></li>
+                        <li class="breadcrumb-item active" aria-current="page">追加</li>
+                    </ol>
+                </nav>
+                <h3 class="text-center mb-4">情報追加</h3>
+
+                <form method="POST" action="{{ route('user.info_base.store') }}">
+                    @csrf
+
+                    @include('info.info_template.create',['templates'=>$templates])
+
+                    <div class="form-group row mb-0 mt-4">
+                        <button type="submit" class="btn btn-primary btn-block">
+                        追加
+                        </button>
+                    </div>
+                </form>
             </div>
         </div>
     </div>

@@ -3,101 +3,95 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\User;
+use App\Models\Group\Group;
+
+use Illuminate\Support\Facades\Auth;
+
+use Validator;
 
 class UserGroupController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware('auth');
+    }
     /**
-     * Display a listing of the resource.
+     * 参加グループ一覧
      *
      * @param  int  $user_id
      * @return \Illuminate\Http\Response
      */
-    public function index($user_id)
+    public function index()
     {
-        //
-        $user=User::find($user_id);
         return view('user.group.index')->with([
-            'user'=>$user,
-            'groups'=>$user->groups()->get(),
-            'group_roles'=>$user->groupRoles()->get(),
-        ]);
+            'user'=>Auth::user(),
+            ]);
     }
 
     /**
-     * Show the form for creating a new resource.
+     * グループに参加
      *
-     * @param  int  $user_id
      * @return \Illuminate\Http\Response
      */
-    public function create($user_id)
+    public function create()
     {
-        //
+        
     }
 
     /**
-     * Store a newly created resource in storage.
+     * グループに参加
      *
-     * @param  int  $user_id
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request,$user_id)
+    public function store(Request $request)
     {
-        //
+       
     }
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  int  $user_id,$group_id
-     * @return \Illuminate\Http\Response
-     */
-    public function show($user_id,$group_id)
+    //
+    public function edit(Group $group)
     {
-        //
-        $user=User::find($user_id);
-        return view('user.group.index')->with([
-            'user'=>$user,
-            'groups'=>$user->groups()->where('group_id',$group_id)->first(),
-            'group_roles'=>$user->groupRoles()->where('group_id',$group_id)->first(),
+        info($group->roles()->get());
+        return view('user.group.edit')->with([
+                'group'=>$group,
+                'user'=>Auth::user(),
+            ]);
+    }
+
+    //
+    public function update(Request $request,Group $group)
+    {
+        $validator = Validator::make($request->all(),[
+            'role_id'=>'required|integer|min:1|exists:roles,id',
         ]);
+        if ($validator->fails()) {
+            return back()->withErrors($validator)->withInput();
+        }
+        //
+        if(!$group->getRole((int)$request->role_id)->checkPassword($request->password)){
+            return back()->withInput();
+        }
+        $group->inviteUser(Auth::id(),(int)$request->role_id);
+        return redirect()->route('user.group.index',Auth::id());
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $user_id,$group_id
-     * @return \Illuminate\Http\Response
-     */
-    public function edit($user_id,$group_id)
+    //
+    public function destroy(int $group_id)
     {
-        //
+        Auth::user()->leaveGroup($group_id);
+        return redirect()->route('user.group.index');
     }
 
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $user_id,$group_id
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request,$user_id,$group_id)
-    {
-        //
+    //
+    public function acceptJoinRequest(int $group_id){
+        Auth::user()->acceptJoinRequest($group_id);
+        return redirect()->back();
     }
-
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  int  $user_id,$group_id
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy($user_id,$group_id)
-    {
-        //
-        $user=User::find($user_id);
-        $user->groups()->detach($group_id);
-        $user->groupRoles()->detach($group_id);
-        return redirect()->route('user.group.index',$user_id);
+    //
+    public function deniedJoinRequest(int $group_id){
+        Auth::user()->deniedJoinRequest($group_id);
+        return redirect()->back();
     }
 }

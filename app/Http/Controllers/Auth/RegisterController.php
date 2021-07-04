@@ -3,7 +3,7 @@
 namespace App\Http\Controllers\Auth;
 
 use App\User;
-use App\UserInfo;
+
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
@@ -33,8 +33,7 @@ class RegisterController extends Controller
      */
     protected function redirectTo()
     {
-        Auth::user()->attachInfoBase(1);
-        return route('user.info_base.info.edit',[Auth::id(),1]);
+        return route('user.setting_form');
     }
     /**
      * Create a new controller instance.

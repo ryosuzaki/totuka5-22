@@ -5,11 +5,15 @@ namespace App\Http\Controllers\Group;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 
-use App\Models\Group\Group;
-use App\Models\Group\GroupInfoBase;
-
 use Illuminate\Support\Facades\Auth;
 use Validator;
+
+use App\Models\Info\Info;
+use App\Models\Info\InfoBase;
+
+use Illuminate\Support\Facades\Gate;
+
+use App\Models\Group\Group;
 
 class GroupInfoController extends Controller
 {
@@ -17,76 +21,32 @@ class GroupInfoController extends Controller
     {
         $this->middleware('auth');
     }
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $group_id,$base_id
-     * @return \Illuminate\Http\Response
-     */
-    public function edit($group_id,$base_id)
+
+    //
+    public function edit(Group $group,int $index)
     {
-        //
-        $group=Group::find($group_id);
+        Gate::authorize('update-group-info',[$group,$index]);
+        $base=$group->getInfoBaseByIndex($index);
         return view('group.info.edit')->with([
             'group'=>$group,
-            'info'=>$group->infoBase($base_id),
+            'base'=>$base,
+            'info'=>$base->info(),
+            'index'=>$index,
             ]);
     }
 
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $group_id,$base_id
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request,$group_id,$base_id)
+    //
+    public function update(Request $request,Group $group,int $index)
     {
-        $group=Group::find($group_id);
-        //
-        if($base_id==1){
-            $validator = Validator::make($request->all(),[
+        Gate::authorize('update-group-info',[$group,$index]);
+        $validator = Validator::make($request->all(),[
             
-            ]);
-            $group->infoBases()->updateExistingPivot($base_id,[
-                'updated_by'=>Auth::id(),
-                'info'=>$request->toArray()['info'],
-            ]);
+        ]);
+        if ($validator->fails()) {
+            return back()->withErrors($validator)->withInput();
         }
         //
-        elseif($base_id==2){
-            $validator = Validator::make($request->all(),[
-            
-            ]);
-            $group->infoBases()->updateExistingPivot($base_id,[
-                'updated_by'=>Auth::id(),
-                'info'=>$request->toArray()['info'],
-            ]);
-        }
-        //
-        elseif($base_id==3){
-            $validator = Validator::make($request->all(),[
-            
-            ]);
-            $group->infoBases()->updateExistingPivot($base_id,[
-                'updated_by'=>Auth::id(),
-                'info'=>$request->toArray()['info'],
-            ]);
-        }        
+        $group->getInfoBaseByIndex($index)->updateInfo($request->toArray()['info']);
         return redirect()->route('group.show',$group->id);
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  int  $group_id,$base_id
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy($group_id,$base_id)
-    {
-        //
-        $group=Group::find($group_id);
-        $group->detachInfoBase($base_id);
-        return redirect()->route('home');
     }
 }

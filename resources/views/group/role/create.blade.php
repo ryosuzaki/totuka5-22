@@ -1,32 +1,26 @@
 @extends('template')
 
 @section('content')
-<div class="container">
-    <div class="row justify-content-center">
-        <div class="col-md-8">
+<div class="row justify-content-center">
+    <div class="col-md-8">
+        <form method="POST" action="{{ route('group.role.store',$group->id) }}">
+        @csrf
             <div class="card">
                 <div class="card-body">
-                    {{$group}}
-                    {{$roles[0]}}
-                    @php
-                    $t=[];
-                    foreach($roles as $role){
-                        $t[]=$role->rank;
-                    }
-                    $ranks=array_diff(range(0,255),$t);
-                    @endphp
                     
-                    <form method="POST" action="{{ route('group.role.store',$group->id) }}">
-                        @csrf
-                        <div class="form-group row">
-                            <label for="rank">権限ランク</label>
-                            <select class="form-control selectpicker" data-style="btn btn-link" id="rank" name="rank">
-                                @foreach($ranks as $rank)
-                                <option value="{{$rank}}">{{$rank}}</option>
-                                @endforeach
-                            </select>
-                        </div>
 
+                    <nav aria-label="breadcrumb" role="navigation">
+                        <ol class="breadcrumb">
+                            <li class="breadcrumb-item"><a href="#">ホーム</a></li>
+                            <li class="breadcrumb-item"><a href="#">{{$group->getFormattedTypeName()}}</a></li>
+                            <li class="breadcrumb-item"><a href="#">{{$group->name}}</a></li>
+                            <li class="breadcrumb-item"><a href="#">役割一覧</a></li>
+                            <li class="breadcrumb-item active" aria-current="page">追加</li>
+                        </ol>
+                    </nav>
+                    <h3 class="text-center mb-4">役割追加</h3>
+
+                    
                         <div class="form-group row">
                             <label for="name">役割名</label>
                             <input id="name" type="text" class="form-control @error('name') is-invalid @enderror" name="name" value="{{ old('name') }}" required autofocus>
@@ -36,9 +30,10 @@
                                 </span>
                             @enderror
                         </div>
+                        
                         <div class="form-group row">
                             <label for="password">パスワード</label>
-                                <input id="password" type="password" class="form-control @error('password') is-invalid @enderror" name="password" required autocomplete="new-password">
+                                <input id="password" type="password" class="form-control @error('password') is-invalid @enderror" name="password" required>
                                 @error('password')
                                     <span class="invalid-feedback" role="alert">
                                         <strong>{{ $message }}</strong>
@@ -48,18 +43,17 @@
 
                         <div class="form-group row">
                             <label for="password-confirm">パスワードを再入力</label>
-                            <input id="password-confirm" type="password" class="form-control" name="password_confirmation" required autocomplete="new-password">
-                        </div>
+                            <input id="password-confirm" type="password" class="form-control" name="password_confirmation" required>
+                        </div>   
 
-                        <div class="form-group row mb-0">
+                        <div class="form-group row mt-5 mb-0">
                             <button type="submit" class="btn btn-primary btn-block">
-                                役割登録
+                                役割追加
                             </button>
                         </div>
-                    </form>
                 </div>
             </div>
-        </div>
+        </form>
     </div>
 </div>
 @endsection

@@ -6,14 +6,16 @@ use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 
 use App\Models\Group\Group;
-use App\Models\Group\GroupRole;
+
 use App\User;
 
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Gate;
+
+use Validator;
 
 class GroupUserController extends Controller
 {
-    //
     public function __construct()
     {
         $this->middleware('auth');
@@ -21,31 +23,29 @@ class GroupUserController extends Controller
     /**
      * Display a listing of the resource.
      *
-     * @param int $group_id
+     * @param Group $group
      * @return \Illuminate\Http\Response
      */
-    public function index($group_id)
+    public function index(Group $group,int $index=0)
     {
-        //
-        $group=Group::find($group_id);
-        return view('group.user.index.'.$group->type)->with([
+        Gate::authorize('viewUsers-group-role',[$group,$index]);
+        return view('group.user.index')->with([
             'group'=>$group,
-            'users'=>$group->users()->get(),
+            'role'=>$group->getRoleByIndex($index),
         ]);
     }
     /**
      * Show the form for creating a new resource.
      *
-     * @param int $group_id
+     * @param Group $group
      * @return \Illuminate\Http\Response
      */
-    public function create($group_id)
+    public function create(Group $group,int $index=0)
     {
-        //
-        $group=Group::find($group_id);
-        return view('group.user.create.'.$group->type)->with([
+        Gate::authorize('inviteUser-group-role',[$group,$index]);
+        return view('group.user.create')->with([
             'group'=>$group,
-            'roles'=>$group->roles()->get(),
+            'role'=>$group->getRoleByIndex($index),
             ]);
     }
 
@@ -53,105 +53,75 @@ class GroupUserController extends Controller
      * Store a newly created resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  $group_id
+     * @param  Group $group
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request,$group_id)
+    public function store(Request $request,Group $group,int $index)
     {
-        //validation
+        Gate::authorize('inviteUser-group-role',[$group,$index]);
         $validator = Validator::make($request->all(),[
+            'email'=>'required|string|email|max:255|exists:users,email',
         ]);
         if ($validator->fails()) {
             return back()->withErrors($validator)->withInput();
         }
         //
-        //checkRolePassword($role_id,$password);
-        $member=GroupMember::create([
-            'group_id'=>$group_id,
-            'user_id'=>$request['user_id'],
-            'role_id'=>$request['role_id'],
-        ]);
-        return redirect()->route('group.member.index',$group_id);
+        $role=$group->getRoleByIndex($index);
+        $user=User::findByEmail($request->email);
+        $group->requestJoin($user->id,$role->id);
+        return redirect()->route('group.user.index',[$group->id,$index]);
     }
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  int  $member_id
-     * @return \Illuminate\Http\Response
-     */
-    public function show($member_id)
+    //
+    public function show(Group $group,int $user_id,int $index)
     {
-        //
-
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $member_id
-     * @return \Illuminate\Http\Response
-     */
-    public function edit($member_id)
-    {
-        //
-        return view('group.member.edit')->with([
-            'member'=>GroupMember::find($member_id),
+        Gate::authorize('viewUsers-group-role',[$group,$index]);
+        return view('group.user.show')->with([
+            'group'=>$group,
+            'user'=>$group->getUser($user_id),
+            'bases'=>$group->getUserInfoBases($user_id),
             ]);
     }
 
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $member_id
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request, $member_id)
+    /*
+    public function edit(Group $group,int $user_id,int $index)
     {
-        //validation
+        return view('group.user.edit')->with([
+                'group'=>$group,
+                'user'=>$group->getUser($user_id),
+                'roles'=>$group->roles()->get(),
+            ]);
+    }
+
+    //
+    public function update(Request $request,Group $group,int $user_id,int $index)
+    {
         $validator = Validator::make($request->all(),[
+            'role_id'=>'required|integer|min:1|exists:roles,id',
         ]);
         if ($validator->fails()) {
             return back()->withErrors($validator)->withInput();
         }
         //
-        //checkRolePassword($role_id,$password);
-        $member=GroupMember::find($member_id)->fill([
-            'role_id'=>$request['role_id'],
-        ])->save();
-        return redirect()->route('group.member.index',$member->group()->first()->id);
-    }
+        if(!$group->hasUser($user_id)){
+            return redirect()->back();
+        }
+        $group->requestJoin($user_id,(int)$request->role_id);
+        return redirect()->route('group.user.index',$group->id);
+    }*/
 
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  int  $member_id
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy($member_id)
+    //
+    public function destroy(Group $group,int $user_id,int $index)
     {
-        //
-        $member=GroupMember::find($member_id);
-        $group_id=$member->group()->id;
-        $member->delete();
-        return redirect()->route('group.member.index',$group_id);
+        Gate::authorize('removeUser-group-role',[$group,$index]);
+        $group->removeUser($user_id);
+        return redirect()->route('group.user.index',[$group->id,$index]);
     }
 
-
-
     //
-    public function like($group_id,$user_id){
-        $group=Group::find($group_id);
-        $user=User::find($user_id);
-        $group->attachRole($user,255);
-        return redirect()->back();
-    }
-    //
-    public function unlike($group_id,$user_id){
-        $group=Group::find($group_id);
-        $user=User::find($user_id);
-        $group->detachRole($user,255);
-        return redirect()->back();
+    public function quitRequestJoin(Group $group,int $user_id,int $index){
+        Gate::authorize('inviteUser-group-role',[$group,$index]);
+        $group->quitRequestJoin($user_id);
+        return redirect()->route('group.user.index',[$group->id,$index]);
     }
 }

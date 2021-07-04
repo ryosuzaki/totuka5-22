@@ -80,14 +80,11 @@
               </a>
 
               <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
-                  <a class="dropdown-item" href="{{ route('user.show',Auth::id()) }}">
+                  <a class="dropdown-item" href="{{ route('user.show') }}">
                       ユーザー情報
                   </a>
-                  <a class="dropdown-item" href="{{ route('group.create') }}">
-                      グループ作成
-                  </a>
-                  <a class="dropdown-item" href="{{ route('group.show',1) }}">
-                      グループ作成
+                  <a class="dropdown-item" href="{{ route('user.group.index') }}">
+                      グループ一覧
                   </a>
                   <a class="dropdown-item" href="{{ route('logout') }}"
                      onclick="event.preventDefault();
@@ -106,7 +103,7 @@
     </div>
   </nav>
 </div>
-<main class="container">
+<main>
   <!--ここに内容-->
   @yield('content')
 </main>

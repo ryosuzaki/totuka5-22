@@ -1,49 +1,59 @@
 @extends('template')
 
 @section('content')
-<div class="container">
-    <div class="row justify-content-center">
-        <div class="col-md-8">
+<div class="row justify-content-center">
+    <div class="col-md-8">
+        <form method="POST" action="{{route('group.role.update',[$group->id,$role->id])}}">
+            @csrf
+            {{ method_field('PUT') }}
             <div class="card">
                 <div class="card-body">
-                    {{$role}}
-                    <form method="POST" action="{{route('group.role.update',$role->id)}}">
-                        @csrf
-                        {{ method_field('PUT') }}
 
-                        <div class="form-group row">
-                            <label for="name">ロール名</label>
-                            <input id="name" type="text" class="form-control @error('name') is-invalid @enderror" name="name" value="{{$role->name}}" required autofocus>
-                            @error('name')
-                                <span class="invalid-feedback" role="alert">
-                                    <strong>{{ $message }}</strong>
-                                </span>
-                            @enderror
+
+                    <nav aria-label="breadcrumb" role="navigation">
+                        <ol class="breadcrumb">
+                            <li class="breadcrumb-item"><a href="#">ホーム</a></li>
+                            <li class="breadcrumb-item"><a href="#">{{$group->getFormattedTypeName()}}</a></li>
+                            <li class="breadcrumb-item"><a href="#">{{$group->name}}</a></li>
+                            <li class="breadcrumb-item"><a href="#">役割一覧</a></li>
+                            <li class="breadcrumb-item"><a href="#">{{$role->role_name}}</a></li>
+                            <li class="breadcrumb-item active" aria-current="page">変更</li>
+                        </ol>
+                    </nav>
+                    <h3 class="text-center mb-4">役割変更</h3>
+
+
+                        <div class="form-group">
+                            <label for="name">役割名</label>
+                            <input id="name" type="text" class="form-control @error('name') is-invalid @enderror" name="name" value="{{$role->role_name}}" required>
                         </div>
-                        <div class="form-group row">
-                            <label for="password">管理者パスワード</label>
-                                <input id="password" type="password" class="form-control @error('password') is-invalid @enderror" name="password" required autocomplete="new-password">
-                                @error('password')
+                        <div class="form-group">
+                            <label for="now_password">現在のパスワード</label>
+                                <input id="now_password" type="password" class="form-control @error('now_password') is-invalid @enderror" name="now_password">
+                                @error('now_password')
                                     <span class="invalid-feedback" role="alert">
                                         <strong>{{ $message }}</strong>
                                     </span>
                                 @enderror
                         </div>
-
-                        <div class="form-group row">
-                            <label for="password-confirm">パスワードを再入力</label>
-                            <input id="password-confirm" type="password" class="form-control" name="password_confirmation" required autocomplete="new-password">
+                        <div class="form-group">
+                            <label for="password">新しいパスワード</label>
+                            <input id="password" type="password" class="form-control @error('password') is-invalid @enderror" name="password">
                         </div>
 
-                        <div class="form-group row mb-0">
+                        <div class="form-group">
+                            <label for="password-confirm">新しいパスワードを再入力</label>
+                            <input id="password-confirm" type="password" class="form-control" name="password_confirmation">
+                        </div>   
+                    
+                        <div class="form-group mt-5 mb-0">
                             <button type="submit" class="btn btn-primary btn-block">
-                            更新
+                                変更
                             </button>
                         </div>
-                    </form>
                 </div>
             </div>
-        </div>
+        </form>
     </div>
 </div>
 @endsection

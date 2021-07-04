@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\User;
+use App\Models\Group\GroupType;
+
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Gate;
 use Validator;
@@ -23,12 +25,12 @@ class UserController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show()
     {
-        $user=User::find($id);
+        $user=Auth::user();
         return view('user.show')->with([
             'user'=>$user,
-            'infos'=>$user->infoBases()->get()
+            'bases'=>$user->infoBases()->get(),
             ]);
     }
 
@@ -38,66 +40,50 @@ class UserController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function edit()
     {
-        //
-        return view('user.edit')->with(['user'=>User::find($id)]);
+        return view('user.edit')->with(['user'=>Auth::user()]);
     }
 
     /**
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request)
     {
-        //validation
         $validator = Validator::make($request->all(),[
             'name' => ['required', 'string', 'max:255'],
-            'email' => ['required', 'string', 'email', 'max:255'],
+            'email' => ['required', 'string', 'email', 'max:255','unique:users,email'],
         ]);
         if ($validator->fails()) {
             return back()->withErrors($validator)->withInput();
         }
-        $user=User::find($id);
+        $user=Auth::user();
         $user->fill([
             'name'=>$request['name'],
             'email'=>$request['email'],
         ])->save();
-        return redirect()->route('user.show',$id);
-    }
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy($id)
-    {
-        //
-        $user=User::find($id);
-        $user->groups()->detach();
-        $user->groupRoles()->detach();
-        $user->questions()->detach();
-        $user->infoBases()->detach();
-        $user->delete();
-        return redirect()->route('home');
+        return redirect()->route('user.show');
     }
 
-    /**
-     * アンケート回答一覧
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function answers($id){
-        //
-        $user=User::find($id);
-        return view('user.answers')->with([
-            'user'=>$user,
-            'answers'=>$user->questions()->get()
-            ]);
+    //
+    public function settingForm(){
+        return view('user.setting')->with(['types'=>GroupType::all()]);
     }
+    //
+    public function setting(Request $request){
+        $validator = Validator::make($request->all(),[
+            'types.*' => ['required', 'integer','min:1','exists:group_types,id'],
+        ]);
+        if ($validator->fails()) {
+            return back()->withErrors($validator)->withInput();
+        }
+        foreach ((array)$request->types as $type){
+            Auth::user()->useGroupType((int)$type);
+        }
+        return redirect()->route('user.show');
+    }
+
 }

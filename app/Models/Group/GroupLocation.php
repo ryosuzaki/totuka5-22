@@ -7,6 +7,12 @@ use Illuminate\Database\Eloquent\Model;
 class GroupLocation extends Model
 {
     //
+    protected $guarded = ['id'];
+
+    //
+    public $incrementing = false; 
+
+
     /**
      * 座標取得
      *

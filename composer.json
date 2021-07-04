@@ -9,10 +9,13 @@
     "license": "MIT",
     "require": {
         "php": "^7.2",
+        "barryvdh/laravel-debugbar": "^3.6",
         "fideloper/proxy": "^4.0",
         "laravel/framework": "^6.0",
         "laravel/tinker": "^1.0",
-        "laravel/ui": "1.*"
+        "laravel/ui": "1.*",
+        "spatie/laravel-permission": "^4.2",
+        "wildside/userstamps": "^2.1"
     },
     "require-dev": {
         "beyondcode/laravel-dump-server": "^1.0",

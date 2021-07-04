@@ -5,9 +5,14 @@ namespace App\Http\Controllers\Group;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 
-use App\Models\Group\GroupInfoBase;
+use App\Models\Info\InfoTemplate;
+
+use App\Models\Group\Group;
+
 use Illuminate\Support\Facades\Auth;
+
 use Illuminate\Support\Facades\Gate;
+
 use Validator;
 
 class GroupInfoBaseController extends Controller
@@ -16,26 +21,25 @@ class GroupInfoBaseController extends Controller
     {
         $this->middleware('auth');
     }
+
     /**
      * Display a listing of the resource.
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Group $group)
     {
-        //
-        return view('group.info_base.index')->with(['bases'=>GroupInfoBase::all()]);
+        return view('group.info_base.index')->with(['group'=>$group,'bases'=>$group->infoBases()->get()]);
     }
-
     /**
      * Show the form for creating a new resource.
      *
      * @return \Illuminate\Http\Response
      */
-    public function create()
+    public function create(Group $group)
     {
-        //
-        return view('group.info_base.create');
+        Gate::authorize('create-group-info-bases', $group);
+        return view('group.info_base.create')->with(['group'=>$group,'templates'=>InfoTemplate::where('model',get_class($group))->get()]);
     }
 
     /**
@@ -44,20 +48,29 @@ class GroupInfoBaseController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(Request $request,Group $group)
     {
-        //
+        Gate::authorize('create-group-info-bases', $group);
         $validator = Validator::make($request->all(),[
-            'name'=>'required|max:255',
+            'templates.*'=>['required', 'integer','min:1','exists:info_templates,id']
         ]);
         if ($validator->fails()) {
             return back()->withErrors($validator)->withInput();
         }
-        //
-        $base=GroupInfoBase::create([
-            'name'=>$request['name'],
-        ]);
-        return redirect()->route('group.info_base.edit',$base->id);
+        foreach((array)$request->templates as $template){
+            $group->createInfoBase($template);
+        }
+        return redirect()->route('group.show',$group->id);
+    }
+
+    /**
+     * Display the specified resource.
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function show($id)
+    {
     }
 
     /**
@@ -66,10 +79,10 @@ class GroupInfoBaseController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit($base_id)
+    public function edit(Group $group,int $id)
     {
-        //
-        return view('group.info_base.edit')->with(['base'=>GroupInfoBase::find($base_id)]);
+        Gate::authorize('update-group-info-bases',$group);
+        return view('group.info_base.edit')->with(['group'=>$group,'base'=>$group->getInfoBase($id)]);
     }
 
     /**
@@ -79,19 +92,22 @@ class GroupInfoBaseController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $group_id,$base_id)
+    public function update(Request $request,Group $group,int $id)
     {
-        //
+        info($request);
+        Gate::authorize('update-group-info-bases',$group);
         $validator = Validator::make($request->all(),[
-            'name'=>'required|max:255',
+            'name'=>'required|string|max:255',
+            'available'=>'required|boolean',
         ]);
         if ($validator->fails()) {
             return back()->withErrors($validator)->withInput();
         }
-        $base=GroupInfoBase::find($base_id)->fill([
-            'name'=>$request['name'],
+        $group->getInfoBase($id)->fill([
+            'name'=>$request->name,
+            'available'=>(bool)$request->available,
         ])->save();
-        return redirect()->route('group.info_base.edit',$base_id);
+        return redirect()->route('group.info_base.index',$group->id);
     }
 
     /**
@@ -100,12 +116,10 @@ class GroupInfoBaseController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($base_id)
+    public function destroy(Group $group,int $id)
     {
-        //
-        $base=GroupInfoBase::find($base_id);
-        $base->infos()->delete();
-        $base->delete();
-        return redirect()->route('home');
+        Gate::authorize('delete-group-info-bases', $group);
+        $group->deleteInfoBase($id);
+        return redirect()->back();
     }
 }

@@ -6,7 +6,7 @@
         <div class="col-md-8">
             <div class="card">
                 <div class="card-body">
-                    {{$bases}}
+                    {{Auth::user()->answerToday()}}
                 </div>
             </div>
         </div>
