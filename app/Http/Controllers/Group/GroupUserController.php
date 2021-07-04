@@ -115,6 +115,13 @@ class GroupUserController extends Controller
     {
         Gate::authorize('removeUser-group-role',[$group,$index]);
         $group->removeUser($user_id);
-        return redirect()->route('group.user.index',$group->id);
+        return redirect()->route('group.user.index',[$group->id,$index]);
+    }
+
+    //
+    public function quitRequestJoin(Group $group,int $user_id,int $index){
+        Gate::authorize('inviteUser-group-role',[$group,$index]);
+        $group->quitRequestJoin($user_id);
+        return redirect()->route('group.user.index',[$group->id,$index]);
     }
 }

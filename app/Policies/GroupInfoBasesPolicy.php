@@ -8,6 +8,8 @@ use App\User;
 class GroupInfoBasesPolicy
 {
     //
+
+    //
     public function create(User $user, Group $group)
     {
         return $user->getRoleByGroup($group->id)->hasPermissionTo('group_info_bases.create');

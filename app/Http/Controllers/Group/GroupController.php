@@ -21,6 +21,7 @@ class GroupController extends Controller
     public function __construct()
     {
         $this->middleware('auth');
+        
     }
 
     /**
@@ -72,9 +73,14 @@ class GroupController extends Controller
      */
     public function show(Group $group,int $index=0)
     {
+        if(Auth::user()->hasGroup($group->id)){
+            $bases=$group->getAvailableInfoBasesByRole(Auth::user()->getRoleByGroup($group->id)->id);
+        }else{
+            $bases=$group->getAvailableInfoBases();
+        }
         return view('group.show')->with([
             'group'=>$group,
-            'bases'=>$group->getAvailableInfoBasesByRole(Auth::user()->getRoleByGroup($group->id)->id),
+            'bases'=>$bases,
             'index'=>$index,
             ]);
     }

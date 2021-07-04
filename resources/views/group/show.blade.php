@@ -22,16 +22,19 @@
                     @foreach ($bases as $base)
                     <div class="tab-pane @if($base->index==$index) active @endif" id="pill{{$base->index}}">
                         @include('info.info.show.'.$base->getTemplate()->id, ['base'=>$base,'info'=>$base->info()])
+                        @if(Auth::user()->hasGroup($group->id))
                         <div class="row">
                             <a class="btn btn-outline-primary btn-block mx-auto" href="{{route('group.info.edit',[$group->id,$base->index])}}"><i class="material-icons">edit</i> 変更</a>
                         </div>
+                        @endif
                     </div>
                     @endforeach
                 </div>
-
+                @if(Auth::user()->hasGroup($group->id))
                 <div class="row">
                     <a class="btn btn-primary btn-block" href="{{route('group.info_base.index',[$group->id])}}"><i class="material-icons">list</i> 情報編集</a>
-                </div> 
+                </div>
+                @endif
             </div>
             
         </div>

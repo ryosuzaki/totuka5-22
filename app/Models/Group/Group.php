@@ -256,16 +256,20 @@ class Group extends Model
         }
     }
     //
+    public function getAvailableInfoBases(){
+        return $this->infoBases()->where('available',true)->get();
+    }
+    //
     public function getAvailableInfoBasesByRole($role){
         $role=$this->getRole($role);
         $bases=$this->infoBases()->get();
-        $rtn=[];
+        $return=[];
         foreach ($bases as $base){
             if($base->available||$role->hasPermissionTo('group_info.'.$base->index.'.view')){
-                $rtn[]=$base;
+                $return[]=$base;
             }
         }
-        return $rtn;
+        return $return;
     }
 
 
@@ -312,6 +316,10 @@ class Group extends Model
         }
         $role=$this->getRole($role);
         return $this->usersRequestJoin()->attach($user_id,['role_id'=>$role->id]);
+    }
+    //
+    public function quitRequestJoin(int $user_id){
+        return $this->usersRequestJoin()->detach($user_id);
     }
 
 

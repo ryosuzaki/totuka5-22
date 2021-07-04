@@ -28,6 +28,7 @@
                 <td></td><td></td>
                 @endif
                 <td class="row pt-1">
+                @if($role->index!=0)
                 <form action="{{route('group.user.destroy',[$group->id,$user->id,$role->index])}}" method="post">
                     @csrf
                     @method('delete')
@@ -46,6 +47,7 @@
                         </div>
                     </div>
                 </form>
+                @endif
                 </td>
             </tr>
             @endforeach

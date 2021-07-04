@@ -62,6 +62,8 @@ Route::get('group/{group}/user/{user}/show/{index}', 'Group\GroupUserController@
 Route::post('group/{group}/user/{index}', 'Group\GroupUserController@store')->name('group.user.store');
 Route::delete('group/{group}/user/{user}/{index}', 'Group\GroupUserController@destroy')->name('group.user.destroy');
 
+Route::get('group/{group}/user/{user}/quit-request-join/{index}', 'Group\GroupUserController@quitRequestJoin')->name('group.user.quit_request_join');
+
 
 //
 Route::get('group/{group}/info/{index}/edit', 'Group\GroupInfoController@edit')->name('group.info.edit');
