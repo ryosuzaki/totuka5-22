@@ -6,7 +6,17 @@
     <div class="col-md-10">
         <div class="card">
             <div class="card-body">
-                <h5>{{$group->getFormattedTypeName()}}</h5>
+
+                <nav aria-label="breadcrumb" role="navigation">
+                    <ol class="breadcrumb">
+                        <li class="breadcrumb-item"><a href="#">ホーム</a></li>
+                        <li class="breadcrumb-item"><a href="#">{{$group->getFormattedTypeName()}}</a></li>
+                        <li class="breadcrumb-item"><a href="#">{{$group->name}}</a></li>
+                        <li class="breadcrumb-item"><a href="#">役割一覧</a></li>
+                        <li class="breadcrumb-item active" aria-current="page">ユーザー一覧</li>
+                    </ol>
+                </nav>
+                <h3 class="text-center mb-4">ユーザー一覧</h3>
                 
                 <div class="form-group">
                     <select class="form-control selectpicker h4" data-style="btn btn-link" id="role-link">
@@ -23,7 +33,7 @@
                 </script>
 
                 @if($role->index!=0)
-                <a class="btn btn-success btn-sm btn-round text-white" href="{{route('group.user.create',[$group->id,$role->index])}}"><i class="material-icons">person_add</i>追加</a>
+                <a class="btn btn-success btn-sm btn-round text-white" href="{{route('group.user.create',[$group->id,$role->index])}}"><i class="material-icons">person_add</i>招待</a>
                 @endif
 
 

@@ -5,13 +5,24 @@
     <div class="col-md-8">
         <div class="card">
             <div class="card-body">
+
+                <nav aria-label="breadcrumb" role="navigation">
+                    <ol class="breadcrumb">
+                        <li class="breadcrumb-item"><a href="#">ホーム</a></li>
+                        <li class="breadcrumb-item"><a href="#">{{Auth::user()->name}}</a></li>
+                        <li class="breadcrumb-item active" aria-current="page">情報一覧</li>
+                    </ol>
+                </nav>
+                <h3 class="text-center mb-4">情報一覧</h3>
+
+
                 <a class="btn btn-success btn-sm btn-round text-white" href="{{route('user.info_base.create')}}"><i class="material-icons">add</i> 追加</a>
                 <div class="table-responsive">
                         <table class="table">
                             <thead>
                             <tr>
                                 <th>テンプレート</th>
-                                <th>名前</th>
+                                <!--<th>名前</th>-->
                                 <th>アクション</th>
                             </tr>
                             </thead>
@@ -19,9 +30,9 @@
                                 @foreach($bases as $base)
                                 <tr>
                                     <td><a href="{{route('info_template.show',$base->infoTemplate()->first()->id)}}">{{$base->infoTemplate()->first()->name}}</a></td>
-                                    <td>{{$base->name}}</td>                                
+                                    <!--<td>{{$base->name}}</td>-->                                
                                     <td class="row p-1">
-                                    <a class="btn btn-primary btn-sm btn-round text-white" href="{{route('user.info_base.edit',[$base->id])}}"><i class="material-icons">edit</i> 編集</a>
+                                    <!--<a class="btn btn-primary btn-sm btn-round text-white" href="{{route('user.info_base.edit',[$base->id])}}"><i class="material-icons">edit</i> 変更</a>-->
                                     <form action="{{route('user.info_base.destroy',[$base->id])}}" method="post">
                                         @csrf
                                         @method('delete')

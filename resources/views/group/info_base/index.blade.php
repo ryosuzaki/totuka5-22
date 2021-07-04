@@ -5,6 +5,18 @@
     <div class="col-md-8">
         <div class="card">
             <div class="card-body">
+
+                <nav aria-label="breadcrumb" role="navigation">
+                    <ol class="breadcrumb">
+                        <li class="breadcrumb-item"><a href="#">ホーム</a></li>
+                        <li class="breadcrumb-item"><a href="#">{{$group->getFormattedTypeName()}}</a></li>
+                        <li class="breadcrumb-item"><a href="#">{{$group->name}}</a></li>
+                        <li class="breadcrumb-item active" aria-current="page">情報一覧</li>
+                    </ol>
+                </nav>
+                <h3 class="text-center mb-4">情報一覧</h3>
+
+
                 <a class="btn btn-success btn-sm btn-round text-white" href="{{route('group.info_base.create',[$group->id])}}"><i class="material-icons">add</i> 追加</a>
                 <div class="table-responsive">
                         <table class="table">
@@ -23,7 +35,7 @@
                                     <td>{{$base->name}}</td> 
                                     <td>@if($base->available)　一般公開　@else　権限を持つユーザーのみ　@endif</td>                              
                                     <td class="row p-1">
-                                    <a class="btn btn-primary btn-sm btn-round text-white" href="{{route('group.info_base.edit',[$group->id,$base->id])}}"><i class="material-icons">edit</i> 編集</a>
+                                    <a class="btn btn-primary btn-sm btn-round text-white" href="{{route('group.info_base.edit',[$group->id,$base->id])}}"><i class="material-icons">edit</i> 変更</a>
                                     <form action="{{route('group.info_base.destroy',[$group->id,$base->id])}}" method="post">
                                         @csrf
                                         @method('delete')

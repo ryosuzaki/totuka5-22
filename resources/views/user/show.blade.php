@@ -5,6 +5,12 @@
     <div class="col-md-8">
         <div class="card mb-3">
             <div class="card-body">
+                <nav aria-label="breadcrumb" role="navigation">
+                    <ol class="breadcrumb">
+                        <li class="breadcrumb-item"><a href="#">ホーム</a></li>
+                        <li class="breadcrumb-item active" aria-current="page">{{$user->name}}</li>
+                    </ol>
+                </nav>
                 <h3 class="text-center">{{$user->name}}</h3>
                 <p class="h3 text-center">{{$user->email}}</p>
             </div>
@@ -23,7 +29,7 @@
                     <div class="tab-pane @if($bases[0]==$base) active @endif" id="pill{{$base->index}}">
                         @include('info.info.show.'.$base->getTemplate()->id, ['base'=>$base])
                         <div class="row">
-                            <a class="btn btn-outline-primary btn-block mx-auto" href="{{route('info_base.info.edit',$base->id)}}"><i class="material-icons">edit</i> 変更</a>
+                            <a class="btn btn-outline-primary btn-block mx-auto" href="{{route('user.info.edit',$base->id)}}"><i class="material-icons">edit</i> 変更</a>
                         </div>
                     </div>
                     @endforeach

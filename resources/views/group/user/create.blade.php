@@ -5,7 +5,19 @@
     <div class="col-md-8">
         <div class="card">
             <div class="card-body">
-                <h5>{{$group->getFormattedTypeName()}} {{$group->name}}</h5>
+
+                <nav aria-label="breadcrumb" role="navigation">
+                    <ol class="breadcrumb">
+                        <li class="breadcrumb-item"><a href="#">ホーム</a></li>
+                        <li class="breadcrumb-item"><a href="#">{{$group->getFormattedTypeName()}}</a></li>
+                        <li class="breadcrumb-item"><a href="#">{{$group->name}}</a></li>
+                        <li class="breadcrumb-item"><a href="#">役割一覧</a></li>
+                        <li class="breadcrumb-item"><a href="#">ユーザー一覧</a></li>
+                        <li class="breadcrumb-item active" aria-current="page">招待</li>
+                    </ol>
+                </nav>
+                <h3 class="text-center mb-4">ユーザーを招待</h3>
+
 
                 <div class="form-group">
                     <select class="form-control selectpicker h4" data-style="btn btn-link" id="role-link">
@@ -30,7 +42,7 @@
 
                     <div class="form-group row mb-0">
                         <button type="submit" class="btn btn-primary btn-block">
-                        参加リクエストを送る
+                        招待する
                         </button>
                     </div>
                 </form>

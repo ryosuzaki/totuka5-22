@@ -5,6 +5,15 @@
     <div class="col-md-8">
         <div class="card mb-3">
             <div class="card-body">
+
+            <nav aria-label="breadcrumb" role="navigation" class="mb-4">
+                <ol class="breadcrumb">
+                    <li class="breadcrumb-item"><a href="#">ホーム</a></li>
+                    <li class="breadcrumb-item"><a href="#">{{$group->getFormattedTypeName()}}</a></li>
+                    <li class="breadcrumb-item active" aria-current="page">{{$group->name}}</li>
+                </ol>
+            </nav>
+            
             @include('group.show.header.'.$group->getTypeName(), ['group'=>$group,'bases'=>$bases])
             
             @if(Auth::user()->hasGroup($group->id))
@@ -14,7 +23,7 @@
             </div>
             @endif
             <div class="row">
-                <a class="btn btn-primary btn-block" href="{{route('group.edit',[$group->id])}}"><i class="material-icons">edit</i> 編集</a>
+                <a class="btn btn-primary btn-block" href="{{route('group.edit',[$group->id])}}"><i class="material-icons">edit</i> 変更</a>
             </div>
             @endif
 

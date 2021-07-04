@@ -82,6 +82,9 @@ Route::put('user', 'UserController@update')->name('user.update');
 Route::get('user/setting', 'UserController@settingForm')->name('user.setting_form');
 Route::post('user/setting', 'UserController@setting')->name('user.setting');
 
+Route::get('user/{info_base}/info/edit', 'UserInfoController@edit')->name('user.info.edit');
+Route::put('user/{info_base}/info', 'UserInfoController@update')->name('user.info.update');
+
 //info_base info
 Route::get('info_base/{info_base}/info/edit', 'Info\InfoController@edit')->name('info_base.info.edit');
 Route::put('info_base/{info_base}/info', 'Info\InfoController@update')->name('info_base.info.update');

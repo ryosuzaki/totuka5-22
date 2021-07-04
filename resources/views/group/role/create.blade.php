@@ -8,6 +8,19 @@
             <div class="card">
                 <div class="card-body">
                     
+
+                    <nav aria-label="breadcrumb" role="navigation">
+                        <ol class="breadcrumb">
+                            <li class="breadcrumb-item"><a href="#">ホーム</a></li>
+                            <li class="breadcrumb-item"><a href="#">{{$group->getFormattedTypeName()}}</a></li>
+                            <li class="breadcrumb-item"><a href="#">{{$group->name}}</a></li>
+                            <li class="breadcrumb-item"><a href="#">役割一覧</a></li>
+                            <li class="breadcrumb-item active" aria-current="page">追加</li>
+                        </ol>
+                    </nav>
+                    <h3 class="text-center mb-4">役割追加</h3>
+
+                    
                         <div class="form-group row">
                             <label for="name">役割名</label>
                             <input id="name" type="text" class="form-control @error('name') is-invalid @enderror" name="name" value="{{ old('name') }}" required autofocus>
@@ -35,7 +48,7 @@
 
                         <div class="form-group row mt-5 mb-0">
                             <button type="submit" class="btn btn-primary btn-block">
-                                役割登録
+                                役割追加
                             </button>
                         </div>
                 </div>

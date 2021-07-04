@@ -5,6 +5,19 @@
     <div class="col-md-8">
         <div class="card">
             <div class="card-body">
+
+
+            <nav aria-label="breadcrumb" role="navigation">
+                <ol class="breadcrumb">
+                    <li class="breadcrumb-item"><a href="#">ホーム</a></li>
+                    <li class="breadcrumb-item"><a href="#">{{$group->getFormattedTypeName()}}</a></li>
+                    <li class="breadcrumb-item"><a href="#">{{$group->name}}</a></li>
+                    <li class="breadcrumb-item active" aria-current="page">役割一覧</li>
+                </ol>
+            </nav>
+            <h3 class="text-center mb-4">役割一覧</h3>
+
+
             <a class="btn btn-success btn-sm btn-round text-white" href="{{route('group.role.create',$group->id)}}"><i class="material-icons">add</i>追加</a>
                 <div class="table-responsive">
                     <table class="table">
@@ -19,7 +32,7 @@
                             <tr>
                                 <td>{{$role->role_name}}</td>
                                 <td class="row">
-                                <a class="btn btn-primary btn-sm btn-round text-white" href="{{route('group.role.edit',[$group->id,$role->index])}}"><i class="material-icons">edit</i> 編集</a>
+                                <a class="btn btn-primary btn-sm btn-round text-white" href="{{route('group.role.edit',[$group->id,$role->index])}}"><i class="material-icons">edit</i> 変更</a>
                                 @if($role->index!=0)
                                 <a class="btn btn-warning btn-sm btn-round text-white" href="{{route('group.permission.edit',[$group->id,$role->index])}}"><i class="material-icons">lock_open</i> 権限</a>
                                 <a class="btn btn-info btn-round btn-sm text-white" href="{{route('group.user.index',[$group->id,$role->index])}}"><i class="material-icons">groups</i> ユーザ</a>
