@@ -11,13 +11,21 @@ class GroupType extends Model
     //
     protected $casts = [
         'required_info'=>'json',
-        'available_info'=>'json',
+        'user_info'=>'json',
         'creator_permissions'=>'json',
     ];
     
     //
     public static function findByName($name){
         return parent::where('name',$name)->first();
+    }
+    //
+    public static function findByIdOrName($type){
+        if (is_string($type)) {
+            return self::findByName($type);
+        }elseif(is_int($type)){
+            return self::find($type);
+        }
     }
 
 

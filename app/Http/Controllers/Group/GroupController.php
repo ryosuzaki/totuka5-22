@@ -10,6 +10,9 @@ use App\Models\Group\Group;
 
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
+
+use Illuminate\Support\Facades\Gate;
+
 use Validator;
 
 
@@ -50,7 +53,7 @@ class GroupController extends Controller
     {
         $validator = Validator::make($request->all(),[
             'name'=>'required|string|max:255',
-            'password'=>'required|alpha_num|min:4|max:255|confirmed'//password_confirmation
+            'password'=>'required|alpha_num|min:4|max:255|confirmed'
         ]);
         if ($validator->fails()) {
             return back()->withErrors($validator)->withInput();
@@ -58,13 +61,6 @@ class GroupController extends Controller
         //
         $type_name=$request->type;
         $group=Group::setUp(Auth::id(),$request->name,$type_name,$request->password);
-        $type=$group->getType();
-        if($type->need_location){
-            $group->location()->create();
-        }
-        foreach($type->required_info as $id){
-            $group->createInfoBase($id);
-        }
         return redirect()->route('group.show',$group->id);
     }
 
@@ -76,9 +72,9 @@ class GroupController extends Controller
      */
     public function show(Group $group,int $index=0)
     {
-        return view('group.show.'.$group->getTypeName())->with([
+        return view('group.show')->with([
             'group'=>$group,
-            'bases'=>$group->infoBases()->get(),
+            'bases'=>$group->getAvailableInfoBasesByRole(Auth::user()->getRoleByGroup($group->id)->id),
             'index'=>$index,
             ]);
     }
@@ -91,7 +87,7 @@ class GroupController extends Controller
      */
     public function edit(Group $group)
     {
-        $this->authorize('update',$group);
+        Gate::authorize('update', $group);
         return view('group.edit')->with([
             'group'=>$group,
             ]);
@@ -106,6 +102,7 @@ class GroupController extends Controller
      */
     public function update(Request $request,Group $group)
     {
+        Gate::authorize('update', $group);
         $validator = Validator::make($request->all(),[
             'name'=>'required|max:255',
         ]);
@@ -126,6 +123,7 @@ class GroupController extends Controller
      */
     public function destroy(Group $group)
     {
+        Gate::authorize('delete', $group);
         foreach($group->infoBases()->get() as $base){
             $group->deleteInfoBase($base->id);
         }

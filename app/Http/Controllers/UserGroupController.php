@@ -7,7 +7,7 @@ use App\User;
 use App\Models\Group\Group;
 
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\Hash;
+
 use Validator;
 
 class UserGroupController extends Controller
@@ -53,16 +53,14 @@ class UserGroupController extends Controller
     /**
      * 役割などを変更
      *
-     * @param  int  $user_id,$group_id
+     * @param  Group $group
      * @return \Illuminate\Http\Response
      */
-    public function edit($group_id)
+    public function edit(Group $group)
     {
-        $group=Group::find($group_id);
-        $user=User::find($user_id);
-        return view('user.group.edit.'.$group->type)->with([
+        return view('user.group.edit')->with([
                 'group'=>$group,
-                'user'=>$user,
+                'user'=>Auth::user(),
             ]);
     }
 
@@ -70,10 +68,10 @@ class UserGroupController extends Controller
      * 役割などを変更
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  int  $user_id,$group_id
+     * @param  Group $group
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request,$group_id)
+    public function update(Request $request,Group $group)
     {
         $validator = Validator::make($request->all(),[
             'role_id'=>'required|integer|min:1|exists:roles,id',
@@ -82,14 +80,11 @@ class UserGroupController extends Controller
             return back()->withErrors($validator)->withInput();
         }
         //
-        $group=Group::find($group_id);
-        if(!Hash::check($request->password,$group->role($request->role_id)->password)){
+        if(!$group->getRole((int)$request->role_id)->checkPassword($request->password)){
             return back()->withInput();
         }
-        $group->users()->updateExistingPivot($user_id,[
-            'role_id'=>$request->role_id,
-        ]);
-        return redirect()->route('user.group.index',$user_id);
+        $group->inviteUser(Auth::id(),(int)$request->role_id);
+        return redirect()->route('user.group.index',Auth::id());
     }
 
     /**
@@ -101,7 +96,7 @@ class UserGroupController extends Controller
     public function destroy(int $group_id)
     {
         Auth::user()->leaveGroup($group_id);
-        return redirect()->route('user.group.index',$user_id);
+        return redirect()->route('user.group.index');
     }
 
     //

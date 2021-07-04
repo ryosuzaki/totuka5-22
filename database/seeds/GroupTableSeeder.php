@@ -22,11 +22,11 @@ class GroupTableSeeder extends Seeder
             'formatted_name'=>'避難所',
             'need_location'=>true,
             'required_info'=>[1,2],
-            'available_info'=>[],
+            'user_info'=>[],
             'creator_permissions'=>[
                 'group.*',
                 'group_info_bases.*',
-                'group_info_base.*',
+                'group_info.*',
                 'group_roles.*',
                 'group_role.*',
             ],
@@ -36,7 +36,7 @@ class GroupTableSeeder extends Seeder
             'formatted_name'=>'危険地点',
             'need_location'=>true,
             'required_info'=>[3],
-            'available_info'=>[],
+            'user_info'=>[],
             'creator_permissions'=>['group.*'],
         ]);
         GroupType::create([
@@ -44,11 +44,11 @@ class GroupTableSeeder extends Seeder
             'formatted_name'=>'介護施設',
             'need_location'=>false,
             'required_info'=>[1],
-            'available_info'=>[],
+            'user_info'=>[5],
             'creator_permissions'=>[
                 'group.*',
                 'group_info_bases.*',
-                'group_info_base.*',
+                'group_info.*',
                 'group_roles.*',
                 'group_role.*',
             ],

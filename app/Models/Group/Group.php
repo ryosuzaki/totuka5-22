@@ -7,7 +7,6 @@ use App\Models\Info\InfoBase;
 
 use App\User;
 
-use App\Models\Group\GroupRole;
 use App\Models\Group\GroupType;
 
 use App\Traits\InfoFuncs;
@@ -25,41 +24,47 @@ use Illuminate\Support\Facades\Hash;
 
 class Group extends Model
 {
-    use InfoFuncs{
-        InfoFuncs::createInfoBase as trait_createInfoBase;
-    }
+    use InfoFuncs;
     use UploadImg{
         uploadImg::uploadImg as trait_uploadImg;
     }
     //
-    protected $guarded = ['id'];
+    protected $guarded = ['id','group_type_id'];
     //
-    public string $creator='作成者';
-    //$unique_name{{$this->id}}
-    public string $unique_name='group';
-    //$upload_path{{$this->id}}
-    public string $upload_path='group';
+    protected $casts = [
+        'permissions'=>'json',
+    ];
+    
 
     
     //
     public static function setUp(int $user_id,string $name,string $type,string $creator_password){
         $type=GroupType::findByName($type);
+        //
         $group=parent::create([
             'group_type_id'=>$type->id,
             'name'=>$name,
         ]);
         //
-        $group->unique_name=$group->unique_name.$group->id;
+        $group->fill([
+            'unique_name'=>config('group.unique_name').$group->id,
+        ])->save();
         //
-        $group->upload_path=$group->upload_path.$group->id;
-        //
-        $creator=$group->createRole($group->creator,$creator_password);
-        //
-        foreach($type->creator_permissions as $permission){
-            $creator->givePermissionTo($permission);
+        if($type->need_location){
+            $group->location()->create();
         }
         //
-        $group->inviteUser($user_id,$group->creator);
+        foreach($type->required_info as $id){
+            $group->createInfoBase($id);
+        }
+        //
+        $creator=$group->createRole(config('group.creator'),$creator_password);
+        //
+        $creator->syncPermissions($type->creator_permissions);
+        //
+        $group->inviteUser($user_id,config('group.creator'));
+        //
+        $group->refreshPermissions();
         return $group;
     }
     //
@@ -67,6 +72,50 @@ class Group extends Model
         return parent::destroy($group_id);
     }
 
+    //
+    public function refreshPermissions(){
+        $permissions=[];
+        $permissions[]='group.*';
+        foreach(config('group.role.group') as $action){
+            $permissions[]='group.'.$action;
+        }
+        $permissions[]='group_info_bases.*';
+        foreach(config('group.role.group_info_bases') as $action){
+            $permissions[]='group_info_bases.'.$action;
+        }
+        $permissions[]='group_info.*';
+        foreach($this->infoBases()->get() as $base){
+            $permissions[]='group_info.'.$base->index.'.*';
+            foreach(config('group.role.group_info') as $action){
+                $permissions[]='group_info.'.$base->index.'.'.$action;
+            }
+        }
+        $permissions[]='group_roles.*';
+        foreach(config('group.role.group_roles') as $action){
+            $permissions[]='group_roles.'.$action;
+        }
+        $permissions[]='group_role.*';
+        foreach($this->roles()->get() as $role){
+            if($role->role_name!=config('group.creator')){
+                $permissions[]='group_role.'.$role->index.'.*';
+                foreach(config('group.role.group_role') as $action){
+                    $permissions[]='group_role.'.$role->index.'.'.$action;
+                }
+            }
+        }
+        $this->fill([
+            'permissions'=>$permissions,
+        ])->save();
+        return $permissions;
+    }
+    //
+    public function refreshRoles(){
+        $permissions=$this->refreshPermissions();
+        foreach ($this->roles()->get() as $role){
+            $role->syncPermissions($role->getAllPermissions()->pluck('name')->intersect($permissions));
+        }
+        return $this->roles()->get();
+    }
 
 
     //
@@ -118,12 +167,14 @@ class Group extends Model
 
     //
     public function createRole(string $name,string $password){
-        return $this->roles()->create([
+        $role=$this->roles()->create([
             'name'=>$this->unique_name.$name,
             'role_name'=>$name,
             'index'=>$this->calcRoleIndex(),
             'password'=>Hash::make($password),
         ]);
+        $this->refreshPermissions();
+        return $role;
     }
     //
     public function deleteRole($role){
@@ -131,7 +182,12 @@ class Group extends Model
         $this->users()->wherePivot('role_id',$role->id)->detach();
         $role->permissions()->detach();
         $role->users()->detach();
-        return $role->delete();
+        $role->delete();
+        return $this->refreshRoles();
+    }
+    public function deleteRoleByIndex(int $index){
+        $role_id=$this->getRoleByIndex($index)->id;
+        return $this->deleteRole($role_id);
     }
     //
     public function roles(){
@@ -145,6 +201,11 @@ class Group extends Model
             return $this->roles()->find($role);
         }
     }
+    //
+    public function getRoleByIndex(int $index){
+        return $this->roles()->where('index',$index)->first();
+    }
+    
     //
     public function usersHaveRole($role){
         $role=$this->getRole($role);
@@ -178,22 +239,39 @@ class Group extends Model
     public function getTypeName(){
         return $this->getType()->name;
     }
-
-
-
-
     //
-    public function createInfoBase(int $template_id){
-        $base=$this->trait_createInfoBase($template_id);
-        return $base;
+    public function getFormattedTypeName(){
+        return $this->getType()->formatted_name;
     }
 
 
+    //
+    public function getUserInfoBases(int $user_id){
+        return $this->getUser($user_id)->infoBases()->where('info_template_id',$this->getType()->user_info)->get();
+    }
+    //
+    public function getUserInfoBase(int $user_id,int $template_id){
+        if(collect($this->getType()->user_info)->contain($template_id)){
+            return $this->getUser($user_id)->getInfoBaseByTemplate($template_id);
+        }
+    }
+    //
+    public function getAvailableInfoBasesByRole($role){
+        $role=$this->getRole($role);
+        $bases=$this->infoBases()->get();
+        $rtn=[];
+        foreach ($bases as $base){
+            if($base->available||$role->hasPermissionTo('group_info.'.$base->index.'.view')){
+                $rtn[]=$base;
+            }
+        }
+        return $rtn;
+    }
 
 
     //
     public function uploadImg(UploadedFile $img){
-        return $this->trait_uploadImg($img,$this->upload_path);
+        return $this->trait_uploadImg($img,$this->unique_name);
     }
     
 
@@ -221,13 +299,16 @@ class Group extends Model
             'App\User','group_join_requests','group_id','user_id'
         )->withPivot('role_id')->withTimestamps();
     }
+    public function hasUserJoinRequest(int $user_id){
+        return $this->usersRequestJoin()->wherePivot('user_id',$user_id)->get()->isNotEmpty();
+    }
     //
     public function requestJoin(int $user_id,$role){
-        if($this->hasUserInRole($user_id,$this->creator)){
+        if($this->hasUserInRole($user_id,config('group.creator'))){
             return false;
         }
-        if($this->hasUser($user_id)){
-            $this->removeUser($user_id);
+        if($this->hasUserJoinRequest($user_id)){
+            $this->usersRequestJoin()->detach($user_id);
         }
         $role=$this->getRole($role);
         return $this->usersRequestJoin()->attach($user_id,['role_id'=>$role->id]);
@@ -251,7 +332,7 @@ class Group extends Model
 
     
 
-    
+
    
     
 

@@ -53,8 +53,19 @@ Route::resource('group', 'Group\GroupController',['except' => [
 Route::resource('group.role', 'Group\RoleController',['except' => [
 ]]);
 //
-Route::resource('group.user', 'Group\GroupUserController',['except' => [
-]]);
+Route::get('group/{group}/permission/{role}/edit', 'Group\PermissionController@edit')->name('group.permission.edit');
+Route::put('group/{group}/permission/{role}', 'Group\PermissionController@update')->name('group.permission.update');
+//
+Route::get('group/{group}/user/index/{index?}', 'Group\GroupUserController@index')->name('group.user.index');
+Route::get('group/{group}/user/create/{index}', 'Group\GroupUserController@create')->name('group.user.create');
+Route::get('group/{group}/user/{user}/show/{index}', 'Group\GroupUserController@show')->name('group.user.show');
+Route::post('group/{group}/user/{index}', 'Group\GroupUserController@store')->name('group.user.store');
+Route::delete('group/{group}/user/{user}/{index}', 'Group\GroupUserController@destroy')->name('group.user.destroy');
+
+
+//
+Route::get('group/{group}/info/{index}/edit', 'Group\GroupInfoController@edit')->name('group.info.edit');
+Route::put('group/{group}/info/{index}', 'Group\GroupInfoController@update')->name('group.info.update');
     
 
 
@@ -65,16 +76,19 @@ Route::resource('group.user', 'Group\GroupUserController',['except' => [
 Route::get('user', 'UserController@show')->name('user.show');
 Route::get('user/edit', 'UserController@edit')->name('user.edit');
 Route::put('user', 'UserController@update')->name('user.update');
-Route::delete('user', 'UserController@destroy')->name('user.destroy');
+
+Route::get('user/setting', 'UserController@settingForm')->name('user.setting_form');
+Route::post('user/setting', 'UserController@setting')->name('user.setting');
 
 //info_base info
 Route::get('info_base/{info_base}/info/edit', 'Info\InfoController@edit')->name('info_base.info.edit');
 Route::put('info_base/{info_base}/info', 'Info\InfoController@update')->name('info_base.info.update');
-Route::delete('info_base/{info_base}/info', 'Info\InfoController@destroy')->name('info_base.info.destroy');
 
 //
-Route::resource('model.info_base', 'Info\InfoBaseController',['except' => [
-]]);
+Route::resource('group.info_base', 'Group\GroupInfoBaseController');
+
+//
+Route::resource('info_template', 'Info\InfoTemplateController');
 
 
 //
@@ -88,7 +102,13 @@ Route::delete('user/group/{group}', 'UserGroupController@destroy')->name('user.g
 Route::get('user/group/{group}/accept_join_request', 'UserGroupController@acceptJoinRequest')->name('user.group.accept_join_request');
 Route::get('user/group/{group}/denied_join_request', 'UserGroupController@deniedJoinRequest')->name('user.group.denied_join_request');
 
-
+//
+Route::get('user/info_base', 'UserInfoBaseController@index')->name('user.info_base.index');
+Route::get('user/info_base/create', 'UserInfoBaseController@create')->name('user.info_base.create');
+Route::post('user/info_base', 'UserInfoBaseController@store')->name('user.info_base.store');
+Route::get('user/info_base/{info_base}/edit', 'UserInfoBaseController@edit')->name('user.info_base.edit');
+Route::put('user/info_base/{info_base}', 'UserInfoBaseController@update')->name('user.info_base.update');
+Route::delete('user/info_base/{info_base}', 'UserInfoBaseController@destroy')->name('user.info_base.destroy');
 
 
 Route::resource('user.answer','Questionnaire\AnswerController',['except' => [

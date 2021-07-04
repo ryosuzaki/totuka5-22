@@ -14,27 +14,16 @@ class GroupLocationController extends Controller
     {
         $this->middleware('auth');
     }
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function edit($id)
+    
+    //
+    public function edit(Group $group)
     {
-        return view('group.location.edit')->with(['group'=>Group::find($id)]);
+        return view('group.location.edit')->with(['group'=>$group]);
     }
 
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request, $id)
+    //
+    public function update(Request $request,Group $group)
     {
-        //
         $validator = Validator::make($request->all(),[
             'location.longitude'=>'required|numeric',
             'location.latitude'=>'required|numeric',
@@ -42,11 +31,10 @@ class GroupLocationController extends Controller
         if ($validator->fails()) {
             return back()->withErrors($validator)->withInput();
         }
-        $group=Group::find($id);
         $group->location()->fill([
             'longitude'=>$request->longitude,
             'latitude'=>$request->latitude,
         ])->save();
-        return redirect()->route('group.show',$id);
+        return redirect()->route('group.show',$group->id);
     }
 }

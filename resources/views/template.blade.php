@@ -103,7 +103,7 @@
     </div>
   </nav>
 </div>
-<main class="container">
+<main>
   <!--ここに内容-->
   @yield('content')
 </main>

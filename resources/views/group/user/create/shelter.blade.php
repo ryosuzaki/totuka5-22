@@ -9,9 +9,9 @@
                 <form method="POST" action="{{ route('group.user.store',$group->id) }}">
                     @csrf
                     <div class="form-group">
-                        <label for="user_id">ユーザーID</label>
-                        <input id="user_id" type="number" class="form-control @error('user_id') is-invalid @enderror" name="user_id" value="{{ old('user_id') }}" required autofocus>
-                        @error('user_id')
+                        <label for="email">招待するメールアドレス</label>
+                        <input id="email" type="email" class="form-control @error('email') is-invalid @enderror" name="email" value="{{ old('email') }}" required autofocus>
+                        @error('email')
                             <span class="invalid-feedback" role="alert">
                                 <strong>{{ $message }}</strong>
                             </span>
@@ -22,7 +22,7 @@
                         <label for="role">役割</label>
                         <select class="form-control selectpicker" data-style="btn btn-link" id="role" name="role_id">
                             @foreach($roles as $role)
-                            @if($role->role_name!=$group->creator)
+                            @if($role->role_name!=config('group.creator'))
                             <option value="{{$role->id}}">{{$role->role_name}}</option>
                             @endif
                             @endforeach
@@ -31,7 +31,7 @@
 
                     <div class="form-group row mb-0">
                         <button type="submit" class="btn btn-primary btn-block">
-                        ユーザーに参加リクエストを送る
+                        参加リクエストを送る
                         </button>
                     </div>
                 </form>

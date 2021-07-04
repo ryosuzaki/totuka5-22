@@ -31,12 +31,15 @@ class CreateInfoTable extends Migration
             $table->index(['model_type','model_id']);
             $table->unique(['index','model_id','model_type']);
             $table->timestamps();
+            $table->boolean('available')->default(true);
             $table->string('name')->index();
         });
 
         Schema::create('info_templates', function (Blueprint $table) {
             $table->unsignedBigInteger('id');
             $table->string('name')->index();
+            $table->string('detail')->default('');
+            $table->string('model')->nullable();
             $table->timestamps();
             $table->json('default');
         });

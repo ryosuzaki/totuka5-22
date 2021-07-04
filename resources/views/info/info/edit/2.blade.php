@@ -1,26 +1,22 @@
-<form method="POST" action="{{ route('info_base.info.update',$base->id) }}">
-    @csrf
-    @method('PUT')
-    
-    <div class="form-group row">
-        <label for="degree">混雑度</label>
-        <input id="degree" type="text" class="form-control-plaintext form-control-lg" name="info[degree]" value="" readonly>
-    </div> 
-    
-    <div id="slider" class="slider mb-5"></div>
-    
+<div class="form-group row">
+    <label for="degree">混雑度</label>
+    <input id="degree" type="text" class="form-control-plaintext form-control-lg" name="info[degree]" value="" readonly>
+</div> 
 
-    <div class="form-group row">
-        <label for="detail">詳細情報</label>
-        <textarea class="form-control" id="detail" name="info[detail]" rows="5">{{$info->info['detail']}}</textarea>
-    </div>
+<div id="slider" class="slider mb-5"></div>
 
-    <div class="form-group row mb-0">
-        <button type="submit" class="btn btn-primary btn-block">
-            登録
-        </button>
-    </div>
-</form>
+
+<div class="form-group row">
+    <label for="detail">詳細情報</label>
+    <textarea class="form-control" id="detail" name="info[detail]" rows="5">{{$info->info['detail']}}</textarea>
+</div>
+
+<div class="form-group row mb-0">
+    <button type="submit" class="btn btn-primary btn-block">
+        登録
+    </button>
+</div>
+
 
 <script type="module">
 var slider = document.getElementById('slider');

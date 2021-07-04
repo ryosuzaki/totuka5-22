@@ -20,4 +20,9 @@ class InfoTemplate extends Model
     public function infoBases(){
         return $this->hasMany('App\Models\Info\InfoBase','info_template_id');
     }
+
+    //
+    public function model(){
+        return $this->model;
+    }
 }

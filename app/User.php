@@ -12,6 +12,7 @@ use App\Models\Group\GroupType;
 use App\Traits\InfoFuncs;
 
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Hash;
 
 use Spatie\Permission\Traits\HasRoles;
 
@@ -19,7 +20,9 @@ class User extends Authenticatable
 {
     use Notifiable;
     use HasRoles;
-    use InfoFuncs;
+    use InfoFuncs{
+        InfoFuncs::createInfoBase as trait_createInfoBase;
+    }
     /**
      * The attributes that are mass assignable.
      *
@@ -40,17 +43,21 @@ class User extends Authenticatable
         'last_used',
     ];
 
-    /**
-     * The attributes that should be cast to native types.
-     *
-     * @var array
-     */
-    protected $casts = [
-        
-    ];
+    //
+    public static function findByEmail(string $email){
+        return parent::where('email',$email)->first();
+    }
 
-
-
+    //
+    public static function setUp(string $name,string $email,string $password){
+        $user=User::create([
+            'name' => $name,
+            'email' => $email,
+            'password' => Hash::make($password),
+        ]);
+        $user->createInfoBase(4);
+        return $user;
+    }
 
     //
     public function groups(){
@@ -107,11 +114,7 @@ class User extends Authenticatable
     
     //
     public function groupsHaveType($type){
-        if (is_string($type)) {
-            $type=GroupType::findByName($type);
-        }elseif(is_int($type)){
-            $type=GroupType::find($type);
-        }
+        $type=GroupType::findByIdOrName($type);
         $out=[];
         foreach($this->groups()->get() as $group){
             if($group->group_type_id==$type->id){
@@ -120,6 +123,7 @@ class User extends Authenticatable
         }
         return collect($out);
     }
+
     //
     public function groupTypes(){
         $types=[];
@@ -128,8 +132,27 @@ class User extends Authenticatable
         }
         return collect(array_unique($types));
     }
+    //
+    public function useGroupType($type){
+        $type=GroupType::findByIdOrName($type);
+        $ids=collect($type->user_info)->diff($this->infoBases()->pluck('info_template_id'));
+        foreach($ids as $id){
+            $this->createInfoBase($id);
+        }
+        return $ids;
+    }
 
-    
+
+    //
+    public function createInfoBase(int $template_id){
+        if($this->hasInfoBase($template_id)){
+            return $this->getInfoBaseByTemplate($template_id);
+        }else{
+            return $this->trait_createInfoBase($template_id);
+        }
+    }
+
+
 
     //
     public function answers(){
@@ -147,6 +170,9 @@ class User extends Authenticatable
     }
     //
     public function acceptJoinRequest(int $group_id){
+        if($this->hasGroup($group_id)){
+            $this->leaveGroup($group_id);
+        }
         $group=$this->groupsRequestJoin()->find($group_id);
         $role_id=$group->pivot->role_id;
         $group->inviteUser($this->id,$role_id);

@@ -37,11 +37,11 @@ class Role extends SpatieRole
 
 
     //
-    public function checkPassword($password){
+    public function checkPassword(string $password){
         return Hash::check($password,$this->password);
     }
     //
-    public function changePassword($password){
+    public function changePassword(string $password){
         return $this->fill([
             'password'=>Hash::make($password),
         ])->save();

@@ -7,9 +7,10 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Validator;
 
+use App\Models\Info\Info;
 use App\Models\Info\InfoBase;
+
 use App\User;
-use App\Models\Group\Group;
 
 class InfoController extends Controller
 {
@@ -21,14 +22,14 @@ class InfoController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param InfoBase $base
+     * @param InfoBase $info_base
      * @return \Illuminate\Http\Response
      */
-    public function edit(InfoBase $base)
+    public function edit(InfoBase $info_base)
     {
         return view('info.info.edit')->with([
-            'base'=>$base,
-            'info'=>$base->info(),
+            'base'=>$info_base,
+            'info'=>$info_base->info(),
             ]);
     }
 
@@ -36,11 +37,11 @@ class InfoController extends Controller
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param InfoBase $base
+     * @param InfoBase $info_base
      * 
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request,InfoBase $base)
+    public function update(Request $request,InfoBase $info_base)
     {
         $validator = Validator::make($request->all(),[
             
@@ -49,23 +50,20 @@ class InfoController extends Controller
             return back()->withErrors($validator)->withInput();
         }
         //
-        $model=$base->model()->first();
-        $base->updateInfo($request->toArray()['info']);
+        $model=$info_base->model()->first();
+        $info_base->updateInfo($request->toArray()['info']);
         if ($model instanceof User) {
             return redirect()->route('user.show');
-        }elseif ($model instanceof Group) {
-            return redirect()->route('group.show',$model->id);
         }
-        
     }
 
     /**
      * Remove the specified resource from storage.
      *
-     * @param InfoBase $base
+     * @param InfoBase $info_base
      * @return \Illuminate\Http\Response
      */
-    public function destroy(InfoBase $base)
+    public function destroy(InfoBase $info_base)
     {
         
     }

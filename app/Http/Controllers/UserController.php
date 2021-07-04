@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\User;
+use App\Models\Group\GroupType;
+
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Gate;
 use Validator;
@@ -65,14 +67,23 @@ class UserController extends Controller
         ])->save();
         return redirect()->route('user.show');
     }
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy()
-    {
-        
+
+    //
+    public function settingForm(){
+        return view('user.setting')->with(['types'=>GroupType::all()]);
     }
+    //
+    public function setting(Request $request){
+        $validator = Validator::make($request->all(),[
+            'types.*' => ['required', 'integer','min:1','exists:group_types,id'],
+        ]);
+        if ($validator->fails()) {
+            return back()->withErrors($validator)->withInput();
+        }
+        foreach ((array)$request->types as $type){
+            Auth::user()->useGroupType((int)$type);
+        }
+        return redirect()->route('user.show');
+    }
+
 }

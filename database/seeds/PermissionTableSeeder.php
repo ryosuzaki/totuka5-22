@@ -16,37 +16,41 @@ class PermissionTableSeeder extends Seeder
     {
         //
         Role::create(['name'=>'SuperAdmin']);
-
+        /*
         Permission::create(['name'=>'groups.*']);
         Permission::create(['name'=>'groups.viewAny']);
         Permission::create(['name'=>'groups.create']);
-
+        */
         Permission::create(['name'=>'group.*']);
-        Permission::create(['name'=>'group.update']);
-        Permission::create(['name'=>'group.delete']);
+        foreach(config('group.role.group') as $action){
+            Permission::create(['name'=>'group.'.$action]);
+        }
 
         Permission::create(['name'=>'group_info_bases.*']);
-        Permission::create(['name'=>'group_info_bases.create']);
-        Permission::create(['name'=>'group_info_bases.delete']);
-
-        Permission::create(['name'=>'group_info_base.*']);
-        for($i=0;$i<5;$i++){
-            Permission::create(['name'=>'group_info_base.'.$i.'.*']);
-            Permission::create(['name'=>'group_info_base.'.$i.'.view']);
-            Permission::create(['name'=>'group_info_base.'.$i.'.update']);
+        foreach(config('group.role.group_info_bases') as $action){
+            Permission::create(['name'=>'group_info_bases.'.$action]);
         }
+
+        Permission::create(['name'=>'group_info.*']);
+        for($i=0;$i<5;$i++){
+            Permission::create(['name'=>'group_info.'.$i.'.*']);
+            foreach(config('group.role.group_info') as $action){
+                Permission::create(['name'=>'group_info.'.$i.'.'.$action]);
+            }
+        }
+
+
         Permission::create(['name'=>'group_roles.*']);
-        Permission::create(['name'=>'group_roles.viewAny']);
-        Permission::create(['name'=>'group_roles.create']);
-        Permission::create(['name'=>'group_roles.delete']);
+        foreach(config('group.role.group_roles') as $action){
+            Permission::create(['name'=>'group_roles.'.$action]);
+        }
 
         Permission::create(['name'=>'group_role.*']);
         for($i=1;$i<10;$i++){
             Permission::create(['name'=>'group_role.'.$i.'.*']);
-            Permission::create(['name'=>'group_role.'.$i.'.update']);
-            Permission::create(['name'=>'group_role.'.$i.'.viewUsers']);
-            Permission::create(['name'=>'group_role.'.$i.'.inviteUser']);
-            Permission::create(['name'=>'group_role.'.$i.'.removeUser']);
+            foreach(config('group.role.group_role') as $action){
+                Permission::create(['name'=>'group_role.'.$i.'.'.$action]);
+            }
         }
     }
 }

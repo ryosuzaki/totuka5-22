@@ -35,7 +35,7 @@ trait InfoFuncs
     }
     //
     public function deleteInfoBase(int $base_id){
-        $base=$this->infoBases()::find($base_id);
+        $base=$this->infoBases()->find($base_id);
         $base->infos()->delete();
         return $base->delete();
     }
@@ -44,8 +44,12 @@ trait InfoFuncs
         return $this->morphMany('App\Models\Info\InfoBase','model');
     }
     //
-    public function getInfoBase(int $template_id){
-        return $this->infoBases()->where('info_template_id',$template_id)->first();
+    public function getInfoBase(int $id){
+        return $this->infoBases()->get()->find($id);
+    }
+    //
+    public function getInfoBaseByTemplate(int $template_id){
+        return $this->infoBases()->where('info_template_id',$template_id)->get();
     }
     //
     public function getInfoBaseByIndex(int $index){
@@ -53,7 +57,7 @@ trait InfoFuncs
     }
     //
     public function hasInfoBase(int $template_id){
-        return $this->infoBases()->contains('info_template_id',$template_id);
+        return $this->infoBases()->get()->contains('info_template_id',$template_id);
     }
 
 
@@ -70,8 +74,16 @@ trait InfoFuncs
         return collect($infos);
     }
     //
-    public function info(int $template_id){
-        return $this->getInfoBase($template_id)->info();
+    public function info(int $id){
+        return $this->getInfoBase($id)->info();
+    }
+    //
+    public function getInfoByTemplate(int $template_id){
+        $infos=[];
+        foreach($this->getInfoBaseByTemplate($template_id) as $base){
+            $infos[]=$base->info();
+        }
+        return collect($infos);
     }
     //
     public function infoLogs(int $base_id){
@@ -85,8 +97,8 @@ trait InfoFuncs
         ];
     }
     //
-    public function infoAndBasePair(int $template_id){
-        $base=$this->getInfoBase($template_id);
+    public function infoAndBasePair(int $id){
+        $base=$this->getInfoBase($id);
         return [
             'base'=>$base,
             'info'=>$base->info(),

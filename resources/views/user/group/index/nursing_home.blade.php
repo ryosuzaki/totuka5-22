@@ -27,7 +27,7 @@
                         </div>
                         <div class="modal-footer">
                             <button type="button" class="btn btn-secondary" data-dismiss="modal">やめる</button>
-                            <a class="btn btn-danger text-white" href="{{route('user.group.destroy',[Auth::id(),$group->id])}}">退出</a>
+                            <a class="btn btn-danger text-white" href="{{route('user.group.destroy',$group->id)}}">退出</a>
                         </div>
                         </div>
                     </div>

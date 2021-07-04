@@ -1,31 +1,16 @@
-@extends('template')
-
-@section('content')
-<div class="container">
-    <div class="row justify-content-center">
-        <div class="col-md-8">
-            <div class="card">
-                <div class="card-body">
-                    <form method="POST" action="{{ route('group_info_base.store') }}">
-                        @csrf
-                        <div class="form-group row">
-                            <label for="name">情報ベース名</label>
-                            <input id="name" type="text" class="form-control @error('name') is-invalid @enderror" name="name" value="{{ old('name') }}" required autocomplete="name" autofocus>
-                            @error('name')
-                                <span class="invalid-feedback" role="alert">
-                                    <strong>{{ $message }}</strong>
-                                </span>
-                            @enderror
-                        </div>                       
-                        <div class="form-group row mb-0">
-                            <button type="submit" class="btn btn-primary btn-block">
-                            情報ベース登録
-                            </button>
-                        </div>
-                    </form>
-                </div>
-            </div>
+@foreach($templates as $template)
+<div class="media ml-4">
+    <div class="media-body">
+        <div class="form-check mb-4">
+            <label class="form-check-label row text-dark h5">
+                <input class="form-check-input" type="checkbox" name="templates[]" value="{{$template->id}}">
+                {{$template->name}}
+                <span class="form-check-sign position-absolute" style="top:4px; left:0;">
+                    <span class="check"></span>
+                </span>
+            </label>
         </div>
+        <p class="text-secondary">{{$template->detail}}</p>
     </div>
 </div>
-@endsection
+@endforeach
