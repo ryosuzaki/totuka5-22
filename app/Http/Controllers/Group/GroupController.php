@@ -41,7 +41,7 @@ class GroupController extends Controller
      */
     public function create(string $type)
     {
-        return view('group.create.'.$type)->with(['type'=>$type]);
+        return view('group.create')->with(['type'=>$type]);
     }
 
     /**

@@ -50,27 +50,17 @@ class UserGroupController extends Controller
        
     }
 
-    /**
-     * 役割などを変更
-     *
-     * @param  Group $group
-     * @return \Illuminate\Http\Response
-     */
+    //
     public function edit(Group $group)
     {
+        info($group->roles()->get());
         return view('user.group.edit')->with([
                 'group'=>$group,
                 'user'=>Auth::user(),
             ]);
     }
 
-    /**
-     * 役割などを変更
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  Group $group
-     * @return \Illuminate\Http\Response
-     */
+    //
     public function update(Request $request,Group $group)
     {
         $validator = Validator::make($request->all(),[
@@ -87,12 +77,7 @@ class UserGroupController extends Controller
         return redirect()->route('user.group.index',Auth::id());
     }
 
-    /**
-     * 退会
-     *
-     * @param  int $group_id
-     * @return \Illuminate\Http\Response
-     */
+    //
     public function destroy(int $group_id)
     {
         Auth::user()->leaveGroup($group_id);

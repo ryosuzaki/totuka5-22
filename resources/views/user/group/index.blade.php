@@ -80,14 +80,16 @@
                                 </thead>
                                 <tbody>
                                     @foreach($groups as $group)
+                                    @php
+                                    $role=$user->getRoleByGroup($group->id);
+                                    @endphp
                                     <tr>
                                         <td>{{$group->getFormattedTypeName()}}</td>
                                         <td><a href="{{route('group.show',$group->id)}}">{{$group->name}}</a></td>
-                                        <td>{{$user->getRoleByGroup($group->id)->role_name}}</td>                                     
+                                        <td>{{$role->role_name}}</td>                                     
                                         <td class="p-1">
-                                        
-                                        <a class="btn btn-primary btn-sm btn-round text-white" href="{{route('user.group.edit',[$user->id,$group->id])}}"><i class="material-icons">edit</i> 編集</a>
-
+                                        @if($role->index!=0)
+                                        <a class="btn btn-primary btn-sm btn-round text-white" href="{{route('user.group.edit',[$group->id])}}"><i class="material-icons">autorenew</i> 変更</a>
                                         <a class="btn btn-danger btn-round btn-sm text-white" data-toggle="modal" data-target="#{{$group->id}}"><i class="material-icons">logout</i> 退出</a>
                                         <div class="modal fade" id="{{$group->id}}" tabindex="-1" role="dialog" aria-labelledby="{{$group->id}}Label" aria-hidden="true">
                                             <div class="modal-dialog" role="document">
@@ -102,7 +104,7 @@
                                                 </div>
                                             </div>
                                         </div>
-
+                                        @endif
                                         
                                         </td>
                                     </tr>

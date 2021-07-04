@@ -6,6 +6,18 @@
         <div class="card mb-3">
             <div class="card-body">
             @include('group.show.header.'.$group->getTypeName(), ['group'=>$group,'bases'=>$bases])
+            
+            @if(Auth::user()->hasGroup($group->id))
+            @if($group->getType()->need_location)
+            <div class="text-left mt-4 mb-3">
+                <a class="btn btn-outline-primary btn-round btn-sm" href="{{route('group_location.edit',[$group->id])}}"><i class="material-icons">location_on</i> 座標変更</a>
+            </div>
+            @endif
+            <div class="row">
+                <a class="btn btn-primary btn-block" href="{{route('group.edit',[$group->id])}}"><i class="material-icons">edit</i> 編集</a>
+            </div>
+            @endif
+
             </div>
         </div>
         <div class="card mt-0 mb-2">

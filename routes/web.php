@@ -28,8 +28,8 @@ Route::delete('group/{group}/deleteImg', 'Group\UploadController@deleteImg')->na
 //
 Route::get('group/map', 'Group\MapController@map')->name('group.map');
 //
-Route::get('group/{group}/location/edit', 'Group\GroupLocationController@edit')->name('group.location.edit');
-Route::put('group/{group}/location', 'Group\GroupLocationController@update')->name('group.location.update');
+Route::get('group/{group}/location/edit', 'Group\GroupLocationController@edit')->name('group_location.edit');
+Route::put('group/{group}/location', 'Group\GroupLocationController@update')->name('group_location.update');
 
 //
 Route::get('group/{group}/like', 'Group\LikeController@like')->name('group.like');

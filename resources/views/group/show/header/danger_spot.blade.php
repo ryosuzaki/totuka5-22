@@ -2,7 +2,7 @@
 $role_name=App\Http\Controllers\Group\LikeController::$name;
 @endphp
 <div class="row">
-    <h5>危険地点</h5>
+    <h5>危険地点　{{$group->name}}</h5>
     <div class="ml-auto">
         @if(Auth::user()->hasGroup($group->id))
         <a class="btn btn-primary btn-round btn-sm text-white">作成者</a>
