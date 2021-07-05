@@ -19,7 +19,7 @@ class CreateGroupsTable extends Migration
             $table->timestamps();
             $table->string('name')->index();
             $table->string('unique_name')->default('');
-            $table->json('permissions')->nullable();
+            $table->text('permissions')->nullable();
         });
 
         Schema::create('group_locations', function (Blueprint $table) {
@@ -35,9 +35,9 @@ class CreateGroupsTable extends Migration
             $table->timestamps();
             $table->string('formatted_name');
             $table->boolean('need_location');
-            $table->json('required_info');
-            $table->json('user_info');
-            $table->json('creator_permissions');
+            $table->text('required_info');
+            $table->text('user_info');
+            $table->text('creator_permissions');
         });
     }
 

@@ -32,9 +32,26 @@ class Group extends Model
     protected $guarded = ['id','group_type_id'];
     //
     protected $casts = [
-        'permissions'=>'json',
+        'permissions'=>'array',
     ];
     
+
+
+
+
+
+    //
+    public function setPermissionsAttribute($value){
+        $this->attributes['permissions'] = serialize($value);
+    }
+    //
+    public function getPermissionsAttribute($value){
+        return unserialize($value);
+    }
+
+
+
+
 
     
     //
@@ -339,6 +356,7 @@ class Group extends Model
 
 
     
+
 
 
    

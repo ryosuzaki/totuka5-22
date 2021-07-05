@@ -19,7 +19,7 @@ class CreateInfoTable extends Migration
             $table->unsignedBigInteger('created_by')->nullable();
             $table->unsignedBigInteger('updated_by')->nullable();
             $table->timestamps();
-            $table->json('info');
+            $table->text('info');
         });
 
         Schema::create('info_bases', function (Blueprint $table) {
@@ -41,7 +41,7 @@ class CreateInfoTable extends Migration
             $table->string('detail')->default('');
             $table->string('model')->nullable();
             $table->timestamps();
-            $table->json('default');
+            $table->text('default');
         });
     }
 
