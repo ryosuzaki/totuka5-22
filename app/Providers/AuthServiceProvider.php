@@ -41,23 +41,20 @@ class AuthServiceProvider extends ServiceProvider
         });
 
         //
-        Gate::define('create-group-info-bases','App\Policies\GroupInfoBasesPolicy@create');
-        Gate::define('update-group-info-bases','App\Policies\GroupInfoBasesPolicy@update');
-        Gate::define('delete-group-info-bases','App\Policies\GroupInfoBasesPolicy@delete');
+        foreach (config('group.role.group_info_bases') as $action){
+            Gate::define($action.'-group-info-bases','App\Policies\GroupInfoBasesPolicy@'.$action);    
+        }
         //
-        Gate::define('view-group-info','App\Policies\GroupInfoPolicy@view');
-        Gate::define('update-group-info','App\Policies\GroupInfoPolicy@update');
-
-        
+        foreach (config('group.role.group_info') as $action){
+            Gate::define($action.'-group-info','App\Policies\GroupInfoPolicy@'.$action);    
+        }
         //
-        Gate::define('viewAny-group-roles','App\Policies\GroupRolesPolicy@viewAny');
-        Gate::define('create-group-roles','App\Policies\GroupRolesPolicy@create');
-        Gate::define('delete-group-roles','App\Policies\GroupRolesPolicy@delete');
-        
+        foreach (config('group.role.group_roles') as $action){
+            Gate::define($action.'-group-roles','App\Policies\GroupRolesPolicy@'.$action);
+        }
         //
-        Gate::define('update-group-role','App\Policies\GroupRolePolicy@update');
-        Gate::define('viewUsers-group-role','App\Policies\GroupRolePolicy@viewUsers');
-        Gate::define('inviteUser-group-role','App\Policies\GroupRolePolicy@inviteUser');
-        Gate::define('removeUser-group-role','App\Policies\GroupRolePolicy@removeUser');
+        foreach (config('group.role.group_users') as $action){
+            Gate::define($action.'-group-users','App\Policies\GroupUsersPolicy@'.$action);
+        }
     }
 }

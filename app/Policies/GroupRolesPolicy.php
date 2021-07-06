@@ -18,6 +18,11 @@ class GroupRolesPolicy
         return $user->getRoleByGroup($group->id)->hasPermissionTo('group_roles.create');
     }
     //
+    public function update(User $user,Group $group)
+    {
+        return $user->getRoleByGroup($group->id)->hasPermissionTo('group_roles.update');
+    }
+    //
     public function delete(User $user, Group $group)
     {
         return $user->getRoleByGroup($group->id)->hasPermissionTo('group_roles.delete');

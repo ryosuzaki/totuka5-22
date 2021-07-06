@@ -28,7 +28,7 @@
                         <input id="name" type="text" class="form-control @error('name') is-invalid @enderror" name="name" value="{{$group->name}}" required autofocus>
                     </div>
                     @endif               
-                    <div class="form-group row mb-0">
+                    <div class="form-group row mb-0 mt-4">
                         <button type="submit" class="btn btn-primary btn-block">
                         変更
                         </button>

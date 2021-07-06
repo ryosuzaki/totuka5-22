@@ -2,7 +2,6 @@
 $role_name=App\Http\Controllers\Group\WatchController::$name;
 @endphp
 <div class="row">
-    <h5 class="mt-1">避難所</h5>
     <div class="ml-auto">
         @if(Auth::user()->hasGroup($group->id))
         <a class="btn btn-success btn-sm btn-round text-white" href="{{route('group.role.index',$group->id)}}"><i class="material-icons">assignment_ind</i>　役割</a>

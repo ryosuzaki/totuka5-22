@@ -18,7 +18,7 @@
 
                 <a class="btn btn-success btn-sm btn-round text-white" href="{{route('user.info_base.create')}}"><i class="material-icons">add</i> 追加</a>
                 <div class="table-responsive">
-                        <table class="table">
+                        <table class="table text-nowrap">
                             <thead>
                             <tr>
                                 <th>テンプレート</th>

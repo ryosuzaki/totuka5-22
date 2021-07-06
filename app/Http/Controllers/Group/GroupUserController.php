@@ -28,7 +28,7 @@ class GroupUserController extends Controller
      */
     public function index(Group $group,int $index=0)
     {
-        Gate::authorize('viewUsers-group-role',[$group,$index]);
+        Gate::authorize('view-group-users',[$group,$index]);
         return view('group.user.index')->with([
             'group'=>$group,
             'role'=>$group->getRoleByIndex($index),
@@ -42,7 +42,7 @@ class GroupUserController extends Controller
      */
     public function create(Group $group,int $index=0)
     {
-        Gate::authorize('inviteUser-group-role',[$group,$index]);
+        Gate::authorize('invite-group-users',[$group,$index]);
         return view('group.user.create')->with([
             'group'=>$group,
             'role'=>$group->getRoleByIndex($index),
@@ -58,7 +58,7 @@ class GroupUserController extends Controller
      */
     public function store(Request $request,Group $group,int $index)
     {
-        Gate::authorize('inviteUser-group-role',[$group,$index]);
+        Gate::authorize('invite-group-users',[$group,$index]);
         $validator = Validator::make($request->all(),[
             'email'=>'required|string|email|max:255|exists:users,email',
         ]);
@@ -75,7 +75,7 @@ class GroupUserController extends Controller
     //
     public function show(Group $group,int $user_id,int $index)
     {
-        Gate::authorize('viewUsers-group-role',[$group,$index]);
+        Gate::authorize('view-group-users',[$group,$index]);
         return view('group.user.show')->with([
             'group'=>$group,
             'user'=>$group->getUser($user_id),
@@ -113,14 +113,14 @@ class GroupUserController extends Controller
     //
     public function destroy(Group $group,int $user_id,int $index)
     {
-        Gate::authorize('removeUser-group-role',[$group,$index]);
+        Gate::authorize('remove-group-users',[$group,$index]);
         $group->removeUser($user_id);
         return redirect()->route('group.user.index',[$group->id,$index]);
     }
 
     //
     public function quitRequestJoin(Group $group,int $user_id,int $index){
-        Gate::authorize('inviteUser-group-role',[$group,$index]);
+        Gate::authorize('invite-group-users',[$group,$index]);
         $group->quitRequestJoin($user_id);
         return redirect()->route('group.user.index',[$group->id,$index]);
     }

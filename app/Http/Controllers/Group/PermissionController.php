@@ -17,7 +17,7 @@ class PermissionController extends Controller
     //
     public function edit(Group $group,int $index)
     {
-        Gate::authorize('update-group-role',[$group,$index]);
+        Gate::authorize('permission-group-users',[$group,$index]);
         return view('group.permission.edit')->with([
             'group'=>$group,
             'role'=>$group->getRoleByIndex($index),
@@ -27,7 +27,7 @@ class PermissionController extends Controller
     //
     public function update(Request $request,Group $group,int $index)
     {
-        Gate::authorize('update-group-role',[$group,$index]);
+        Gate::authorize('permission-group-users',[$group,$index]);
         $validator = Validator::make($request->all(),[
             'permissions.*'=>'required|string',
         ]);

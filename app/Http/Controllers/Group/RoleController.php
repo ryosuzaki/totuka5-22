@@ -73,7 +73,7 @@ class RoleController extends Controller
     //
     public function edit(Group $group,int $index)
     {
-        Gate::authorize('update-group-role',[$group,$index]);
+        Gate::authorize('update-group-roles',[$group,$index]);
         return view('group.role.edit')->with([
             'group'=>$group,
             'role'=>$group->getRoleByIndex($index),
@@ -89,7 +89,7 @@ class RoleController extends Controller
      */
     public function update(Request $request,Group $group,int $index)
     {
-        Gate::authorize('update-group-role',[$group,$index]);
+        Gate::authorize('update-group-roles',[$group,$index]);
         $validator = Validator::make($request->all(),[
             'name'=>'required|max:255',
             'now_password'=>'nullable|alpha_num|min:4|max:255',

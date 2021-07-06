@@ -64,7 +64,7 @@
                         @include('group.user.index.'.$group->getTypeName(),['users'=>$users])
                         @else
                         <div class="table-responsive">
-                            <table class="table">
+                            <table class="table text-nowrap">
                                 <thead>
                                 <tr>
                                     <th>ユーザー名</th>
@@ -113,7 +113,7 @@
                         $requests=$group->usersRequestJoin()->wherePivot('role_id',$role->id)->get();
                         @endphp
                         <div class="table-responsive">
-                            <table class="table">
+                            <table class="table text-nowrap">
                                 <thead>
                                 <tr>
                                     <th>メールアドレス</th>

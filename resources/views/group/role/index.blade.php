@@ -12,15 +12,15 @@
                     <li class="breadcrumb-item"><a href="#">ホーム</a></li>
                     <li class="breadcrumb-item"><a href="#">{{$group->getFormattedTypeName()}}</a></li>
                     <li class="breadcrumb-item"><a href="#">{{$group->name}}</a></li>
-                    <li class="breadcrumb-item active" aria-current="page">役割一覧</li>
+                    <li class="breadcrumb-item active" aria-current="page">役割</li>
                 </ol>
             </nav>
-            <h3 class="text-center mb-4">役割一覧</h3>
+            <h3 class="text-center mb-4">一覧</h3>
 
 
             <a class="btn btn-success btn-sm btn-round text-white" href="{{route('group.role.create',$group->id)}}"><i class="material-icons">add</i>追加</a>
                 <div class="table-responsive">
-                    <table class="table">
+                    <table class="table text-nowrap">
                         <thead>
                         <tr>
                             <th>役割名</th>
