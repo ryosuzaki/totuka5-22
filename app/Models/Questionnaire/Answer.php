@@ -11,9 +11,10 @@ class Answer extends Model
     //
     protected $guarded = [];
     //
+    /*
     protected $casts = [
         'answer'  => 'json',
-    ];
+    ];*/
     //
     protected $dates = ['date'];
     //

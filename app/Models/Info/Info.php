@@ -14,7 +14,7 @@ class Info extends Model
     protected $guarded=['id'];
     //
     protected $casts = [
-        'info'  => 'json',
+        'info'  => 'array',
     ];
     //
     public function infoBase(){
@@ -24,4 +24,14 @@ class Info extends Model
     public function infoBaseable(){
         return $this->infoBase()->infoBaseable();
     }
+
+    //
+    public function setInfoAttribute($value){
+        $this->attributes['info'] = serialize($value);
+    }
+    //
+    public function getInfoAttribute($value){
+        return unserialize($value);
+    }
+
 }

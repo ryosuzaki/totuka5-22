@@ -10,7 +10,7 @@ class InfoTemplate extends Model
     protected $guarded=[];
     //
     protected $casts = [
-        'default' => 'json',
+        'default' => 'array',
     ];
 
     //
@@ -24,5 +24,14 @@ class InfoTemplate extends Model
     //
     public function model(){
         return $this->model;
+    }
+
+    //
+    public function setDefaultAttribute($value){
+        $this->attributes['default'] = serialize($value);
+    }
+    //
+    public function getDefaultAttribute($value){
+        return unserialize($value);
     }
 }

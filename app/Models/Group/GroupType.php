@@ -10,9 +10,9 @@ class GroupType extends Model
     protected $guarded = ['id','name'];
     //
     protected $casts = [
-        'required_info'=>'json',
-        'user_info'=>'json',
-        'creator_permissions'=>'json',
+        'required_info'=>'array',
+        'user_info'=>'array',
+        'creator_permissions'=>'array',
     ];
     
     //
@@ -33,5 +33,37 @@ class GroupType extends Model
     public function groups(){
         return $this->hasMany('App\Models\Group\GroupType','group_type_id');
     }
+
+
+
+
+    //
+    public function setRequiredInfoAttribute($value){
+        $this->attributes['required_info'] = serialize($value);
+    }
+    //
+    public function getRequiredInfoAttribute($value){
+        return unserialize($value);
+    }
+
+    //
+    public function setUserInfoAttribute($value){
+        $this->attributes['user_info'] = serialize($value);
+    }
+    //
+    public function getUserInfoAttribute($value){
+        return unserialize($value);
+    }
+
+
+    //
+    public function setCreaterPermissionsAttribute($value){
+        $this->attributes['creator_permissions'] = serialize($value);
+    }
+    //
+    public function getCreaterPermissionsAttribute($value){
+        return unserialize($value);
+    }
+
 
 }

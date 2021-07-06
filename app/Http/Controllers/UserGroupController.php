@@ -53,7 +53,6 @@ class UserGroupController extends Controller
     //
     public function edit(Group $group)
     {
-        info($group->roles()->get());
         return view('user.group.edit')->with([
                 'group'=>$group,
                 'user'=>Auth::user(),
