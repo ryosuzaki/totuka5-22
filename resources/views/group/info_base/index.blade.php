@@ -19,7 +19,7 @@
 
                 <a class="btn btn-success btn-sm btn-round text-white" href="{{route('group.info_base.create',[$group->id])}}"><i class="material-icons">add</i> 追加</a>
                 <div class="table-responsive">
-                        <table class="table">
+                        <table class="table text-nowrap">
                             <thead>
                             <tr>
                                 <th>テンプレート</th>

@@ -29,6 +29,7 @@ class GroupInfoBaseController extends Controller
      */
     public function index(Group $group)
     {
+        Gate::authorize('viewAny-group-info-bases', $group);
         return view('group.info_base.index')->with(['group'=>$group,'bases'=>$group->infoBases()->get()]);
     }
     /**
@@ -94,7 +95,6 @@ class GroupInfoBaseController extends Controller
      */
     public function update(Request $request,Group $group,int $id)
     {
-        info($request);
         Gate::authorize('update-group-info-bases',$group);
         $validator = Validator::make($request->all(),[
             'name'=>'required|string|max:255',

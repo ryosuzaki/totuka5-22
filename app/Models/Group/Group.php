@@ -111,12 +111,12 @@ class Group extends Model
         foreach(config('group.role.group_roles') as $action){
             $permissions[]='group_roles.'.$action;
         }
-        $permissions[]='group_role.*';
+        $permissions[]='group_users.*';
         foreach($this->roles()->get() as $role){
             if($role->role_name!=config('group.creator')){
-                $permissions[]='group_role.'.$role->index.'.*';
-                foreach(config('group.role.group_role') as $action){
-                    $permissions[]='group_role.'.$role->index.'.'.$action;
+                $permissions[]='group_users.'.$role->index.'.*';
+                foreach(config('group.role.group_users') as $action){
+                    $permissions[]='group_users.'.$role->index.'.'.$action;
                 }
             }
         }

@@ -26,7 +26,7 @@
                     <h3 class="text-center mb-4">権限変更</h3>
 
 
-                    <div class="mx-5">
+                    <div>
                         <div class="permissions">
                             <p class="h5">{{$group->getType()->formatted_name}}</p>
                             <div class="form-check">

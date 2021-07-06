@@ -1,0 +1,26 @@
+<?php
+
+namespace App\Policies;
+
+use App\Models\Group\Group;
+use App\User;
+
+class GroupUsersPolicy
+{
+    public function permission(User $user, Group $group, int $index)
+    {
+        return $user->getRoleByGroup($group->id)->hasPermissionTo('group_users.'.$index.'.permission');
+    }
+    //
+    public function view(User $user, Group $group, int $index){
+        return $user->getRoleByGroup($group->id)->hasPermissionTo('group_users.'.$index.'.view');
+    }
+    //
+    public function invite(User $user, Group $group, int $index){
+        return $user->getRoleByGroup($group->id)->hasPermissionTo('group_users.'.$index.'.invite');
+    }
+    //
+    public function remove(User $user, Group $group, int $index){
+        return $user->getRoleByGroup($group->id)->hasPermissionTo('group_users.'.$index.'.remove');
+    }
+}

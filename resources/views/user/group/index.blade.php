@@ -49,7 +49,7 @@
                     @if($exist_request)
                     <div class="tab-pane active" id="join_request">
                         <div class="table-responsive">
-                            <table class="table">
+                            <table class="table text-nowrap">
                                 <thead>
                                 <tr>
                                     <th>種類</th>
@@ -80,7 +80,7 @@
 
                     <div class="tab-pane @if(!$exist_request)active @endif" id="group">
                         <div class="table-responsive">
-                            <table class="table">
+                            <table class="table text-nowrap">
                                 <thead>
                                 <tr>
                                     <th>種類</th>
@@ -129,7 +129,7 @@
                     @if($exist_extra)
                     <div class="tab-pane" id="extra">
                         <div class="table-responsive">
-                            <table class="table">
+                            <table class="table text-nowrap">
                                 <thead>
                                 <tr>
                                     <th>種類</th>

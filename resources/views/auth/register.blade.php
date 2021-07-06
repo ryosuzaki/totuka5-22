@@ -8,7 +8,7 @@
     
                 <form method="POST" action="{{ route('register') }}">
                     @csrf
-                    <div class="form-group row">
+                    <div class="form-group">
                         <label for="name">名前</label>
                         <input id="name" type="text" class="form-control @error('name') is-invalid @enderror" name="name" value="{{ old('name') }}" required autocomplete="name" autofocus>
                         @error('name')
@@ -18,7 +18,7 @@
                         @enderror
                     </div>
 
-                    <div class="form-group row">
+                    <div class="form-group">
                         <label for="email">メールアドレス</label>
                             <input id="email" type="email" class="form-control @error('email') is-invalid @enderror" name="email" value="{{ old('email') }}" required autocomplete="email">
                             @error('email')
@@ -28,7 +28,7 @@
                             @enderror
                     </div>
 
-                    <div class="form-group row">
+                    <div class="form-group">
                         <label for="password">パスワード</label>
                             <input id="password" type="password" class="form-control @error('password') is-invalid @enderror" name="password" required autocomplete="new-password">
                             @error('password')
@@ -38,12 +38,12 @@
                             @enderror
                     </div>
 
-                    <div class="form-group row">
+                    <div class="form-group">
                         <label for="password-confirm">パスワードを再入力</label>
                         <input id="password-confirm" type="password" class="form-control" name="password_confirmation" required autocomplete="new-password">
                     </div>
 
-                    <div class="form-group row mb-0">
+                    <div class="form-group mb-0">
                         <button type="submit" class="btn btn-primary btn-block">
                             ユーザー登録
                         </button>

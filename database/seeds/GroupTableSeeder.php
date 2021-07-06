@@ -28,7 +28,7 @@ class GroupTableSeeder extends Seeder
                 'group_info_bases.*',
                 'group_info.*',
                 'group_roles.*',
-                'group_role.*',
+                'group_users.*',
             ],
         ]);
         GroupType::create([
@@ -37,7 +37,10 @@ class GroupTableSeeder extends Seeder
             'need_location'=>true,
             'required_info'=>[3],
             'user_info'=>[],
-            'creator_permissions'=>['group.*'],
+            'creator_permissions'=>[
+                'group.*',
+                'group_info.*'
+            ],
         ]);
         GroupType::create([
             'name'=>'nursing_home',
@@ -50,7 +53,7 @@ class GroupTableSeeder extends Seeder
                 'group_info_bases.*',
                 'group_info.*',
                 'group_roles.*',
-                'group_role.*',
+                'group_users.*',
             ],
         ]);
           
