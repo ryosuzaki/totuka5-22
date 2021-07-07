@@ -12,11 +12,11 @@
                         <li class="breadcrumb-item"><a href="#">ホーム</a></li>
                         <li class="breadcrumb-item"><a href="#">{{$group->getFormattedTypeName()}}</a></li>
                         <li class="breadcrumb-item"><a href="#">{{$group->name}}</a></li>
-                        <li class="breadcrumb-item"><a href="#">情報一覧</a></li>
+                        <li class="breadcrumb-item"><a href="#">情報</a></li>
                         <li class="breadcrumb-item active" aria-current="page">変更</li>
                     </ol>
                 </nav>
-                <h3 class="text-center mb-4">情報変更</h3>
+                <h3 class="text-center mb-4">変更</h3>
 
 
                 <form method="POST" action="{{route('group.info_base.update',[$group->id,$base->id])}}">
@@ -38,7 +38,7 @@
                         </label>
                     </div>
 
-                    <div class="form-group row mb-0">
+                    <div class="form-group mb-0">
                         <button type="submit" class="btn btn-primary btn-block">
                         変更
                         </button>

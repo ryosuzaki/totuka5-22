@@ -47,7 +47,7 @@ class GroupTableSeeder extends Seeder
             'formatted_name'=>'介護施設',
             'need_location'=>false,
             'required_info'=>[1],
-            'user_info'=>[5],
+            'user_info'=>[5,6],
             'creator_permissions'=>[
                 'group.*',
                 'group_info_bases.*',

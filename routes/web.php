@@ -37,6 +37,10 @@ Route::get('group/{group}/unlike', 'Group\LikeController@unlike')->name('group.u
 //
 Route::get('group/{group}/watch', 'Group\WatchController@watch')->name('group.watch');
 Route::get('group/{group}/unwatch', 'Group\WatchController@unwatch')->name('group.unwatch');
+//
+Route::get('group/{group}/user/{user}/rescue', 'Group\RescueController@rescue')->name('group.user.rescue');
+Route::get('group/{group}/user/{user}/unrescue', 'Group\RescueController@unrescue')->name('group.user.unrescue');
+Route::get('group/{group}/user/{user}/rescued', 'Group\RescueController@rescued')->name('group.user.rescued');
 
 
 
