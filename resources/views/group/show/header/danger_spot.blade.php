@@ -1,5 +1,5 @@
 @php
-$role_name=App\Http\Controllers\Group\LikeController::$name;
+$role_name=config('group.like');
 @endphp
 
 <div class="row">

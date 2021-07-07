@@ -10,10 +10,10 @@
                     <ol class="breadcrumb">
                         <li class="breadcrumb-item"><a href="#">ホーム</a></li>
                         <li class="breadcrumb-item"><a href="#">{{Auth::user()->name}}</a></li>
-                        <li class="breadcrumb-item active" aria-current="page">情報一覧</li>
+                        <li class="breadcrumb-item active" aria-current="page">情報</li>
                     </ol>
                 </nav>
-                <h3 class="text-center mb-4">情報一覧</h3>
+                <h3 class="text-center mb-4">情報</h3>
 
 
                 <a class="btn btn-success btn-sm btn-round text-white" href="{{route('user.info_base.create')}}"><i class="material-icons">add</i> 追加</a>

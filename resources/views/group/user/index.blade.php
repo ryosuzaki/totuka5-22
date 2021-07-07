@@ -12,11 +12,11 @@
                         <li class="breadcrumb-item"><a href="#">ホーム</a></li>
                         <li class="breadcrumb-item"><a href="#">{{$group->getFormattedTypeName()}}</a></li>
                         <li class="breadcrumb-item"><a href="#">{{$group->name}}</a></li>
-                        <li class="breadcrumb-item"><a href="#">役割一覧</a></li>
-                        <li class="breadcrumb-item active" aria-current="page">ユーザー一覧</li>
+                        <li class="breadcrumb-item"><a href="#">{{$role->role_name}}</a></li>
+                        <li class="breadcrumb-item active" aria-current="page">ユーザー</li>
                     </ol>
                 </nav>
-                <h3 class="text-center mb-4">ユーザー一覧</h3>
+                <h3 class="text-center mb-4">ユーザー</h3>
                 
                 <div class="form-group">
                     <select class="form-control selectpicker h4" data-style="btn btn-link" id="role-link">

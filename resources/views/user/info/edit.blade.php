@@ -12,6 +12,9 @@
                         <li class="breadcrumb-item active" aria-current="page">{{$base->name}}の変更</li>
                     </ol>
                 </nav>
+                <h3 class="text-center mb-4">{{$base->name}}の変更</h3>
+
+
                 <form method="POST" action="{{ route('user.info.update',[$base->id]) }}">
                     @csrf
                     @method('PUT')

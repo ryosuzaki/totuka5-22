@@ -11,12 +11,12 @@
                         <li class="breadcrumb-item"><a href="#">ホーム</a></li>
                         <li class="breadcrumb-item"><a href="#">{{$group->getFormattedTypeName()}}</a></li>
                         <li class="breadcrumb-item"><a href="#">{{$group->name}}</a></li>
-                        <li class="breadcrumb-item"><a href="#">役割一覧</a></li>
-                        <li class="breadcrumb-item"><a href="#">ユーザー一覧</a></li>
+                        <li class="breadcrumb-item"><a href="#">{{$role->role_name}}</a></li>
+                        <li class="breadcrumb-item"><a href="#">ユーザー</a></li>
                         <li class="breadcrumb-item active" aria-current="page">招待</li>
                     </ol>
                 </nav>
-                <h3 class="text-center mb-4">ユーザーを招待</h3>
+                <h3 class="text-center mb-4">招待</h3>
 
 
                 <div class="form-group">

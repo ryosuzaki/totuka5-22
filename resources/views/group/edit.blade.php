@@ -14,7 +14,7 @@
                         <li class="breadcrumb-item active" aria-current="page">変更</li>
                     </ol>
                 </nav>
-                <h3 class="text-center mb-4">グループの変更</h3>
+                <h3 class="text-center mb-4">変更</h3>
                 
                 <form method="POST" action="{{route('group.update',$group->id)}}">
                     @csrf
@@ -23,12 +23,12 @@
                     @if(Illuminate\Support\Facades\View::exists('group.edit.'.$group->getTypeName()))
                     @include('group.edit.'.$group->getTypeName(),['group'=>$group])
                     @else
-                    <div class="form-group row">
+                    <div class="form-group">
                         <label for="name">グループ名</label>
                         <input id="name" type="text" class="form-control @error('name') is-invalid @enderror" name="name" value="{{$group->name}}" required autofocus>
                     </div>
                     @endif               
-                    <div class="form-group row mb-0 mt-4">
+                    <div class="form-group mb-0 mt-4">
                         <button type="submit" class="btn btn-primary btn-block">
                         変更
                         </button>

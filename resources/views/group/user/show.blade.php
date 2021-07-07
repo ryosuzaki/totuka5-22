@@ -5,6 +5,17 @@
     <div class="col-md-8">
         <div class="card mb-3">
             <div class="card-body">
+
+                <nav aria-label="breadcrumb" role="navigation">
+                    <ol class="breadcrumb">
+                        <li class="breadcrumb-item"><a href="#">ホーム</a></li>
+                        <li class="breadcrumb-item"><a href="#">{{$group->getFormattedTypeName()}}</a></li>
+                        <li class="breadcrumb-item"><a href="#">{{$group->name}}</a></li>
+                        <li class="breadcrumb-item"><a href="#">ユーザー</a></li>
+                        <li class="breadcrumb-item active" aria-current="page">{{$user->name}}</li>
+                    </ol>
+                </nav>
+
                 <h3 class="text-center">{{$user->name}}</h3>
                 <p class="h3 text-center">{{$user->email}}</p>
             </div>

@@ -264,7 +264,7 @@ class Group extends Model
 
     //
     public function getUserInfoBases(int $user_id){
-        return $this->getUser($user_id)->infoBases()->where('info_template_id',$this->getType()->user_info)->get();
+        return $this->getUser($user_id)->infoBases()->whereIn('info_template_id',$this->getType()->user_info)->get();
     }
     //
     public function getUserInfoBase(int $user_id,int $template_id){
