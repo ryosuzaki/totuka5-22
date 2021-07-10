@@ -13,7 +13,7 @@
 
 <div class="form-group mb-0">
     <button type="submit" class="btn btn-primary btn-block">
-        登録
+    変更
     </button>
 </div>
 

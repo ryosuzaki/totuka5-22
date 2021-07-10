@@ -44,7 +44,7 @@
   <nav class="navbar navbar-color-on-scroll navbar-expand-lg" color-on-scroll="100">
     <div class="container">
         <div class="navbar-translate">
-          <a class="navbar-brand" href="{{ url('/') }}">戸塚ハッカソン</a>
+          <a class="navbar-brand" href="{{route('home')}}">戸塚ハッカソン</a>
   
           <button class="navbar-toggler" type="button" data-toggle="collapse" aria-expanded="false" aria-label="Toggle navigation">
               <span class="sr-only">Toggle navigation</span>
@@ -96,6 +96,9 @@
                       @csrf
                   </form>
               </div>
+              <li class="nav-item">
+                <a class="nav-link" href="{{ route('setting') }}"><i class="material-icons">settings</i>設定</a>
+              </li>
               @endguest
             </li>
           </ul>

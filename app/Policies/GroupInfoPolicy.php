@@ -10,12 +10,20 @@ class GroupInfoPolicy
     //
     public function view(User $user, Group $group,int $index)
     {
-        return $user->getRoleByGroup($group->id)->hasPermissionTo('group_info.'.$index.'.view');
+        $role=$user->getRoleByGroup($group->id);
+        if (!$role){
+            return false;
+        }
+        return $role->hasPermissionTo('group_info.'.$index.'.view');
     }
 
     //
     public function update(User $user, Group $group,int $index)
     {
-        return $user->getRoleByGroup($group->id)->hasPermissionTo('group_info.'.$index.'.update');
+        $role=$user->getRoleByGroup($group->id);
+        if (!$role){
+            return false;
+        }
+        return $role->hasPermissionTo('group_info.'.$index.'.update');
     }
 }

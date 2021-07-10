@@ -5,17 +5,8 @@
 <div class="row justify-content-center">
     <div class="col-md-10">
         <div class="card">
+        {{ Breadcrumbs::render('group.user.index',$group,$role->index) }}
             <div class="card-body">
-
-                <nav aria-label="breadcrumb" role="navigation">
-                    <ol class="breadcrumb">
-                        <li class="breadcrumb-item"><a href="#">ホーム</a></li>
-                        <li class="breadcrumb-item"><a href="#">{{$group->getFormattedTypeName()}}</a></li>
-                        <li class="breadcrumb-item"><a href="#">{{$group->name}}</a></li>
-                        <li class="breadcrumb-item"><a href="#">{{$role->role_name}}</a></li>
-                        <li class="breadcrumb-item active" aria-current="page">ユーザー</li>
-                    </ol>
-                </nav>
                 <h3 class="text-center mb-4">ユーザー</h3>
                 
                 <div class="form-group">
@@ -41,12 +32,12 @@
                 <ul class="nav nav-pills nav-pills-primary justify-content-center" role="tablist">
                     <li class="nav-item">
                         <a class="nav-link active" data-toggle="tab" href="#role_users" role="tablist" aria-expanded="true">
-                            参加ユーザー
+                            参加中
                         </a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" data-toggle="tab" href="#request_join" role="tablist" aria-expanded="false">
-                            招待済みユーザー
+                            招待中
                         </a>
                     </li>
                 </ul>
@@ -83,7 +74,7 @@
                                         <form action="{{route('group.user.destroy',[$group->id,$user->id,$role->index])}}" method="post">
                                             @csrf
                                             @method('delete')
-                                            <button type="button" data-toggle="modal" data-target="#delete" class="btn btn-danger btn-round btn-sm text-white"><i class="material-icons">logout</i> 退出</button>
+                                            <button type="button" data-toggle="modal" data-target="#delete" class="btn btn-danger btn-round btn-sm text-white m-0"><i class="material-icons">logout</i> 退出</button>
                                             <div class="modal fade" id="delete" tabindex="-1" role="dialog" aria-labelledby="deleteLabel" aria-hidden="true">
                                                 <div class="modal-dialog" role="document">
                                                     <div class="modal-content">

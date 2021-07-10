@@ -59,7 +59,7 @@ class InfoTableSeeder extends Seeder
 
         InfoTemplate::create([
             'id' => 6,
-            'name' => '救助状況',
+            'name' => '避難/救助状況',
             'default'=>['rescue'=>config('group.rescue.unrescue'),'group'=>null,'rescuer'=>null,'info'=>[]],
             'model'=>User::class,
             'detail'=>'救助状況',

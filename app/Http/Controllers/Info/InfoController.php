@@ -56,15 +56,4 @@ class InfoController extends Controller
             return redirect()->route('user.show');
         }
     }
-
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param InfoBase $info_base
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy(InfoBase $info_base)
-    {
-        
-    }
 }

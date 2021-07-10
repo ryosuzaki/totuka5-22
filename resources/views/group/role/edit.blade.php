@@ -7,19 +7,8 @@
             @csrf
             {{ method_field('PUT') }}
             <div class="card">
+            {{ Breadcrumbs::render('group.role.edit',$group,$role->index) }}
                 <div class="card-body">
-
-
-                    <nav aria-label="breadcrumb" role="navigation">
-                        <ol class="breadcrumb">
-                            <li class="breadcrumb-item"><a href="#">ホーム</a></li>
-                            <li class="breadcrumb-item"><a href="#">{{$group->getFormattedTypeName()}}</a></li>
-                            <li class="breadcrumb-item"><a href="#">{{$group->name}}</a></li>
-                            <li class="breadcrumb-item"><a href="#">役割</a></li>
-                            <li class="breadcrumb-item"><a href="#">{{$role->role_name}}</a></li>
-                            <li class="breadcrumb-item active" aria-current="page">変更</li>
-                        </ol>
-                    </nav>
                     <h3 class="text-center mb-4">変更</h3>
 
 

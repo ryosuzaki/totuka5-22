@@ -13,12 +13,20 @@ class GroupPolicy
     //
     public function update(User $user, Group $group)
     {
-        return $user->getRoleByGroup($group->id)->hasPermissionTo('group.update');
+        $role=$user->getRoleByGroup($group->id);
+        if (!$role){
+            return false;
+        }
+        return $role->hasPermissionTo('group.update');
     }
 
     //
     public function delete(User $user, Group $group)
     {
-        return $user->getRoleByGroup($group->id)->hasPermissionTo('group.delete');
+        $role=$user->getRoleByGroup($group->id);
+        if (!$role){
+            return false;
+        }
+        return $role->hasPermissionTo('group.delete');
     }
 }
