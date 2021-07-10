@@ -10,21 +10,37 @@ class GroupInfoBasesPolicy
     //
     public function viewAny(User $user, Group $group)
     {
-        return $user->getRoleByGroup($group->id)->hasPermissionTo('group_info_bases.viewAny');
+        $role=$user->getRoleByGroup($group->id);
+        if (!$role){
+            return false;
+        }
+        return $role->hasPermissionTo('group_info_bases.viewAny');
     }
     //
     public function create(User $user, Group $group)
     {
-        return $user->getRoleByGroup($group->id)->hasPermissionTo('group_info_bases.create');
+        $role=$user->getRoleByGroup($group->id);
+        if (!$role){
+            return false;
+        }
+        return $role->hasPermissionTo('group_info_bases.create');
     }
     //
     public function update(User $user, Group $group)
     {
-        return $user->getRoleByGroup($group->id)->hasPermissionTo('group_info_bases.update');
+        $role=$user->getRoleByGroup($group->id);
+        if (!$role){
+            return false;
+        }
+        return $role->hasPermissionTo('group_info_bases.update');
     }
     //
     public function delete(User $user, Group $group)
     {
-        return $user->getRoleByGroup($group->id)->hasPermissionTo('group_info_bases.delete');
+        $role=$user->getRoleByGroup($group->id);
+        if (!$role){
+            return false;
+        }
+        return $role->hasPermissionTo('group_info_bases.delete');
     }
 }

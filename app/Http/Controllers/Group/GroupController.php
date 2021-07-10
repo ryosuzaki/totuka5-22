@@ -79,6 +79,7 @@ class GroupController extends Controller
         }
         return view('group.show')->with([
             'group'=>$group,
+            'type'=>$group->getType(),
             'bases'=>$bases,
             'index'=>$index,
             ]);

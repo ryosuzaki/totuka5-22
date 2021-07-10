@@ -44,13 +44,13 @@
                 <td>
                 @if($rescue==config('group.rescue.rescue'))
                     @if($rescue_group==$group)
-                    <a class="btn btn-danger btn-round btn-sm text-white" href="{{route('group.user.unrescue',[$info->info['group']->id,$user->id])}}">救助をやめる</a>
-                    <a class="btn btn-success btn-round btn-sm text-white" href="{{route('group.user.rescued',[$info->info['group']->id,$user->id])}}">救助が完了</a>
+                    <a class="btn btn-danger btn-round btn-sm text-white m-0" href="{{route('group.user.unrescue',[$info->info['group']->id,$user->id])}}">救助をやめる</a>
+                    <a class="btn btn-success btn-round btn-sm text-white m-0" href="{{route('group.user.rescued',[$info->info['group']->id,$user->id])}}">救助が完了</a>
                     @else
                     <a href="{{route('group.show',$rescue_group->id)}}">{{$rescue_group->name}}</a>が救助中
                     @endif
                 @elseif($rescue==config('group.rescue.unrescue'))
-                <a class="btn btn-warning btn-round btn-sm text-white" href="{{route('group.user.rescue',[$group->id,$user->id])}}">救助に向かう</a>
+                <a class="btn btn-warning btn-round btn-sm text-white m-0" href="{{route('group.user.rescue',[$group->id,$user->id])}}">救助に向かう</a>
                 @elseif($rescue==config('group.rescue.rescued'))
                 <a href="{{route('group.show',$rescue_group->id)}}">{{$rescue_group->name}}</a>が救助済み
                 @endif
@@ -61,10 +61,8 @@
 
                 <td class="row pt-1">
                 @if($role->index!=0)
-                <form action="{{route('group.user.destroy',[$group->id,$user->id,$role->index])}}" method="post">
-                    @csrf
-                    @method('delete')
-                    <button type="button" data-toggle="modal" data-target="#delete" class="btn btn-danger btn-round btn-sm text-white"><i class="material-icons">logout</i> 退出</button>
+                
+                    <button type="button" data-toggle="modal" data-target="#delete" class="btn btn-danger btn-round btn-sm text-white m-0"><i class="material-icons">logout</i> 退出</button>
                     <div class="modal fade" id="delete" tabindex="-1" role="dialog" aria-labelledby="deleteLabel" aria-hidden="true">
                         <div class="modal-dialog" role="document">
                             <div class="modal-content">
@@ -73,12 +71,15 @@
                                 </div>
                                 <div class="modal-footer">
                                     <button type="button" class="btn btn-secondary" data-dismiss="modal">やめる</button>
+                                    <form action="{{route('group.user.destroy',[$group->id,$user->id,$role->index])}}" method="post">
+                                    @csrf
+                                    @method('delete')
                                     <button type="submit" class="btn btn-danger text-white">退出させる</button>
+                                    </form>
                                 </div>
                             </div>
                         </div>
                     </div>
-                </form>
                 @endif
                 </td>
             </tr>

@@ -4,16 +4,8 @@
 <div class="row justify-content-center">
     <div class="col-md-8">
         <div class="card">
+            {{ Breadcrumbs::render('group.edit',$group) }}
             <div class="card-body">
-
-                <nav aria-label="breadcrumb" role="navigation" class="mb-4">
-                    <ol class="breadcrumb">
-                        <li class="breadcrumb-item"><a href="#">ホーム</a></li>
-                        <li class="breadcrumb-item"><a href="#">{{$group->getFormattedTypeName()}}</a></li>
-                        <li class="breadcrumb-item"><a href="#">{{$group->name}}</a></li>
-                        <li class="breadcrumb-item active" aria-current="page">変更</li>
-                    </ol>
-                </nav>
                 <h3 class="text-center mb-4">変更</h3>
                 
                 <form method="POST" action="{{route('group.update',$group->id)}}">
@@ -35,6 +27,33 @@
                     </div>
                 </form>
             </div>
+        </div>
+
+@can('delete',$group)
+        <div class="card">
+            <div class="card-body">
+                <h3 class="text-center mb-4 mt-5">グループの削除</h3>
+                <button type="button" data-toggle="modal" data-target="#delete" class="btn btn-danger btn-block text-white mt-5">削除</button>
+                <div class="modal fade" id="delete" tabindex="-1" role="dialog" aria-labelledby="deleteLabel" aria-hidden="true">
+                    <div class="modal-dialog" role="document">
+                        <div class="modal-content">
+                            <div class="modal-body">
+                                本当にグループを削除しますか？
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-secondary" data-dismiss="modal">やめる</button>
+                                <form action="{{route('group.destroy',$group->id)}}" method="post">
+                                @csrf
+                                @method('delete')
+                                <button type="submit" class="btn btn-danger text-white">削除する</button>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+@endcan
+
         </div>
     </div>
 </div>

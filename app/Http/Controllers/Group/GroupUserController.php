@@ -12,6 +12,9 @@ use App\User;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Gate;
 
+use Illuminate\Support\Facades\Storage;
+use League\Csv\Reader;
+
 use Validator;
 
 class GroupUserController extends Controller
@@ -20,12 +23,7 @@ class GroupUserController extends Controller
     {
         $this->middleware('auth');
     }
-    /**
-     * Display a listing of the resource.
-     *
-     * @param Group $group
-     * @return \Illuminate\Http\Response
-     */
+    //
     public function index(Group $group,int $index=0)
     {
         Gate::authorize('view-group-users',[$group,$index]);
@@ -34,12 +32,7 @@ class GroupUserController extends Controller
             'role'=>$group->getRoleByIndex($index),
         ]);
     }
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @param Group $group
-     * @return \Illuminate\Http\Response
-     */
+    //
     public function create(Group $group,int $index=0)
     {
         Gate::authorize('invite-group-users',[$group,$index]);
@@ -48,14 +41,8 @@ class GroupUserController extends Controller
             'role'=>$group->getRoleByIndex($index),
             ]);
     }
-
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  Group $group
-     * @return \Illuminate\Http\Response
-     */
+    
+    //
     public function store(Request $request,Group $group,int $index)
     {
         Gate::authorize('invite-group-users',[$group,$index]);
@@ -69,7 +56,29 @@ class GroupUserController extends Controller
         $role=$group->getRoleByIndex($index);
         $user=User::findByEmail($request->email);
         $group->requestJoin($user->id,$role->id);
-        return redirect()->route('group.user.index',[$group->id,$index]);
+        return redirect()->back();
+    }
+
+    //
+    public function storeByCsv(Request $request,Group $group,int $index){
+        Gate::authorize('invite-group-users',[$group,$index]);
+        $validator = Validator::make($request->all(),[
+            'csv_file'=>'required|file|max:128|mimes:csv,txt|mimetypes:text/plain',
+        ]);
+        if ($validator->fails()) {
+            return back()->withErrors($validator)->withInput();
+        }
+        //
+        $role=$group->getRoleByIndex($index);
+        $path=$request->file('csv_file')->getPathname();
+        $records=Reader::createFromPath($path, 'r')->getRecords();
+        foreach($records as $record){
+            $user=User::findByEmail($record[0]);
+            if($user){
+                $group->requestJoin($user->id,$role->id);
+            }
+        }
+        return redirect()->back();
     }
 
     //
@@ -78,37 +87,11 @@ class GroupUserController extends Controller
         Gate::authorize('view-group-users',[$group,$index]);
         return view('group.user.show')->with([
             'group'=>$group,
+            'index'=>$index,
             'user'=>$group->getUser($user_id),
             'bases'=>$group->getUserInfoBases($user_id),
             ]);
     }
-
-    /*
-    public function edit(Group $group,int $user_id,int $index)
-    {
-        return view('group.user.edit')->with([
-                'group'=>$group,
-                'user'=>$group->getUser($user_id),
-                'roles'=>$group->roles()->get(),
-            ]);
-    }
-
-    //
-    public function update(Request $request,Group $group,int $user_id,int $index)
-    {
-        $validator = Validator::make($request->all(),[
-            'role_id'=>'required|integer|min:1|exists:roles,id',
-        ]);
-        if ($validator->fails()) {
-            return back()->withErrors($validator)->withInput();
-        }
-        //
-        if(!$group->hasUser($user_id)){
-            return redirect()->back();
-        }
-        $group->requestJoin($user_id,(int)$request->role_id);
-        return redirect()->route('group.user.index',$group->id);
-    }*/
 
     //
     public function destroy(Group $group,int $user_id,int $index)

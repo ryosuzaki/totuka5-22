@@ -10,22 +10,9 @@
             $permissions=$role->permissions()->pluck('name');
             @endphp
             <div class="card">
+            {{ Breadcrumbs::render('group.permission.edit',$group,$role->index) }}
                 <div class="card-body">
-
-
-                    <nav aria-label="breadcrumb" role="navigation">
-                        <ol class="breadcrumb">
-                            <li class="breadcrumb-item"><a href="#">ホーム</a></li>
-                            <li class="breadcrumb-item"><a href="#">{{$group->getFormattedTypeName()}}</a></li>
-                            <li class="breadcrumb-item"><a href="#">{{$group->name}}</a></li>
-                            <li class="breadcrumb-item"><a href="#">役割一覧</a></li>
-                            <li class="breadcrumb-item"><a href="#">{{$role->role_name}}</a></li>
-                            <li class="breadcrumb-item active" aria-current="page">権限変更</li>
-                        </ol>
-                    </nav>
-                    <h3 class="text-center mb-4">権限変更</h3>
-
-
+                    <h3 class="text-center mb-4">権限</h3>
                     <div>
                         <div class="permissions">
                             <p class="h5">{{$group->getType()->formatted_name}}</p>

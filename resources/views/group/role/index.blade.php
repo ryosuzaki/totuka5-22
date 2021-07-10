@@ -4,17 +4,8 @@
 <div class="row justify-content-center">
     <div class="col-md-8">
         <div class="card">
+        {{ Breadcrumbs::render('group.role.index',$group) }}
             <div class="card-body">
-
-
-            <nav aria-label="breadcrumb" role="navigation">
-                <ol class="breadcrumb">
-                    <li class="breadcrumb-item"><a href="#">ホーム</a></li>
-                    <li class="breadcrumb-item"><a href="#">{{$group->getFormattedTypeName()}}</a></li>
-                    <li class="breadcrumb-item"><a href="#">{{$group->name}}</a></li>
-                    <li class="breadcrumb-item active" aria-current="page">役割</li>
-                </ol>
-            </nav>
             <h3 class="text-center mb-4">役割</h3>
 
 
@@ -32,12 +23,12 @@
                             <tr>
                                 <td>{{$role->role_name}}</td>
                                 <td>
-                                <a class="btn btn-primary btn-sm btn-round text-white" href="{{route('group.role.edit',[$group->id,$role->index])}}"><i class="material-icons">edit</i> 変更</a>
+                                <a class="btn btn-primary btn-sm btn-round m-0 text-white" href="{{route('group.role.edit',[$group->id,$role->index])}}"><i class="material-icons">edit</i> 変更</a>
                                 @if($role->index!=0)
-                                <a class="btn btn-warning btn-sm btn-round text-white" href="{{route('group.permission.edit',[$group->id,$role->index])}}"><i class="material-icons">lock_open</i> 権限</a>
-                                <a class="btn btn-info btn-round btn-sm text-white" href="{{route('group.user.index',[$group->id,$role->index])}}"><i class="material-icons">groups</i> ユーザ</a>
+                                <a class="btn btn-warning btn-sm btn-round m-0 text-white" href="{{route('group.permission.edit',[$group->id,$role->index])}}"><i class="material-icons">lock_open</i> 権限</a>
+                                <a class="btn btn-info btn-sm btn-round m-0 text-white" href="{{route('group.user.index',[$group->id,$role->index])}}"><i class="material-icons">groups</i> ユーザ</a>
                                 
-                                <button type="button" data-toggle="modal" data-target="#delete" class="btn btn-danger btn-round btn-sm text-white"><i class="material-icons">remove_circle_outline</i> 削除</button>
+                                <button type="button" data-toggle="modal" data-target="#delete" class="btn btn-danger btn-round btn-sm m-0 text-white"><i class="material-icons">remove_circle_outline</i> 削除</button>
                                 <div class="modal fade" id="delete" tabindex="-1" role="dialog" aria-labelledby="deleteLabel" aria-hidden="true">
                                     <div class="modal-dialog" role="document">
                                         <div class="modal-content">

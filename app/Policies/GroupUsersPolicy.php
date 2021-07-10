@@ -9,18 +9,34 @@ class GroupUsersPolicy
 {
     public function permission(User $user, Group $group, int $index)
     {
-        return $user->getRoleByGroup($group->id)->hasPermissionTo('group_users.'.$index.'.permission');
+        $role=$user->getRoleByGroup($group->id);
+        if (!$role){
+            return false;
+        }
+        return $role->hasPermissionTo('group_users.'.$index.'.permission');
     }
     //
     public function view(User $user, Group $group, int $index){
-        return $user->getRoleByGroup($group->id)->hasPermissionTo('group_users.'.$index.'.view');
+        $role=$user->getRoleByGroup($group->id);
+        if (!$role){
+            return false;
+        }
+        return $role->hasPermissionTo('group_users.'.$index.'.view');
     }
     //
     public function invite(User $user, Group $group, int $index){
-        return $user->getRoleByGroup($group->id)->hasPermissionTo('group_users.'.$index.'.invite');
+        $role=$user->getRoleByGroup($group->id);
+        if (!$role){
+            return false;
+        }
+        return $role->hasPermissionTo('group_users.'.$index.'.invite');
     }
     //
     public function remove(User $user, Group $group, int $index){
-        return $user->getRoleByGroup($group->id)->hasPermissionTo('group_users.'.$index.'.remove');
+        $role=$user->getRoleByGroup($group->id);
+        if (!$role){
+            return false;
+        }
+        return $role->hasPermissionTo('group_users.'.$index.'.remove');
     }
 }

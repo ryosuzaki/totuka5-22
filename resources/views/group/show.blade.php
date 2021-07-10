@@ -5,28 +5,20 @@
     <div class="col-md-8">
         <div class="card mb-3">
 
-
-            <nav aria-label="breadcrumb" role="navigation" class="px-3 pt-3">
-                <ol class="breadcrumb">
-                    <li class="breadcrumb-item"><a href="#">ホーム</a></li>
-                    <li class="breadcrumb-item"><a href="#">{{$group->getFormattedTypeName()}}</a></li>
-                    <li class="breadcrumb-item active" aria-current="page">{{$group->name}}</li>
-                </ol>
-            </nav>
-
+            {{ Breadcrumbs::render('group.show',$group) }}
 
             <div class="card-body">
 
-            @include('group.show.header.'.$group->getTypeName(), ['group'=>$group,'bases'=>$bases])
+            @include('group.show.header.'.$type->name, ['group'=>$group,'bases'=>$bases])
             
             @if(Auth::user()->hasGroup($group->id))
-            @if($group->getType()->need_location)
+            @if($type->need_location)
             <div class="text-left mt-4 mb-3">
                 <a class="btn btn-outline-primary btn-round btn-sm" href="{{route('group_location.edit',[$group->id])}}"><i class="material-icons">location_on</i> 座標変更</a>
             </div>
             @endif
             <div class="row">
-                <a class="btn btn-primary btn-block" href="{{route('group.edit',[$group->id])}}"><i class="material-icons">edit</i> 変更</a>
+                <a class="btn btn-primary btn-block" href="{{route('group.edit',[$group->id])}}">変更/削除</a>
             </div>
             @endif
 
