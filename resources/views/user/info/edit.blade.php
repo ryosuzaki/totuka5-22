@@ -4,14 +4,8 @@
 <div class="row justify-content-center">
     <div class="col-md-8">
         <div class="card">
+        {{ Breadcrumbs::render('user.info.edit',$base) }}
             <div class="card-body">
-                <nav aria-label="breadcrumb" role="navigation">
-                    <ol class="breadcrumb">
-                        <li class="breadcrumb-item"><a href="#">ホーム</a></li>
-                        <li class="breadcrumb-item"><a href="#">{{Auth::user()->name}}</a></li>
-                        <li class="breadcrumb-item active" aria-current="page">{{$base->name}}の変更</li>
-                    </ol>
-                </nav>
                 <h3 class="text-center mb-4">{{$base->name}}の変更</h3>
 
 

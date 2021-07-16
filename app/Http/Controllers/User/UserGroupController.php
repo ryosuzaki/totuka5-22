@@ -1,12 +1,15 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\User;
 
+use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\User;
 use App\Models\Group\Group;
 
 use Illuminate\Support\Facades\Auth;
+
+use App\Models\Components\Announcement;
 
 use Validator;
 

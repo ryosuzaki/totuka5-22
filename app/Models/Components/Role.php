@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Models;
+namespace App\Models\Components;
 
 use Spatie\Permission\Models\Role as SpatieRole;
 
@@ -20,7 +20,7 @@ class Role extends SpatieRole
 
     //
     public function model(){
-        return $this->morphTo();
+        return $this->morphTo();;
     }
     
 

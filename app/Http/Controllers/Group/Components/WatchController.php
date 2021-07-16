@@ -1,29 +1,28 @@
 <?php
 
-namespace App\Http\Controllers\Group;
+namespace App\Http\Controllers\Group\Components;
 
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 
 use App\Models\Group\Group;
-use App\User;
 
 use Illuminate\Support\Facades\Auth;
 
-class LikeController extends Controller
+class WatchController extends Controller
 {
     public function __construct()
     {
         $this->middleware('auth');
     }
     //
-    public function like(int $group_id){
-        Auth::user()->attachExtraGroup($group_id,config('group.like'));
+    public function watch(int $group_id){
+        Auth::user()->attachExtraGroup($group_id,config('group.watch'));
         return redirect()->back();
     }
     //
-    public function unlike(int $group_id){
-        Auth::user()->detachExtraGroup($group_id,config('group.like'));
+    public function unwatch(int $group_id){
+        Auth::user()->detachExtraGroup($group_id,config('group.watch'));
         return redirect()->back();
     }
 }

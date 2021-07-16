@@ -1,5 +1,5 @@
 @php
-$role_name=config('group.watch');
+$role_name=config('kaigohack_group_system.watch');
 @endphp
 <div class="row">
     <div class="ml-auto">

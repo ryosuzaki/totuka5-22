@@ -41,19 +41,19 @@ class AuthServiceProvider extends ServiceProvider
         });
 
         //
-        foreach (config('group.role.group_info_bases') as $action){
+        foreach (config('kaigohack_group_system.role.group_info_bases') as $action){
             Gate::define($action.'-group-info-bases','App\Policies\GroupInfoBasesPolicy@'.$action);    
         }
         //
-        foreach (config('group.role.group_info') as $action){
+        foreach (config('kaigohack_group_system.role.group_info') as $action){
             Gate::define($action.'-group-info','App\Policies\GroupInfoPolicy@'.$action);    
         }
         //
-        foreach (config('group.role.group_roles') as $action){
+        foreach (config('kaigohack_group_system.role.group_roles') as $action){
             Gate::define($action.'-group-roles','App\Policies\GroupRolesPolicy@'.$action);
         }
         //
-        foreach (config('group.role.group_users') as $action){
+        foreach (config('kaigohack_group_system.role.group_users') as $action){
             Gate::define($action.'-group-users','App\Policies\GroupUsersPolicy@'.$action);
         }
     }

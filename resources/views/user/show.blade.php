@@ -4,15 +4,13 @@
 <div class="row justify-content-center">
     <div class="col-md-8">
         <div class="card mb-3">
+        {{ Breadcrumbs::render('user.show') }}
             <div class="card-body">
-                <nav aria-label="breadcrumb" role="navigation">
-                    <ol class="breadcrumb">
-                        <li class="breadcrumb-item"><a href="#">ホーム</a></li>
-                        <li class="breadcrumb-item active" aria-current="page">{{$user->name}}</li>
-                    </ol>
-                </nav>
                 <h3 class="text-center">{{$user->name}}</h3>
                 <p class="h3 text-center">{{$user->email}}</p>
+                <div class="row">
+                    <a class="btn btn-primary btn-block" href="{{route('user.edit')}}"><i class="material-icons">edit</i> 変更</a>
+                </div>
             </div>
         </div>
         <div class="card mt-0 mb-2">
