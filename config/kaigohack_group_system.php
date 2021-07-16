@@ -7,6 +7,8 @@ return [
     'creator'=>'作成者',
     //
     'role'=>[
+        'namespace'=>'App\Models\Components\Role',
+        
         'group'=>['update','delete'],
         'group_info_bases'=>['viewAny','create','update','delete'],
         'group_info'=>['view','update'],
@@ -24,4 +26,12 @@ return [
     //
     'like'=>'いいね',
     'watch'=>'ウォッチ',
+
+    //
+    'announcement'=>[
+        'table'=>[
+            'announcement'=>'announcement',
+            'announcement_user'=>'announcement_user',
+        ]
+    ],
 ];

@@ -1,13 +1,11 @@
 <?php
 
-namespace App\Http\Controllers\Group;
+namespace App\Http\Controllers\Group\Components;
 
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 
 use App\Models\Group\Group;
-
-
 
 use Validator;
 

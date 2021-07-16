@@ -4,8 +4,8 @@
 <div class="row justify-content-center">
     <div class="col-md-8">
         <div class="card">
+        {{ Breadcrumbs::render('user.edit') }}
             <div class="card-body">
-                {{$user}}
                 <form method="POST" action="{{route('user.update',$user->id)}}">
                     @csrf
                     {{ method_field('PUT') }}

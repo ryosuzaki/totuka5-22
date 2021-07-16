@@ -96,11 +96,37 @@
                       @csrf
                   </form>
               </div>
-              <li class="nav-item">
-                <a class="nav-link" href="{{ route('setting') }}"><i class="material-icons">settings</i>設定</a>
-              </li>
-              @endguest
             </li>
+
+            <li class="nav-item dropdown">
+              @php
+              $unread=Auth::user()->countUnreadAnnouncements();
+              $request=Auth::user()->countGroupsRequestJoin();
+              $total=$unread+$request;
+              @endphp
+              <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
+                <i class="material-icons">notifications</i>通知
+                @if($total>0)<span class="ml-2 badge badge-pill badge-danger">{{$total}}</span>@endif
+                <span class="caret"></span>
+              </a>
+
+              <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
+                  <a class="dropdown-item" href="{{ route('announcement.index') }}">
+                      お知らせ
+                      @if($unread>0)<span class="ml-2 badge badge-pill badge-danger">{{$unread}}</span>@endif
+                  </a>
+                  <a class="dropdown-item" href="{{ route('user.group.index') }}">
+                      参加リクエスト
+                      @if($request>0)<span class="ml-2 badge badge-pill badge-danger">{{$request}}</span>@endif
+                  </a>
+              </div>
+            </li>
+
+            <li class="nav-item">
+              <a class="nav-link" href="{{ route('setting') }}"><i class="material-icons">settings</i>設定</a>
+            </li>
+            @endguest
+            
           </ul>
         </div>
     </div>

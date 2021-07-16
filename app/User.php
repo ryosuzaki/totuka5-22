@@ -10,6 +10,7 @@ use App\Models\Group\Group;
 use App\Models\Group\GroupType;
 
 use App\Traits\InfoFuncs;
+use App\Traits\RecieveAnnouncement;
 
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
@@ -18,23 +19,19 @@ use Spatie\Permission\Traits\HasRoles;
 
 class User extends Authenticatable
 {
-    use Notifiable;
     use HasRoles;
     use InfoFuncs{
         InfoFuncs::createInfoBase as trait_createInfoBase;
     }
-    /**
-     * The attributes that are mass assignable.
-     *
-     * @var array
-     */
+
+    //RecieveAnnouncementにはNotifiable必須
+    use Notifiable;
+    use RecieveAnnouncement;
+
+    //
     protected $guarded=[];
 
-    /**
-     * The attributes that should be hidden for arrays.
-     *
-     * @var array
-     */
+    //
     protected $hidden = [
          'remember_token','password'
     ];
@@ -108,7 +105,7 @@ class User extends Authenticatable
     //
     public function rolesThroughGroup(){
         return $this->belongsToMany(
-            'App\Models\Role','group_role_user','user_id','role_id'
+            config('kaigohack_group_system.role.namespace'),'group_role_user','user_id','role_id'
         )->withPivot('group_id')->withTimestamps();
     }
     
@@ -143,23 +140,6 @@ class User extends Authenticatable
     }
 
 
-    //
-    public function createInfoBase(int $template_id){
-        if($this->hasInfoBase($template_id)){
-            return $this->getInfoBaseByTemplate($template_id);
-        }else{
-            return $this->trait_createInfoBase($template_id);
-        }
-    }
-
-
-
-    //
-    public function answers(){
-        return $this->hasMany('App\Models\Questionnaire\Answer','user_id');
-    }
-
-
 
 
     //
@@ -168,6 +148,11 @@ class User extends Authenticatable
             'App\Models\Group\Group','group_join_requests','user_id','group_id'
         )->withPivot('role_id')->withTimestamps();
     }
+    //
+    public function countGroupsRequestJoin(){
+        return $this->groupsRequestJoin()->get()->count();
+    }
+
     //
     public function acceptJoinRequest(int $group_id){
         if($this->hasGroup($group_id)){
@@ -203,5 +188,17 @@ class User extends Authenticatable
     //
     public function hasExtraGroup(int $group_id,string $extra_name){
         return $this->extraGroups()->wherePivot('name',$extra_name)->get()->contains('id',$group_id);
+    }
+
+
+
+
+    //
+    public function createInfoBase(int $template_id){
+        if($this->hasInfoBase($template_id)){
+            return $this->getInfoBaseByTemplate($template_id);
+        }else{
+            return $this->trait_createInfoBase($template_id);
+        }
     }
 }

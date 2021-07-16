@@ -11,6 +11,7 @@ use App\Models\Group\GroupType;
 
 use App\Traits\InfoFuncs;
 use App\Traits\UploadImg;
+use App\Traits\SendAnnouncement;
 
 use App\Models\Upload\Image;
 use Illuminate\Http\UploadedFile;
@@ -28,6 +29,8 @@ class Group extends Model
     use UploadImg{
         uploadImg::uploadImg as trait_uploadImg;
     }
+    use SendAnnouncement;
+
     //
     protected $guarded = ['id','group_type_id'];
     //
@@ -64,7 +67,7 @@ class Group extends Model
         ]);
         //
         $group->fill([
-            'unique_name'=>config('group.unique_name').$group->id,
+            'unique_name'=>config('kaigohack_group_system.unique_name').$group->id,
         ])->save();
         //
         if($type->need_location){
@@ -75,11 +78,11 @@ class Group extends Model
             $group->createInfoBase($id);
         }
         //
-        $creator=$group->createRole(config('group.creator'),$creator_password);
+        $creator=$group->createRole(config('kaigohack_group_system.creator'),$creator_password);
         //
         $creator->syncPermissions($type->creator_permissions);
         //
-        $group->inviteUser($user_id,config('group.creator'));
+        $group->inviteUser($user_id,config('kaigohack_group_system.creator'));
         //
         $group->refreshPermissions();
         return $group;
@@ -93,29 +96,29 @@ class Group extends Model
     public function refreshPermissions(){
         $permissions=[];
         $permissions[]='group.*';
-        foreach(config('group.role.group') as $action){
+        foreach(config('kaigohack_group_system.role.group') as $action){
             $permissions[]='group.'.$action;
         }
         $permissions[]='group_info_bases.*';
-        foreach(config('group.role.group_info_bases') as $action){
+        foreach(config('kaigohack_group_system.role.group_info_bases') as $action){
             $permissions[]='group_info_bases.'.$action;
         }
         $permissions[]='group_info.*';
         foreach($this->infoBases()->get() as $base){
             $permissions[]='group_info.'.$base->index.'.*';
-            foreach(config('group.role.group_info') as $action){
+            foreach(config('kaigohack_group_system.role.group_info') as $action){
                 $permissions[]='group_info.'.$base->index.'.'.$action;
             }
         }
         $permissions[]='group_roles.*';
-        foreach(config('group.role.group_roles') as $action){
+        foreach(config('kaigohack_group_system.role.group_roles') as $action){
             $permissions[]='group_roles.'.$action;
         }
         $permissions[]='group_users.*';
         foreach($this->roles()->get() as $role){
-            if($role->role_name!=config('group.creator')){
+            if($role->role_name!=config('kaigohack_group_system.creator')){
                 $permissions[]='group_users.'.$role->index.'.*';
-                foreach(config('group.role.group_users') as $action){
+                foreach(config('kaigohack_group_system.role.group_users') as $action){
                     $permissions[]='group_users.'.$role->index.'.'.$action;
                 }
             }
@@ -138,7 +141,7 @@ class Group extends Model
     //
     public function users(){
         return $this->belongsToMany(
-            'App\User','group_role_user','group_id','user_id'
+            config('auth.providers.users.model'),'group_role_user','group_id','user_id'
         )->withPivot('role_id')->withTimestamps();
     }
     //
@@ -208,7 +211,7 @@ class Group extends Model
     }
     //
     public function roles(){
-        return $this->morphMany('App\Models\Role','model');
+        return $this->morphMany(config('kaigohack_group_system.role.namespace'),'model');
     }
     //
     public function getRole($role){
@@ -317,7 +320,7 @@ class Group extends Model
     //
     public function usersRequestJoin(){
         return $this->belongsToMany(
-            'App\User','group_join_requests','group_id','user_id'
+            config('auth.providers.users.model'),'group_join_requests','group_id','user_id'
         )->withPivot('role_id')->withTimestamps();
     }
     public function hasUserJoinRequest(int $user_id){
@@ -325,7 +328,7 @@ class Group extends Model
     }
     //
     public function requestJoin(int $user_id,$role){
-        if($this->hasUserInRole($user_id,config('group.creator'))){
+        if($this->hasUserInRole($user_id,config('kaigohack_group_system.creator'))){
             return false;
         }
         if($this->hasUserJoinRequest($user_id)){
@@ -346,7 +349,7 @@ class Group extends Model
     //
     public function extraUsers(){
         return $this->belongsToMany(
-            'App\User','extra_group_users','group_id','user_id'
+            config('auth.providers.users.model'),'extra_group_users','group_id','user_id'
         )->withPivot('name')->withTimestamps();
     }
     //
