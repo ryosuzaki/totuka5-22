@@ -6,13 +6,13 @@
         <div class="card">
         {{ Breadcrumbs::render('user.info.edit',$base) }}
             <div class="card-body">
-                <h3 class="text-center mb-4">{{$base->name}}の変更</h3>
+                <h3 class="text-center mb-4">{{$base->name}}の{{$base->getTemplate()->edit['name']}}</h3>
 
 
                 <form method="POST" action="{{ route('user.info.update',[$base->id]) }}">
                     @csrf
                     @method('PUT')
-                    @include('info.info.edit.'.$base->getTemplate()->id, ['info' => $info])
+                    @include('user.info.edit.'.$base->getTemplate()->id, ['info' => $info])
                 </form>
             </div>
         </div>

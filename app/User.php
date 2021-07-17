@@ -105,7 +105,7 @@ class User extends Authenticatable
     //
     public function rolesThroughGroup(){
         return $this->belongsToMany(
-            config('kaigohack_group_system.role.namespace'),'group_role_user','user_id','role_id'
+            config('kaigohack.role.namespace'),'group_role_user','user_id','role_id'
         )->withPivot('group_id')->withTimestamps();
     }
     

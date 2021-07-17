@@ -14,7 +14,8 @@ class HomeController extends Controller
         return view('home.home');
     }
     //
-    public function groupType(GroupType $type){
+    public function groupType($name){
+        $type=GroupType::findByName($name);
         return view('home.group_type.'.$type->name)->with(['type'=>$type]);
     }
 }

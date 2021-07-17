@@ -111,7 +111,7 @@
               </a>
 
               <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
-                  <a class="dropdown-item" href="{{ route('announcement.index') }}">
+                  <a class="dropdown-item" href="{{ route('user.announcement.index') }}">
                       お知らせ
                       @if($unread>0)<span class="ml-2 badge badge-pill badge-danger">{{$unread}}</span>@endif
                   </a>
@@ -122,9 +122,7 @@
               </div>
             </li>
 
-            <li class="nav-item">
-              <a class="nav-link" href="{{ route('setting') }}"><i class="material-icons">settings</i>設定</a>
-            </li>
+            
             @endguest
             
           </ul>

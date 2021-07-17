@@ -53,7 +53,6 @@ class GroupController extends Controller
     {
         $validator = Validator::make($request->all(),[
             'name'=>'required|string|max:255',
-            'password'=>'required|alpha_num|min:4|max:255|confirmed'
         ]);
         if ($validator->fails()) {
             return back()->withErrors($validator)->withInput();

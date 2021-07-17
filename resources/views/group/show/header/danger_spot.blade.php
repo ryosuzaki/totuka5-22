@@ -1,5 +1,5 @@
 @php
-$role_name=config('kaigohack_group_system.like');
+$role_name=config('kaigohack.like');
 @endphp
 
 <div class="row">

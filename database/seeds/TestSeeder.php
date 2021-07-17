@@ -17,13 +17,13 @@ class TestSeeder extends Seeder
         $user=User::setup('aaa','cars1201023@gn.iwasaki.ac.jp','aaaa');
         $user1=User::setup('bbb','ryo.yakizakana12@gmail.com','aaaa');
         $user->useGroupType('nursing_home');
-        Group::setUp($user->id,'戸塚小学校','shelter','aaaa');
-        Group::setUp($user->id,'土砂崩れ','danger_spot',$user->id);
-        $group=Group::setUp($user->id,'戸塚ラボ','nursing_home','aaaa');
+        Group::setUp($user->id,'戸塚小学校','shelter');
+        Group::setUp($user->id,'土砂崩れ','danger_spot');
+        $group=Group::setUp($user->id,'戸塚ラボ','nursing_home');
         $group->createRole('職員','aaaa');
         $group->createRole('利用者','aaaa');
 
-        Group::setUp($user1->id,'土砂崩れ','danger_spot',$user1->id);
-        Group::setUp($user1->id,'戸塚中学校','shelter','aaaa');
+        Group::setUp($user1->id,'土砂崩れ','danger_spot');
+        Group::setUp($user1->id,'戸塚中学校','shelter');
     }
 }

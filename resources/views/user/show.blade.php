@@ -24,10 +24,13 @@
                 </ul>
                 <div class="tab-content tab-space pb-0">
                     @foreach ($bases as $base)
+                    @php
+                    $template=$base->getTemplate();
+                    @endphp
                     <div class="tab-pane @if($bases[0]==$base) active @endif" id="pill{{$base->index}}">
-                        @include('info.info.show.'.$base->getTemplate()->id, ['base'=>$base])
+                        @include('user.info.show.'.$template->id, ['base'=>$base])
                         <div class="row">
-                            <a class="btn btn-outline-primary btn-block mx-auto" href="{{route('user.info.edit',$base->id)}}"><i class="material-icons">edit</i> 変更</a>
+                            <a class="btn btn-outline-primary btn-block mx-auto" href="{{route('user.info.edit',$base->id)}}">{!! $template->edit['icon'] !!} {{$template->edit['name']}}</a>
                         </div>
                     </div>
                     @endforeach

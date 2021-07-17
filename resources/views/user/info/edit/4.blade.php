@@ -1,4 +1,9 @@
-    <div>
+<form method="POST" action="{{ route('info_base.info.update',[$base->id]) }}">
+    @csrf
+    @method('PUT')
+
+<div>
+  
     <h2>基本情報</h2>
 
     【氏名】
@@ -295,3 +300,4 @@
     </button>
 </div>
 
+</form>

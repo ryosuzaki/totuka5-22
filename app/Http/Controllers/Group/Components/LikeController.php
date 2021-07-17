@@ -18,12 +18,12 @@ class LikeController extends Controller
     }
     //
     public function like(int $group_id){
-        Auth::user()->attachExtraGroup($group_id,config('group.like'));
+        Auth::user()->attachExtraGroup($group_id,config('kaigohack.like'));
         return redirect()->back();
     }
     //
     public function unlike(int $group_id){
-        Auth::user()->detachExtraGroup($group_id,config('group.like'));
+        Auth::user()->detachExtraGroup($group_id,config('kaigohack.like'));
         return redirect()->back();
     }
 }
