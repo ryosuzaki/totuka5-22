@@ -6,7 +6,7 @@ use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 
 use App\Models\Group\Group;
-
+use App\Models\Group\GroupType;
 
 use Illuminate\Support\Facades\Auth;
 
@@ -33,34 +33,23 @@ class GroupController extends Controller
         //
     }
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create(string $type)
+    //
+    public function create(GroupType $type)
     {
         return view('group.create')->with(['type'=>$type]);
     }
 
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
-    public function store(Request $request)
+    //
+    public function store(Request $request,GroupType $type)
     {
         $validator = Validator::make($request->all(),[
             'name'=>'required|string|max:255',
-            'password'=>'required|alpha_num|min:4|max:255|confirmed'
         ]);
         if ($validator->fails()) {
             return back()->withErrors($validator)->withInput();
         }
         //
-        $type_name=$request->type;
-        $group=Group::setUp(Auth::id(),$request->name,$type_name,$request->password);
+        $group=Group::setUp(Auth::id(),$request->name,$type);
         return redirect()->route('group.show',$group->id);
     }
 
@@ -137,7 +126,7 @@ class GroupController extends Controller
             $group->deleteRole($role->id);
         }
         $group->delete();
-        return redirect()->route('group.home');
+        return redirect()->route('home');
     }
     
 }

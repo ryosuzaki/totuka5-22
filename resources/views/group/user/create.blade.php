@@ -12,7 +12,9 @@
                 <div class="form-group">
                     <select class="form-control selectpicker h4" data-style="btn btn-link" id="role-link">
                         @foreach($group->roles()->get() as $r)
+                        @if($r->index!=0)
                         <option value="{{route('group.user.create',[$group->id,$r->index])}}"@if($role==$r) selected @endif>{{$r->role_name}}</option>
+                        @endif
                         @endforeach
                     </select>
                 </div>

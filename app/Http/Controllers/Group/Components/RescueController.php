@@ -20,7 +20,7 @@ class RescueController extends Controller
     //
     public function rescue(Group $group,User $user){
         $user->getInfoBaseByTemplate(6)->first()->updateInfo([
-            'rescue'=>config('group.rescue.rescue'),
+            'rescue'=>config('kaigohack.rescue.rescue'),
             'group'=>$group,
             'rescuer'=>Auth::user(),
         ]);
@@ -29,7 +29,7 @@ class RescueController extends Controller
     //
     public function unrescue(Group $group,User $user){
         $user->getInfoBaseByTemplate(6)->first()->updateInfo([
-            'rescue'=>config('group.rescue.unrescue'),
+            'rescue'=>config('kaigohack.rescue.unrescue'),
             'group'=>null,
             'rescuer'=>null,
         ]);
@@ -38,7 +38,7 @@ class RescueController extends Controller
     //
     public function rescued(Group $group,User $user){
         $user->getInfoBaseByTemplate(6)->first()->updateInfo([
-            'rescue'=>config('group.rescue.rescued'),
+            'rescue'=>config('kaigohack.rescue.rescued'),
             'group'=>$group,
             'rescuer'=>Auth::user(),
         ]);

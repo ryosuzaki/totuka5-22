@@ -1,12 +1,12 @@
 @php
-$role_name=config('kaigohack_group_system.watch');
+$role_name=config('kaigohack.watch');
 @endphp
 <div class="row">
     <div class="ml-auto">
         @if(Auth::user()->hasGroup($group->id))
         <a class="btn btn-success btn-sm btn-round text-white" href="{{route('group.role.index',$group->id)}}"><i class="material-icons">assignment_ind</i>　役割</a>
-        <a class="btn btn-info btn-sm btn-round text-white" href="{{route('group.user.index',$group->id)}}"><i class="material-icons">groups</i>　参加者</a><a class="btn btn-primary text-white btn-round btn-sm">参加中</a>
-        @elseif(Auth::user()->hasExtraGroup($group->id,$role_name))
+        @endif
+        @if(Auth::user()->hasExtraGroup($group->id,$role_name))
         <a class="btn btn-primary btn-round btn-sm" href="{{route('group.unwatch',$group->id)}}">{{$role_name}}中</a>
         @else
         <a class="btn btn-outline-primary btn-round btn-sm" href="{{route('group.watch',$group->id)}}">{{$role_name}}する</a>

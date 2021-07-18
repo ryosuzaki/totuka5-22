@@ -55,14 +55,32 @@ class InfoTableSeeder extends Seeder
             'default'=>['main'=>'回答なし','additional'=>[]],
             'model'=>User::class,
             'detail'=>'健康確認',
+            'edit'=>['name'=>'回答','icon'=>'<i class="material-icons">question_answer</i>'],
         ]);
 
         InfoTemplate::create([
             'id' => 6,
             'name' => '避難/救助状況',
-            'default'=>['rescue'=>config('group.rescue.unrescue'),'group'=>null,'rescuer'=>null,'info'=>[]],
+            'default'=>['rescue'=>config('kaigohack.rescue.unrescue'),'group'=>null,'rescuer'=>null,'info'=>[]],
             'model'=>User::class,
             'detail'=>'救助状況',
+        ]);
+
+        InfoTemplate::create([
+            'id' => 7,
+            'name' => 'お知らせ',
+            'default'=>[],
+            'model'=>Group::class,
+            'detail'=>'お知らせ',
+            'edit'=>['name'=>'送信','icon'=>'<i class="material-icons">mail_outline</i>'],
+        ]);
+
+        InfoTemplate::create([
+            'id' => 8,
+            'name' => '家族情報',
+            'default'=>[],
+            'model'=>User::class,
+            'detail'=>'家族情報',
         ]);
     }
 }

@@ -11,6 +11,7 @@ class InfoTemplate extends Model
     //
     protected $casts = [
         'default' => 'array',
+        'edit'=>'array',
     ];
 
     //
@@ -32,6 +33,15 @@ class InfoTemplate extends Model
     }
     //
     public function getDefaultAttribute($value){
+        return unserialize($value);
+    }
+
+    //
+    public function setEditAttribute($value){
+        $this->attributes['edit'] = serialize($value);
+    }
+    //
+    public function getEditAttribute($value){
         return unserialize($value);
     }
 }

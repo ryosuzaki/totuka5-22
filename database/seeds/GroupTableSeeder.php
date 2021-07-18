@@ -21,7 +21,7 @@ class GroupTableSeeder extends Seeder
             'name'=>'shelter',
             'formatted_name'=>'避難所',
             'need_location'=>true,
-            'required_info'=>[1,2],
+            'required_info'=>[1,2,7],
             'user_info'=>[],
             'creator_permissions'=>[
                 'group.*',

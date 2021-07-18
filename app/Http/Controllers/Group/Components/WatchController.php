@@ -17,12 +17,12 @@ class WatchController extends Controller
     }
     //
     public function watch(int $group_id){
-        Auth::user()->attachExtraGroup($group_id,config('group.watch'));
+        Auth::user()->attachExtraGroup($group_id,config('kaigohack.watch'));
         return redirect()->back();
     }
     //
     public function unwatch(int $group_id){
-        Auth::user()->detachExtraGroup($group_id,config('group.watch'));
+        Auth::user()->detachExtraGroup($group_id,config('kaigohack.watch'));
         return redirect()->back();
     }
 }

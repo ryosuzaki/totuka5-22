@@ -17,11 +17,11 @@
                 @if($types)
                 <ul class="nav nav-pills nav-pills-primary" role="tablist">
 
-                    @if($exist_request)
+                    
                     <li class="nav-item mx-auto">
-                        <a class="nav-link active" href="#join_request" data-toggle="tab">参加リクエスト</a>
+                        <a class="nav-link @if($exist_request)active @endif" href="#join_request" data-toggle="tab">参加リクエスト</a>
                     </li>
-                    @endif
+                    
                     
                     <li class="nav-item mx-auto">
                         <a class="nav-link @if(!$exist_request)active @endif" href="#group" data-toggle="tab">参加中</a>
@@ -38,8 +38,8 @@
                 <div class="tab-content tab-space">
 
 
-                    @if($exist_request)
-                    <div class="tab-pane active" id="join_request">
+                    
+                    <div class="tab-pane @if($exist_request)active @endif" id="join_request">
                         <div class="table-responsive">
                             <table class="table text-nowrap">
                                 <thead>
@@ -66,7 +66,7 @@
                             </table>
                         </div>
                     </div>
-                    @endif
+                    
 
 
 

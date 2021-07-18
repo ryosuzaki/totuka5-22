@@ -20,7 +20,6 @@ class AnnouncementController extends Controller
     
     //
     public function index(){
-        info(Auth::user()->announcements()->get());
         return view('user.components.announcement.index')->with([
             'user'=>Auth::user(),
             'announcements'=>Auth::user()->announcements()->get(),
@@ -39,13 +38,13 @@ class AnnouncementController extends Controller
 
     //
     public function markAsReadAll(){
-        Auth::user()->unreadAnnouncements()->markAsRead();
+        Auth::user()->unreadAnnouncements()->get()->markAsRead();
         return redirect()->back();
     }
 
     //
-    public function destroy(Announcement $announcement){
-        $announcement->delete();
+    public function destroy(string $id){
+        Auth::user()->announcements()->find($id)->delete();
         return redirect()->back();
     }
 }

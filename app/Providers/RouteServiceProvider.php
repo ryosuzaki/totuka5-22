@@ -39,11 +39,9 @@ class RouteServiceProvider extends ServiceProvider
 
         $this->mapWebRoutes();
 
-        /*
+        //
         $this->mapKaigoHackGroupRoutes();
         $this->mapKaigoHackUserRoutes();
-        $this->mapKaigoHackInfoRoutes();
-        */
     }
 
     /**
@@ -76,20 +74,14 @@ class RouteServiceProvider extends ServiceProvider
     }
 
     public function mapKaigoHackGroupRoutes(){
-        Route::middleware('auth')
-             ->namespace($this->namespace)
-             ->group(base_path('routes/kaigo_hack_group.php'));
+        Route::middleware('web')
+            ->namespace($this->namespace)
+            ->group(base_path('routes/kaigo_hack_group.php'));
     }
 
     public function mapKaigoHackUserRoutes(){
-        Route::middleware('auth')
-             ->namespace($this->namespace)
-             ->group(base_path('routes/kaigo_hack_user.php'));
-    }
-
-    public function mapKaigoHackInfoRoutes(){
-        Route::middleware('auth')
-             ->namespace($this->namespace)
-             ->group(base_path('routes/kaigo_hack_info.php'));
+        Route::middleware('web')
+            ->namespace($this->namespace)
+            ->group(base_path('routes/kaigo_hack_user.php'));
     }
 }

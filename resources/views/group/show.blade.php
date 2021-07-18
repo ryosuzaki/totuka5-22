@@ -14,7 +14,7 @@
             @if(Auth::user()->hasGroup($group->id))
             @if($type->need_location)
             <div class="text-left mt-4 mb-3">
-                <a class="btn btn-outline-primary btn-round btn-sm" href="{{route('group_location.edit',[$group->id])}}"><i class="material-icons">location_on</i> 座標変更</a>
+                <a class="btn btn-outline-primary btn-round btn-sm" href="{{route('group.location.edit',[$group->id])}}"><i class="material-icons">location_on</i> 座標変更</a>
             </div>
             @endif
             <div class="row">
@@ -36,11 +36,14 @@
 
                 <div class="tab-content tab-space pb-0">
                     @foreach ($bases as $base)
+                    @php
+                    $template=$base->getTemplate();
+                    @endphp
                     <div class="tab-pane @if($base->index==$index) active @endif" id="pill{{$base->index}}">
-                        @include('info.info.show.'.$base->getTemplate()->id, ['base'=>$base,'info'=>$base->info()])
+                        @include('group.info.show.'.$template->id, ['base'=>$base,'info'=>$base->info(),'group'=>$group])
                         @can('update-group-info',[$group,$base->index])
                         <div class="row">
-                            <a class="btn btn-outline-primary btn-block mx-auto" href="{{route('group.info.edit',[$group->id,$base->index])}}"><i class="material-icons">edit</i> 変更</a>
+                            <a class="btn btn-outline-primary btn-block mx-auto" href="{{route('group.info.edit',[$group->id,$base->index])}}">{!! $template->edit['icon'] !!} {{$template->edit['name']}}</a>
                         </div>
                         @endcan
                     </div>

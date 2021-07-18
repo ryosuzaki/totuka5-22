@@ -23,8 +23,8 @@
                             <tr>
                                 <td>{{$role->role_name}}</td>
                                 <td>
-                                <a class="btn btn-primary btn-sm btn-round m-0 text-white" href="{{route('group.role.edit',[$group->id,$role->index])}}"><i class="material-icons">edit</i> 変更</a>
                                 @if($role->index!=0)
+                                <a class="btn btn-primary btn-sm btn-round m-0 text-white" href="{{route('group.role.edit',[$group->id,$role->index])}}"><i class="material-icons">edit</i> 変更</a>
                                 <a class="btn btn-warning btn-sm btn-round m-0 text-white" href="{{route('group.permission.edit',[$group->id,$role->index])}}"><i class="material-icons">lock_open</i> 権限</a>
                                 <a class="btn btn-info btn-sm btn-round m-0 text-white" href="{{route('group.user.index',[$group->id,$role->index])}}"><i class="material-icons">groups</i> ユーザ</a>
                                 

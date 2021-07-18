@@ -33,5 +33,4 @@ class Info extends Model
     public function getInfoAttribute($value){
         return unserialize($value);
     }
-
 }

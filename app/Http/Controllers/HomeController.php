@@ -11,10 +11,10 @@ class HomeController extends Controller
     //
     public function index()
     {
-        return view('home.home');
+        return view('home.home')->with(['types'=>GroupType::all()]);
     }
     //
-    public function groupType(GroupType $type){
-        return view('home.group_type.'.$type->name)->with(['type'=>$type]);
+    public function groupType(GroupType $group_type){
+        return view('home.group_type.'.$group_type->name)->with(['type'=>$group_type]);
     }
 }

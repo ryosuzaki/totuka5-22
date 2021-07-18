@@ -1,5 +1,5 @@
 <div class="table-responsive">
-    <table class="table text-nowrap">
+    <table class="table text-nowrap tablesorter" id="sorter">
         <thead>
         <tr>
             <th>ユーザー名</th>
@@ -42,16 +42,29 @@
                 @endphp
                 @if($exist)
                 <td>
-                @if($rescue==config('group.rescue.rescue'))
+                @if($rescue==config('kaigohack.rescue.rescue'))
                     @if($rescue_group==$group)
-                    <a class="btn btn-danger btn-round btn-sm text-white m-0" href="{{route('group.user.unrescue',[$info->info['group']->id,$user->id])}}">救助をやめる</a>
-                    <a class="btn btn-success btn-round btn-sm text-white m-0" href="{{route('group.user.rescued',[$info->info['group']->id,$user->id])}}">救助が完了</a>
+                    <a class="btn btn-danger btn-round btn-sm text-white m-0" href="{{route('group.user.unrescue',[$info->info['group']->id,$user->id])}}"><i class="material-icons">close</i> やめる</a>
+                    <button type="button" data-toggle="modal" data-target="#rescued" class="btn btn-success btn-round btn-sm text-white m-0"><i class="material-icons">done</i> 完了</button>
+                    <div class="modal fade" id="rescued" tabindex="-1" role="dialog" aria-labelledby="rescuedLabel" aria-hidden="true">
+                        <div class="modal-dialog" role="document">
+                            <div class="modal-content">
+                                <div class="modal-body">
+                                    本当に救助を完了しますか？
+                                </div>
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-secondary" data-dismiss="modal">やめる</button>
+                                    <a class="btn btn-success text-white" href="{{route('group.user.rescued',[$info->info['group']->id,$user->id])}}">救助を完了</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                     @else
                     <a href="{{route('group.show',$rescue_group->id)}}">{{$rescue_group->name}}</a>が救助中
                     @endif
-                @elseif($rescue==config('group.rescue.unrescue'))
+                @elseif($rescue==config('kaigohack.rescue.unrescue'))
                 <a class="btn btn-warning btn-round btn-sm text-white m-0" href="{{route('group.user.rescue',[$group->id,$user->id])}}">救助に向かう</a>
-                @elseif($rescue==config('group.rescue.rescued'))
+                @elseif($rescue==config('kaigohack.rescue.rescued'))
                 <a href="{{route('group.show',$rescue_group->id)}}">{{$rescue_group->name}}</a>が救助済み
                 @endif
                 </td>
@@ -87,3 +100,9 @@
         </tbody>
     </table>
 </div>
+
+<script type="module">
+    $(document).ready(function() { 
+        $("#sorter").tablesorter();
+    });
+</script>

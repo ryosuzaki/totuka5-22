@@ -29,7 +29,7 @@ Breadcrumbs::for('group.show', function ($trail,Group $group) {
 //
 Breadcrumbs::for('group.create', function ($trail,GroupType $type) {
     $trail->parent('home.group_type',$type);
-    $trail->push('作成', route('group.create',$type));
+    $trail->push('登録', route('group.create',$type));
 });
 //
 Breadcrumbs::for('group.edit', function ($trail,Group $group) {
@@ -71,7 +71,7 @@ Breadcrumbs::for('group.user.index', function ($trail,Group $group,int $index) {
 
 //
 Breadcrumbs::for('group.user.create', function ($trail,Group $group,int $index) {
-    $trail->parent('group.user.index', $group);
+    $trail->parent('group.user.index', $group,$index);
     $trail->push('招待', route('group.user.create',[$group,$index]));
 });
 
@@ -87,7 +87,7 @@ Breadcrumbs::for('group.user.show', function ($trail,Group $group,User $user,int
 //
 Breadcrumbs::for('group.info.edit', function ($trail,Group $group,int $index) {
     $trail->parent('group.show',$group);
-    $trail->push('変更', route('group.info.edit',[$group,$index]));
+    $trail->push($group->getInfoBaseByIndex($index)->name, route('group.info.edit',[$group,$index]));
 });
 
 
@@ -128,7 +128,7 @@ Breadcrumbs::for('user.edit', function ($trail) {
 //
 Breadcrumbs::for('user.info.edit', function ($trail,InfoBase $info_base) {
     $trail->parent('user.show');
-    $trail->push('変更', route('user.info.edit',$info_base));
+    $trail->push($info_base->name, route('user.info.edit',$info_base));
 });
 
 //
@@ -161,4 +161,15 @@ Breadcrumbs::for('user.group.create', function ($trail) {
 Breadcrumbs::for('user.group.edit', function ($trail,Group $group) {
     $trail->parent('user.group.index');
     $trail->push('変更', route('user.group.edit',$group));
+});
+
+//
+Breadcrumbs::for('user.announcement.index', function ($trail) {
+    $trail->parent('user.show');
+    $trail->push('お知らせ', route('user.announcement.index'));
+});
+//
+Breadcrumbs::for('user.announcement.show', function ($trail,$announcement) {
+    $trail->parent('user.announcement.index');
+    $trail->push($announcement->data['announcement']['title']);
 });
