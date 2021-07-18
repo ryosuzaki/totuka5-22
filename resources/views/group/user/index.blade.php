@@ -55,7 +55,7 @@
                         @include('group.user.index.'.$group->getTypeName(),['users'=>$users])
                         @else
                         <div class="table-responsive">
-                            <table class="table text-nowrap">
+                            <table class="table text-nowrap tablesorter" id="sorter">
                                 <thead>
                                 <tr>
                                     <th>ユーザー名</th>
@@ -99,6 +99,14 @@
                         @endif
                     </div>
                     
+
+                    <script type="module">
+                        $(document).ready(function() { 
+                            $("#sorter").tablesorter();
+                        });
+                    </script>
+
+
                     <div class="tab-pane" id="request_join" aria-expanded="false">
                         @php
                         $requests=$group->usersRequestJoin()->wherePivot('role_id',$role->id)->get();
