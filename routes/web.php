@@ -15,7 +15,7 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\Request;
 
 Route::get('/', function () {
-    return view('home.home');
+    return redirect()->route('home');
 });
 
 Auth::routes();

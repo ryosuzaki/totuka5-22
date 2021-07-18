@@ -46,28 +46,6 @@ class UserInfoBaseController extends Controller
         //
     }
 
-    /*
-    //
-    public function edit($id)
-    {
-        return view('user.info_base.edit')->with(['user'=>Auth::user(),'base'=>Auth::user()->getInfoBase($id)]);
-    }
-
-    //
-    public function update(Request $request,int $id)
-    {
-        $validator = Validator::make($request->all(),[
-            'name'=>'required|max:255',
-        ]);
-        if ($validator->fails()) {
-            return back()->withErrors($validator)->withInput();
-        }
-        Auth::user()->getInfoBase($id)->fill([
-            'name'=>$request->name,
-        ])->save();
-        return redirect()->route('user.info_base.index',Auth::id());
-    }*/
-
     //
     public function destroy(int $id)
     {
