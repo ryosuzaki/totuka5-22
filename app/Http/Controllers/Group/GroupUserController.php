@@ -33,7 +33,7 @@ class GroupUserController extends Controller
         ]);
     }
     //
-    public function create(Group $group,int $index=0)
+    public function create(Group $group,int $index)
     {
         Gate::authorize('invite-group-users',[$group,$index]);
         return view('group.user.create')->with([

@@ -7,6 +7,7 @@
 Route::name('group.')->prefix('group')->namespace('Group')->group(function(){
     //
     Route::get('create/{type}', 'GroupController@create')->name('create');
+    Route::post('store/{type}', 'GroupController@store')->name('store');
     //
     Route::prefix('{group}')->group(function(){
         //
@@ -56,7 +57,7 @@ Route::name('group.')->prefix('group')->namespace('Group')->group(function(){
 });
 
 //
-Route::resource('group', 'Group\GroupController',['except' => ['create','show']]);
+Route::resource('group', 'Group\GroupController',['except' => ['create','show','store']]);
 //
 Route::resource('group.role', 'Group\Components\RoleController');
 //

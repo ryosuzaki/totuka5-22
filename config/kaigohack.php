@@ -34,4 +34,8 @@ return [
             'announcement_user'=>'announcement_user',
         ]
     ],
+
+    'danger_spot'=>[
+        'name'=>['土砂崩れ','水没','倒壊','その他'],
+    ],
 ];

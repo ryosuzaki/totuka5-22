@@ -9,6 +9,9 @@ class GroupUsersPolicy
 {
     public function permission(User $user, Group $group, int $index)
     {
+        if($index==0){
+            return false;
+        }
         $role=$user->getRoleByGroup($group->id);
         if (!$role){
             return false;
@@ -25,6 +28,9 @@ class GroupUsersPolicy
     }
     //
     public function invite(User $user, Group $group, int $index){
+        if($index==0){
+            return false;
+        }
         $role=$user->getRoleByGroup($group->id);
         if (!$role){
             return false;
@@ -33,6 +39,9 @@ class GroupUsersPolicy
     }
     //
     public function remove(User $user, Group $group, int $index){
+        if($index==0){
+            return false;
+        }
         $role=$user->getRoleByGroup($group->id);
         if (!$role){
             return false;

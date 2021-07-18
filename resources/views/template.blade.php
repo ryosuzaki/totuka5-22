@@ -18,25 +18,30 @@
     <script type="module" src="https://cdnjs.cloudflare.com/ajax/libs/jquery.tablesorter/2.31.0/js/jquery.tablesorter.min.js"></script>
 
     <style type="text/css">
-        .tablesorter-headerUnSorted {
-            height:80%;
-            background-image: url("{{asset('img/sort-icon.png')}}");
-            background-repeat: no-repeat;
-            background-size:auto 60%;
-            background-position: center right;
-        }
-        .tablesorter-headerAsc {
-            background-image: url("{{asset('img/sort-asc-icon.png')}}");
-            background-repeat: no-repeat;
-            background-size:auto 60%;
-            background-position: center right;
-        }
-        .tablesorter-headerDesc {
-            background-image: url("{{asset('img/sort-desc-icon.png')}}");
-            background-repeat: no-repeat;
-            background-size:auto 60%;
-            background-position: center right;
-        }
+      .tablesorter td,.tablesorter th{
+        padding-right:1.5rem;
+      }
+      .tablesorter-header-inner{
+        color:#555 !important;
+      }
+      .tablesorter-headerUnSorted {
+        background-image: url("{{asset('img/sort/unsort.png')}}");
+        background-repeat: no-repeat;
+        background-size:auto 30%;
+        background-position: center right;
+      }
+      .tablesorter-headerAsc {
+        background-image: url("{{asset('img/sort/sort-asc.png')}}");
+        background-repeat: no-repeat;
+        background-size:auto 30%;
+        background-position: center right;
+      }
+      .tablesorter-headerDesc {
+        background-image: url("{{asset('img/sort/sort-desc.png')}}");
+        background-repeat: no-repeat;
+        background-size:auto 30%;
+        background-position: center right;
+      }
     </style>
   </head>
   <body>

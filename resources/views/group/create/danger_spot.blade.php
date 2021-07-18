@@ -1,6 +1,15 @@
-<input type="hidden" name="type" value="{{$type}}">
-<input id="name" type="text" class="form-control d-none" name="name" value="danger_spot">
-<div class="form-group row mb-0">
+@foreach(config('kaigohack.danger_spot.name') as $name)
+<div class="form-check form-check-radio form-check-inline">
+    <label class="form-check-label">
+        <input class="form-check-input" type="radio" name="name" value="{{$name}}">
+        {{$name}}
+        <span class="circle">
+            <span class="check"></span>
+        </span>
+    </label>
+</div>
+@endforeach
+<div class="form-group mb-0">
     <button type="submit" class="btn btn-primary btn-block">
     危険地点投稿
     </button>
