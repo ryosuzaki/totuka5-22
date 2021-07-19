@@ -70,11 +70,11 @@ class UserController extends Controller
     }
 
     //
-    public function settingForm(){
-        return view('user.setting')->with(['types'=>GroupType::all()]);
+    public function initialSettingForm(){
+        return view('user.initial_setting')->with(['types'=>GroupType::all()]);
     }
     //
-    public function setting(Request $request){
+    public function initialSetting(Request $request){
         $validator = Validator::make($request->all(),[
             'types.*' => ['required', 'integer','min:1','exists:group_types,id'],
         ]);

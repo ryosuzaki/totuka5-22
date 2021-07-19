@@ -16,13 +16,13 @@ class WatchController extends Controller
         $this->middleware('auth');
     }
     //
-    public function watch(int $group_id){
-        Auth::user()->attachExtraGroup($group_id,config('kaigohack.watch'));
+    public function watch(Group $group){
+        Auth::user()->attachExtraGroup($group->id,config('kaigohack.watch'));
         return redirect()->back();
     }
     //
-    public function unwatch(int $group_id){
-        Auth::user()->detachExtraGroup($group_id,config('kaigohack.watch'));
+    public function unwatch(Group $group){
+        Auth::user()->detachExtraGroup($group->id,config('kaigohack.watch'));
         return redirect()->back();
     }
 }

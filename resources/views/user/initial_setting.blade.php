@@ -5,7 +5,9 @@
     <div class="col-md-8">
         <div class="card">
             <div class="card-body">
-                <form method="POST" action="{{ route('user.setting') }}">
+                <p class="text-center h3">初期設定</p>
+                <p class="text-center h4">使う機能を選択してください</p>
+                <form method="POST" action="{{ route('user.initial_setting') }}">
                     @csrf
                     @foreach($types as $type)
                     <div class="form-check">
@@ -19,7 +21,7 @@
                     </div>
                     @endforeach
 
-                    <div class="form-group row mb-0">
+                    <div class="form-group mb-0">
                         <button type="submit" class="btn btn-primary btn-block">
                         登録
                         </button>

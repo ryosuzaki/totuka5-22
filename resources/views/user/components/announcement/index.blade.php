@@ -17,7 +17,8 @@
                             <tr>
                                 <th style="width: 10%"></th>
                                 <th style="width: 30%">送信元</th>
-                                <th style="width: 60%">タイトル</th>
+                                <th style="width: 50%">タイトル</th>
+                                <th style="width: 10%"></th>
                             </tr>
                         </thead>
                         <tbody>
