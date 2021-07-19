@@ -59,13 +59,11 @@ class Group extends Model
     
     //
     public static function setUp(int $user_id,string $name,GroupType $type){
-        info($type->id);
         //
         $group=parent::create([
             'group_type_id'=>$type->id,
             'name'=>$name,
         ]);
-        info($type->id);
         //
         $group->fill([
             'unique_name'=>config('kaigohack.unique_name').$group->id,
