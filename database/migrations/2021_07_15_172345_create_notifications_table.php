@@ -28,6 +28,7 @@ class CreateNotificationsTable extends Migration
             $table->string('title');
             $table->text('content');
             $table->timestamps();
+            $table->date('delete_time')->nullable();
         });
     }
 

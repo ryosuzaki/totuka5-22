@@ -27,11 +27,11 @@
                         <a class="nav-link @if(!$exist_request)active @endif" href="#group" data-toggle="tab">参加中</a>
                     </li>
 
-                    @if($exist_extra)
+                    
                     <li class="nav-item mx-auto">
                         <a class="nav-link" href="#extra" data-toggle="tab">アクション中</a>
                     </li>
-                    @endif
+                    
 
                 </ul>
                 
@@ -118,7 +118,7 @@
                     </div>
 
 
-                    @if($exist_extra)
+                    
                     <div class="tab-pane" id="extra">
                         <div class="table-responsive">
                             <table class="table text-nowrap">
@@ -141,7 +141,7 @@
                             </table>
                         </div>
                     </div>
-                    @endif
+                    
 
         
                 </div>

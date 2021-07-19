@@ -9,8 +9,8 @@ Route::name('user.')->prefix('user')->namespace('User')->group(function(){
     Route::put('', 'UserController@update')->name('update');
 
     //
-    Route::get('first-setting', 'UserController@settingForm')->name('setting_form');
-    Route::post('first-setting', 'UserController@setting')->name('setting');
+    Route::get('initial_setting_form', 'UserController@initialSettingForm')->name('initial_setting_form');
+    Route::post('initial_setting', 'UserController@initialSetting')->name('initial_setting');
 
     //
     Route::get('{info_base}/info/edit', 'UserInfoController@edit')->name('info.edit');
