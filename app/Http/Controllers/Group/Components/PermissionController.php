@@ -22,7 +22,7 @@ class PermissionController extends Controller
     public function edit(Group $group,int $index)
     {
         Gate::authorize('permission-group-users',[$group,$index]);
-        return view('group.permission.edit')->with([
+        return view('group.components.permission.edit')->with([
             'group'=>$group,
             'role'=>$group->getRoleByIndex($index),
             ]);

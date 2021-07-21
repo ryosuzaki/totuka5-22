@@ -27,7 +27,7 @@ class RoleController extends Controller
     public function index(Group $group)
     {
         Gate::authorize('viewAny-group-roles',$group);
-        return view('group.role.index')->with([
+        return view('group.components.role.index')->with([
             'group'=>$group,
             'roles'=>$group->roles()->get(),
         ]);
@@ -42,7 +42,7 @@ class RoleController extends Controller
     public function create(Group $group)
     {
         Gate::authorize('create-group-roles',$group);
-        return view('group.role.create')->with([
+        return view('group.components.role.create')->with([
             'group'=>$group,
             'roles'=>$group->roles()->get(),
             ]);
@@ -74,7 +74,7 @@ class RoleController extends Controller
     public function edit(Group $group,int $index)
     {
         Gate::authorize('update-group-roles',[$group,$index]);
-        return view('group.role.edit')->with([
+        return view('group.components.role.edit')->with([
             'group'=>$group,
             'role'=>$group->getRoleByIndex($index),
             ]);

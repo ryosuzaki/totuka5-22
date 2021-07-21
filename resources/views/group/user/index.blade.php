@@ -74,8 +74,8 @@
                                         <form action="{{route('group.user.destroy',[$group->id,$user->id,$role->index])}}" method="post">
                                             @csrf
                                             @method('delete')
-                                            <button type="button" data-toggle="modal" data-target="#delete" class="btn btn-danger btn-round btn-sm text-white m-0"><i class="material-icons">logout</i> 退出</button>
-                                            <div class="modal fade" id="delete" tabindex="-1" role="dialog" aria-labelledby="deleteLabel" aria-hidden="true">
+                                            <button type="button" data-toggle="modal" data-target="#delete{{$user->id}}" class="btn btn-danger btn-round btn-sm text-white m-0"><i class="material-icons">logout</i> 退出</button>
+                                            <div class="modal fade" id="delete{{$user->id}}" tabindex="-1" role="dialog" aria-labelledby="deleteLabel" aria-hidden="true">
                                                 <div class="modal-dialog" role="document">
                                                     <div class="modal-content">
                                                         <div class="modal-body">

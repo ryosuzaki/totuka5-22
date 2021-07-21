@@ -118,7 +118,6 @@ class GroupInfoBaseController extends Controller
      */
     public function destroy(Group $group,$id)
     {
-        info($id);
         Gate::authorize('delete-group-info-bases', $group);
         $group->deleteInfoBase($id);
         return redirect()->back();

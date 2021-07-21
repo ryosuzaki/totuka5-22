@@ -8,23 +8,16 @@
             <div class="card-body">
                 <h3 class="text-center mb-4">グループ</h3>
 
-                @php
-                $types=$user->groupTypes();
-                $groups=$user->groups()->get();
-                $exist_request=$user->groupsRequestJoin()->get()->isNotEmpty();
-                $exist_extra=$user->extraGroups()->get()->isNotEmpty();
-                @endphp
-                @if($types)
                 <ul class="nav nav-pills nav-pills-primary" role="tablist">
 
                     
                     <li class="nav-item mx-auto">
-                        <a class="nav-link @if($exist_request)active @endif" href="#join_request" data-toggle="tab">参加リクエスト</a>
+                        <a class="nav-link @if($requests->isNotEmpty())active @endif" href="#join_request" data-toggle="tab">参加リクエスト</a>
                     </li>
                     
                     
                     <li class="nav-item mx-auto">
-                        <a class="nav-link @if(!$exist_request)active @endif" href="#group" data-toggle="tab">参加中</a>
+                        <a class="nav-link @if($requests->isEmpty())active @endif" href="#group" data-toggle="tab">参加中</a>
                     </li>
 
                     
@@ -39,7 +32,7 @@
 
 
                     
-                    <div class="tab-pane @if($exist_request)active @endif" id="join_request">
+                    <div class="tab-pane @if($requests->isNotEmpty())active @endif" id="join_request">
                         <div class="table-responsive">
                             <table class="table text-nowrap">
                                 <thead>
@@ -51,7 +44,7 @@
                                 </tr>
                                 </thead>
                                 <tbody>
-                                    @foreach($user->groupsRequestJoin()->get() as $group)
+                                    @foreach($requests as $group)
                                     <tr>
                                         <td>{{$group->getType()->formatted_name}}</td>
                                         <td><a href="{{route('group.show',$group->id)}}">{{$group->name}}</a></td>
@@ -70,7 +63,7 @@
 
 
 
-                    <div class="tab-pane @if(!$exist_request)active @endif" id="group">
+                    <div class="tab-pane @if($requests->isEmpty())active @endif" id="group">
                         <div class="table-responsive">
                             <table class="table text-nowrap">
                                 <thead>
@@ -84,7 +77,7 @@
                                 <tbody>
                                     @foreach($groups as $group)
                                     @php
-                                    $role=$user->getRoleByGroup($group->id);
+                                    $role=$group->getRole($group->pivot->role_id);
                                     @endphp
                                     <tr>
                                         <td>{{$group->getFormattedTypeName()}}</td>
@@ -93,8 +86,8 @@
                                         <td class="p-1">
                                         @if($role->index!=0)
                                         <a class="btn btn-primary btn-sm btn-round m-0 text-white" href="{{route('user.group.edit',[$group->id])}}"><i class="material-icons">autorenew</i> 変更</a>
-                                        <a class="btn btn-danger btn-round btn-sm m-0 text-white" data-toggle="modal" data-target="#{{$group->id}}"><i class="material-icons">logout</i> 退出</a>
-                                        <div class="modal fade" id="{{$group->id}}" tabindex="-1" role="dialog" aria-labelledby="{{$group->id}}Label" aria-hidden="true">
+                                        <a class="btn btn-danger btn-round btn-sm m-0 text-white" data-toggle="modal" data-target="#delete{{$group->id}}"><i class="material-icons">logout</i> 退出</a>
+                                        <div class="modal fade" id="delete{{$group->id}}" tabindex="-1" role="dialog" aria-labelledby="{{$group->id}}Label" aria-hidden="true">
                                             <div class="modal-dialog" role="document">
                                                 <div class="modal-content">
                                                 <div class="modal-body">
@@ -102,7 +95,11 @@
                                                 </div>
                                                 <div class="modal-footer">
                                                     <button type="button" class="btn btn-secondary" data-dismiss="modal">やめる</button>
-                                                    <a class="btn btn-danger text-white" href="{{route('user.group.destroy',$group->id)}}">退出する</a>
+                                                    <form action="{{route('user.group.destroy',$group->id)}}" method="post">
+                                                    @csrf
+                                                    @method('delete')
+                                                    <button type="submit" class="btn btn-danger text-white">退出する</button>
+                                                    </form>
                                                 </div>
                                                 </div>
                                             </div>
@@ -130,7 +127,7 @@
                                 </tr>
                                 </thead>
                                 <tbody>
-                                    @foreach($user->extraGroups()->get() as $group)
+                                    @foreach($extras as $group)
                                     <tr>
                                         <td>{{$group->getFormattedTypeName()}}</td>
                                         <td><a href="{{route('group.show',$group->id)}}">{{$group->name}}</a></td>
@@ -141,13 +138,9 @@
                             </table>
                         </div>
                     </div>
-                    
 
-        
                 </div>
-                @else
-                <h4>参加しているグループはありません</h4>
-                @endif
+
             </div>
         </div>
     </div>

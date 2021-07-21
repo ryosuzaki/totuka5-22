@@ -304,11 +304,11 @@ class Group extends Model
 
     //
     public function location(){
-        return $this->hasOne('App\Models\Group\GroupLocation', 'id');
+        return $this->morphOne('App\Models\Components\Location', 'model');
     }
     //
     public function setLocation(float $latitude,float $longitude){
-        return $this->location()->fill([
+        return $this->location()->first()->fill([
             'latitude'=>$latitude,
             'longitude'=>$longitude,
         ])->save();

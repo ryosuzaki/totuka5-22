@@ -27,8 +27,12 @@ class UserGroupController extends Controller
      */
     public function index()
     {
+        $user=Auth::user();
         return view('user.group.index')->with([
-            'user'=>Auth::user(),
+            'user'=>$user,
+            'groups'=>$user->groups()->get(),
+            'extras'=>$user->extraGroups()->get(),
+            'requests'=>$user->groupsRequestJoin()->get(),
             ]);
     }
 
@@ -76,7 +80,7 @@ class UserGroupController extends Controller
             return back()->withInput();
         }
         $group->inviteUser(Auth::id(),(int)$request->role_id);
-        return redirect()->route('user.group.index',Auth::id());
+        return redirect()->route('user.group.index');
     }
 
     //
