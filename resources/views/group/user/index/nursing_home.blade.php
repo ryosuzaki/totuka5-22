@@ -45,8 +45,8 @@
                 @if($rescue==config('kaigohack.rescue.rescue'))
                     @if($rescue_group==$group)
                     <a class="btn btn-danger btn-round btn-sm text-white m-0" href="{{route('group.user.unrescue',[$info->info['group']->id,$user->id])}}"><i class="material-icons">close</i> やめる</a>
-                    <button type="button" data-toggle="modal" data-target="#rescued" class="btn btn-success btn-round btn-sm text-white m-0"><i class="material-icons">done</i> 完了</button>
-                    <div class="modal fade" id="rescued" tabindex="-1" role="dialog" aria-labelledby="rescuedLabel" aria-hidden="true">
+                    <button type="button" data-toggle="modal" data-target="#rescued{{$user->id}}" class="btn btn-success btn-round btn-sm text-white m-0"><i class="material-icons">done</i> 完了</button>
+                    <div class="modal fade" id="rescued{{$user->id}}" tabindex="-1" role="dialog" aria-labelledby="rescuedLabel" aria-hidden="true">
                         <div class="modal-dialog" role="document">
                             <div class="modal-content">
                                 <div class="modal-body">
@@ -75,8 +75,8 @@
                 <td class="row pt-1">
                 @if($role->index!=0)
                 
-                    <button type="button" data-toggle="modal" data-target="#delete" class="btn btn-danger btn-round btn-sm text-white m-0"><i class="material-icons">logout</i> 退出</button>
-                    <div class="modal fade" id="delete" tabindex="-1" role="dialog" aria-labelledby="deleteLabel" aria-hidden="true">
+                    <button type="button" data-toggle="modal" data-target="#delete{{$user->id}}" class="btn btn-danger btn-round btn-sm text-white m-0"><i class="material-icons">logout</i> 退出</button>
+                    <div class="modal fade" id="delete{{$user->id}}" tabindex="-1" role="dialog" aria-labelledby="deleteLabel" aria-hidden="true">
                         <div class="modal-dialog" role="document">
                             <div class="modal-content">
                                 <div class="modal-body">

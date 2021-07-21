@@ -42,6 +42,23 @@
         background-size:auto 30%;
         background-position: center right;
       }
+
+      /* マップスタイル */
+      #map{
+        position: absolute;
+        z-index: -1;
+        top: 1px;
+        right: 0;
+        bottom: 0;
+        left: 0;
+      }
+
+      /* infowindow */
+      .img-fluid{
+        max-width: 100%;
+        height: auto;
+      }
+
     </style>
   </head>
   <body>
@@ -62,10 +79,10 @@
         <div class="collapse navbar-collapse">
           <ul class="navbar-nav mr-auto">
             <li class="nav-item">
-              <a class="nav-link" href="#"><i class="material-icons">run_circle</i>避難所マップ</a>
+              <a class="nav-link" href="{{route('group.location.index','shelter')}}"><i class="material-icons">run_circle</i>避難所マップ</a>
             </li>
             <li class="nav-item">
-              <a class="nav-link" href="#"><i class="material-icons">warning</i>危険地点マップ</a>
+              <a class="nav-link" href="{{route('group.location.index','danger_spot')}}"><i class="material-icons">warning</i>危険地点マップ</a>
             </li>
           </ul>
           <ul class="navbar-nav">
@@ -160,6 +177,8 @@
     </div>
   </div>
 </footer>
+
+
 <!--   Core JS Files   -->
 <script src="{{asset('material-kit-master/assets/js/core/jquery.min.js')}}" type="text/javascript"></script>
 <script src="{{asset('material-kit-master/assets/js/core/popper.min.js')}}" type="text/javascript"></script>
@@ -174,7 +193,7 @@
 
 
 <!--  Google Maps Plugin  -->
-<!-- <script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?key=YOUR_KEY_HERE"></script> -->
+
 <!-- Place this tag in your head or just before your close body tag. -->
 <script async defer src="https://buttons.github.io/buttons.js"></script>
 <!-- Control Center for Material Kit: parallax effects, scripts for the example pages etc -->

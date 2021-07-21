@@ -13,8 +13,29 @@
             
             @if(Auth::user()->hasGroup($group->id))
             @if($type->need_location)
-            <div class="text-left mt-4 mb-3">
-                <a class="btn btn-outline-primary btn-round btn-sm" href="{{route('group.location.edit',[$group->id])}}"><i class="material-icons">location_on</i> 座標変更</a>
+            <div class="text-left row mt-4 mb-3">
+            @can('update',$group)
+            <form id="set_here" action="{{route('group.location.set_here',$group)}}" method="POST">
+                @csrf
+                <input type="hidden" name="latitude">
+                <input type="hidden" name="longitude">
+                <button type="submit" class="btn btn-outline-success btn-round btn-sm mr-2"><i class="material-icons">my_location</i> 現在地を地点に設定</button>
+            </form>
+            <script type="module">
+                $(function(){
+                if (navigator.geolocation) {
+                    navigator.geolocation.getCurrentPosition(
+                    (position) => {
+                        $('input[name="latitude"]').val(position.coords.latitude); 
+                        $('input[name="longitude"]').val(position.coords.longitude); 
+                    });
+                }
+                })
+            </script>
+            @endcan
+            <div>
+                <a class="btn btn-outline-primary btn-round btn-sm" href="{{route('group.location.show',$group->id)}}"><i class="material-icons">location_on</i> 地点を表示</a>
+            </div>
             </div>
             @endif
             <div class="row">

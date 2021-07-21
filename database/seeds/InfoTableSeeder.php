@@ -43,10 +43,10 @@ class InfoTableSeeder extends Seeder
 
         InfoTemplate::create([
             'id' => 4,
-            'name' => 'ユーザー情報',
-            'default'=>['detail'=>''],
+            'name' => '基本情報',
+            'default'=>['you1'=>'a','you2'=>'','you3'=>'','you4'=>'','you5'=>'','you6'=>'','you7'=>'','you8'=>'','you9'=>'','you10'=>'OFF','home1'=>'','home2'=>''],
             'model'=>User::class,
-            'detail'=>'ユーザー情報',
+            'detail'=>'基本情報',
         ]);
 
         InfoTemplate::create([
@@ -78,9 +78,25 @@ class InfoTableSeeder extends Seeder
         InfoTemplate::create([
             'id' => 8,
             'name' => '家族情報',
-            'default'=>[],
+            'default'=>['fami1'=>'','fami2'=>'','fami3'=>'','fami4'=>'','fami5'=>'','fami6'=>'','fami7'=>'','fami8'=>'','fami9'=>''],
             'model'=>User::class,
             'detail'=>'家族情報',
+        ]);
+
+        InfoTemplate::create([
+            'id' => 9,
+            'name' => '医療',
+            'default'=>['care1'=>'36.2','care2'=>'170.0','care3'=>'60','care4'=>'','care5'=>'','care6'=>'','care7'=>'','care8'=>''],
+            'model'=>User::class,
+            'detail'=>'医療',
+        ]);
+        
+        InfoTemplate::create([
+            'id' => 10,
+            'name' => '福祉',
+            'default'=>['help1'=>'','help2'=>'','help3'=>'','help4'=>'','help5'=>'','help6'=>'','help7'=>'','help8'=>'','help9'=>'','use1'=>'利用しない','use2'=>'通常版','use3'=>'利用する'],
+            'model'=>User::class,
+            'detail'=>'福祉',
         ]);
     }
 }

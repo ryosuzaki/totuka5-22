@@ -28,8 +28,8 @@
                                 <a class="btn btn-warning btn-sm btn-round m-0 text-white" href="{{route('group.permission.edit',[$group->id,$role->index])}}"><i class="material-icons">lock_open</i> 権限</a>
                                 <a class="btn btn-info btn-sm btn-round m-0 text-white" href="{{route('group.user.index',[$group->id,$role->index])}}"><i class="material-icons">groups</i> ユーザ</a>
                                 
-                                <button type="button" data-toggle="modal" data-target="#delete" class="btn btn-danger btn-round btn-sm m-0 text-white"><i class="material-icons">remove_circle_outline</i> 削除</button>
-                                <div class="modal fade" id="delete" tabindex="-1" role="dialog" aria-labelledby="deleteLabel" aria-hidden="true">
+                                <button type="button" data-toggle="modal" data-target="#delete{{$role->index}}" class="btn btn-danger btn-round btn-sm m-0 text-white"><i class="material-icons">remove_circle_outline</i> 削除</button>
+                                <div class="modal fade" id="delete{{$role->index}}" tabindex="-1" role="dialog" aria-labelledby="deleteLabel" aria-hidden="true">
                                     <div class="modal-dialog" role="document">
                                         <div class="modal-content">
                                             <div class="modal-body">

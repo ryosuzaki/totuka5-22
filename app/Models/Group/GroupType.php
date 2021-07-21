@@ -31,7 +31,7 @@ class GroupType extends Model
 
     //
     public function groups(){
-        return $this->hasMany('App\Models\Group\GroupType','group_type_id');
+        return $this->hasMany('App\Models\Group\Group','group_type_id');
     }
 
 

@@ -24,11 +24,6 @@ Auth::routes();
 Route::get('home', 'HomeController@index')->name('home');
 //
 Route::get('home/group_type/{group_type}', 'HomeController@groupType')->name('home.group_type');
-
-//info_base info
-Route::get('info_base/{info_base}/info/edit', 'Info\InfoController@edit')->name('info_base.info.edit');
-Route::put('info_base/{info_base}/info', 'Info\InfoController@update')->name('info_base.info.update');
-
 //
 Route::resource('info_template', 'Info\InfoTemplateController');
     

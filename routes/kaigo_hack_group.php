@@ -8,6 +8,12 @@ Route::name('group.')->prefix('group')->namespace('Group')->group(function(){
     //
     Route::get('create/{type}', 'GroupController@create')->name('create');
     Route::post('store/{type}', 'GroupController@store')->name('store');
+
+    //
+    Route::namespace('Components')->group(function(){
+        Route::get('location/{group_type}', 'LocationController@index')->name('location.index');
+    });
+
     //
     Route::prefix('{group}')->group(function(){
         //
@@ -27,11 +33,13 @@ Route::name('group.')->prefix('group')->namespace('Group')->group(function(){
         Route::put('info/{index}', 'GroupInfoController@update')->name('info.update');
 
         //
-        Route::get('location/edit', 'GroupLocationController@edit')->name('location.edit');
-        Route::put('location', 'GroupLocationController@update')->name('location.update');
-
-        //
         Route::namespace('Components')->group(function(){
+            //    
+            Route::get('location/show', 'LocationController@show')->name('location.show');
+            Route::get('location/edit', 'LocationController@edit')->name('location.edit');
+            Route::put('location', 'LocationController@update')->name('location.update');
+            Route::post('location/set_here', 'LocationController@setHere')->name('location.set_here');
+            //
             Route::put('announcement/send', 'AnnouncementController@send')->name('announcement.send');
             //
             Route::get('watch', 'WatchController@watch')->name('watch');

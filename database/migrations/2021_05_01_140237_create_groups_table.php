@@ -22,13 +22,6 @@ class CreateGroupsTable extends Migration
             $table->text('permissions')->nullable();
         });
 
-        Schema::create('group_locations', function (Blueprint $table) {
-            $table->unsignedBigInteger('id')->index()->unique();
-            $table->timestamps();
-            $table->float('longitude',10,7)->nullable();
-            $table->float('latitude',10,7)->nullable();
-        });
-
         Schema::create('group_types', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->string('name')->index()->unique();
@@ -49,8 +42,6 @@ class CreateGroupsTable extends Migration
     public function down()
     {
         Schema::dropIfExists('groups');
-        Schema::dropIfExists('group_roles');
-        Schema::dropIfExists('group_locations');
         Schema::dropIfExists('group_types');
     }
 }
