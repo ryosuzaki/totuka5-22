@@ -35,8 +35,8 @@ async function initMap() {
   const map = new google.maps.Map(document.getElementById("map"), {
     zoom: 16,
     center: {
-      lat: {{$initial['latitude']}},
-      lng: {{$initial['longitude']}}
+      lat: , 
+      lng: ,
     },
   });
 
