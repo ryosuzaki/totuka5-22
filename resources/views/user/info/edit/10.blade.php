@@ -1,9 +1,9 @@
-<form method="POST" action="{{ route('info_base.info.update',[$base->id]) }}">
+<form method="POST" action="{{ route('.info.update',[$base->id]) }}">
     @csrf
     @method('PUT')
     <h2>福祉</h2>
 
-    <p class="h5 mt-4 mb-0">【障害有り無し】</p>
+    <p class="h5 mt-4 mb-0">【持っている障害】</p>
     <input type="text" class="form-control" name="info[help1]" value="{{$base->info()->info['help1']}}">
 
     <p class="h5 mt-4 mb-0">【要介護認定】</p>
@@ -11,7 +11,7 @@
         <input type="hidden" name="info[help2]" value="{{$base->info()->info['help2']}}">
         <div class="form-check form-check-radio">
             <label class="form-check-label">
-                <input type="radio" class="form-check-input" name="info[help2]" value="有り">有り
+                <input type="radio" class="form-check-input" name="info[help2]" value="無し">無し
                 <span class="circle">
                     <span class="check"></span>
         　      </span>
@@ -19,7 +19,55 @@
         </div>
         <div class="form-check form-check-radio">
             <label class="form-check-label">
-                <input type="radio" class="form-check-input" name="info[help2]" value="無し">無し
+                <input type="radio" class="form-check-input" name="info[help2]" value="要支援１">要支援１
+                <span class="circle">
+                    <span class="check"></span>
+                </span>
+            </label>
+        </div>
+        <div class="form-check form-check-radio">
+            <label class="form-check-label">
+                <input type="radio" class="form-check-input" name="info[help2]" value="要支援２">要支援２
+                <span class="circle">
+                    <span class="check"></span>
+        　      </span>
+            </label>
+        </div>
+        <div class="form-check form-check-radio">
+            <label class="form-check-label">
+                <input type="radio" class="form-check-input" name="info[help2]" value="要介護１">要介護１
+                <span class="circle">
+                    <span class="check"></span>
+                </span>
+            </label>
+        </div>
+        <div class="form-check form-check-radio">
+            <label class="form-check-label">
+                <input type="radio" class="form-check-input" name="info[help2]" value="要介護２">要介護２
+                <span class="circle">
+                    <span class="check"></span>
+        　      </span>
+            </label>
+        </div>
+        <div class="form-check form-check-radio">
+            <label class="form-check-label">
+                <input type="radio" class="form-check-input" name="info[help2]" value="要介護３">要介護３
+                <span class="circle">
+                    <span class="check"></span>
+                </span>
+            </label>
+        </div>
+        <div class="form-check form-check-radio">
+            <label class="form-check-label">
+                <input type="radio" class="form-check-input" name="info[help2]" value="要介護４以上">要介護４以上
+                <span class="circle">
+                    <span class="check"></span>
+        　      </span>
+            </label>
+        </div>
+        <div class="form-check form-check-radio">
+            <label class="form-check-label">
+                <input type="radio" class="form-check-input" name="info[help2]" value="">介護や障害等の申請はしていないが、日常生活には
                 <span class="circle">
                     <span class="check"></span>
                 </span>
@@ -80,7 +128,7 @@
 
     <p class="h5 mt-4 mb-0">【在宅酸素療法】</p>
     <div>
-        <input type="hidden" name="info[help]" value="{{$base->info()->info['help8']}}">
+        <input type="hidden" name="info[help8]" value="{{$base->info()->info['help8']}}">
         <div class="form-check form-check-radio">
             <label class="form-check-label">
                 <input type="radio" class="form-check-input" name="info[help8]" value="有り">有り
@@ -120,69 +168,6 @@
         </div>
     </div>
 
-    <h2>使用するアプリ内容</h2>
-    <p class="h5 mt-4 mb-0">【平常時安否確認】</p>
-    <div>
-        <input type="hidden" name="info[use1]" value="{{$base->info()->info['use1']}}">
-        <div class="form-check form-check-radio">
-            <label class="form-check-label">
-                <input type="radio" class="form-check-input" name="info[use1]" value="利用する">利用する
-                <span class="circle">
-                    <span class="check"></span>
-            　  </span>
-            </label>
-        </div>
-        <div class="form-check form-check-radio">
-            <label class="form-check-label">
-                <input type="radio" class="form-check-input" name="info[use1]" value="利用しない">利用しない
-                <span class="circle">
-                    <span class="check"></span>
-                </span>
-            </label>
-        </div>
-    </div>
-
-    <p class="h5 mt-4 mb-0">【災害時安否確認】</p>
-    <div>
-        <input type="hidden" name="info[use2]" value="{{$base->info()->info['use2']}}">
-        <div class="form-check form-check-radio">
-            <label class="form-check-label">
-                <input type="radio" class="form-check-input" name="info[use2]" value="通常版">通常版
-                <span class="circle">
-                    <span class="check"></span>
-            　  </span>
-            </label>
-        </div>
-        <div class="form-check form-check-radio">
-            <label class="form-check-label">
-                <input type="radio" class="form-check-input" name="info[use2]" value="短縮版">短縮版
-                <span class="circle">
-                    <span class="check"></span>
-                </span>
-            </label>
-        </div>
-    </div>
-
-    <p class="h5 mt-4 mb-0">【健康管理】</p>
-    <div>
-        <input type="hidden" name="info[use3]" value="{{$base->info()->info['use3']}}">
-        <div class="form-check form-check-radio">
-            <label class="form-check-label">
-                <input type="radio" class="form-check-input" name="info[use3]" value="利用する">利用する
-                <span class="circle">
-                    <span class="check"></span>
-            　  </span>
-            </label>
-        </div>
-        <div class="form-check form-check-radio">
-            <label class="form-check-label">
-                <input type="radio" class="form-check-input" name="info[use3]" value="利用しない">利用しない
-                <span class="circle">
-                    <span class="check"></span>
-                </span>
-            </label>
-        </div>
-    </div>
 </div>
     <button type="submit" class="btn btn-primary btn-block">
         登録
