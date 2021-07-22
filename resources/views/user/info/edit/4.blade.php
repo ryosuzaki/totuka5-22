@@ -90,33 +90,8 @@
         </div>
     </div>
 </div>
-<div>
-    <h2>住まい</h2>
-    <p class="h5 mt-4 mb-0">【同居人の有無】</p>
-    <div>
-        <input type="hidden" name="info[home1]" value="{{$base->info()->info['home1']}}">       
-        <div class="form-check form-check-radio">
-            <label class="form-check-label">
-                <input type="radio" class="form-check-input" name="info[home1]" value="有">有
-                <span class="circle">
-                    <span class="check"></span>
-            </span>
-            </label>
-        </div>
-        <div class="form-check form-check-radio">
-            <label class="form-check-label">
-                <input type="radio" class="form-check-input" name="info[home1]" value="無">無
-                <span class="circle">
-                    <span class="check"></span>
-                </span>
-            </label>
-        </div>
-    </div>
-    <p class="h5 mt-4 mb-0">【最寄りの避難場所】</p>
-    <input type="text" class="form-control" name="info[home2]" value="{{$base->info()->info['home2']}}">
-</div>
-     
-<div class="form-group row mb-0">
+
+<div class="form-group mb-0">
     <button type="submit" class="btn btn-primary btn-block">
         登録
     </button>
