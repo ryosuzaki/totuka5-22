@@ -1,4 +1,4 @@
-<form method="POST" action="{{ route('info_base.info.update',[$base->id]) }}">
+<form method="POST" action="{{ route('user.info.update',[$base->id]) }}">
     @csrf
     @method('PUT')
     <h2>医療</h2>
