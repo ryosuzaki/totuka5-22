@@ -14,7 +14,7 @@
 <h2>住まい</h2>	
 <div class="table-responsive">
 	<table class="table text-nowrap"> 
-		<tr><td style="width: 30%">同居人の有無</td><td style="width: 70%">：{{$base->info()->info["home1"]}}</td></tr>			
-		<tr><td>最寄りの避難場所</td><td>： {{$base->info()->info["home2"]}}</td></tr>	
+		<tr><td style="width: 30%">同居人の有無</td><td style="width: 70%">{{$base->info()->info["home1"]}}</td></tr>			
+		<tr><td>最寄りの避難場所</td><td>{{$base->info()->info["home2"]}}</td></tr>	
 	</table>
 </div>
