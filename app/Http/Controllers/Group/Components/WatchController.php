@@ -11,10 +11,6 @@ use Illuminate\Support\Facades\Auth;
 
 class WatchController extends Controller
 {
-    public function __construct()
-    {
-        $this->middleware('auth');
-    }
     //
     public function watch(Group $group){
         Auth::user()->attachExtraGroup($group->id,config('kaigohack.watch'));

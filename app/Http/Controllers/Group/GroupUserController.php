@@ -19,10 +19,6 @@ use Validator;
 
 class GroupUserController extends Controller
 {
-    public function __construct()
-    {
-        $this->middleware('auth');
-    }
     //
     public function index(Group $group,int $index=0)
     {

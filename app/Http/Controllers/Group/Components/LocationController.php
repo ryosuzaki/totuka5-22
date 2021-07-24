@@ -16,11 +16,6 @@ use Validator;
 
 class LocationController extends Controller
 {
-    public function __construct()
-    {
-        $this->middleware('auth');
-    }
-    
     //
     public function index($type){
         $type=GroupType::findByIdOrName($type);
@@ -29,7 +24,6 @@ class LocationController extends Controller
         foreach($groups as $group){
             $locations[]=$group->location()->first()->location;
         }
-        info($locations);
         return view('components.map')->with(["mame"=>$groups->pluck('name'),"location"=>$locations]);
     }
 

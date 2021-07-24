@@ -12,10 +12,6 @@ use Illuminate\Support\Facades\Auth;
 
 class LikeController extends Controller
 {
-    public function __construct()
-    {
-        $this->middleware('auth');
-    }
     //
     public function like(int $group_id){
         Auth::user()->attachExtraGroup($group_id,config('kaigohack.like'));

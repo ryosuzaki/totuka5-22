@@ -15,17 +15,6 @@ use Validator;
 class UserController extends Controller
 {
     //
-    public function __construct()
-    {
-        $this->middleware('auth');
-    }
-
-    /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
     public function show()
     {
         $user=Auth::user();

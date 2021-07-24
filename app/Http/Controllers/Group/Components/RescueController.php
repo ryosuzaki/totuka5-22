@@ -13,10 +13,6 @@ use Illuminate\Support\Facades\Auth;
 
 class RescueController extends Controller
 {
-    public function __construct()
-    {
-        $this->middleware('auth');
-    }
     //
     public function rescue(Group $group,User $user){
         $user->getInfoBaseByTemplate(6)->first()->updateInfo([

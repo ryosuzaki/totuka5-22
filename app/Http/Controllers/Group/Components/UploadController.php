@@ -11,12 +11,6 @@ use Validator;
 
 class UploadController extends Controller
 {
-    //
-    public function __construct()
-    {
-        $this->middleware('auth');
-    }
-
     //php artisan storage:linkを行う
     public function uploadImg(Request $request,$group_id){
         $validator = Validator::make($request->all(),[

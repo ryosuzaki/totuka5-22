@@ -51,10 +51,10 @@ class InfoTableSeeder extends Seeder
 
         InfoTemplate::create([
             'id' => 5,
-            'name' => '健康確認',
-            'default'=>['main'=>'回答なし','additional'=>[]],
+            'name' => '健康アンケート',
+            'default'=>['main'=>'回答なし','comment'=>''],
             'model'=>User::class,
-            'detail'=>'健康確認',
+            'detail'=>'簡易版健康アンケート',
             'edit'=>['name'=>'回答','icon'=>'<i class="material-icons">question_answer</i>'],
         ]);
 
@@ -64,6 +64,7 @@ class InfoTableSeeder extends Seeder
             'default'=>['rescue'=>config('kaigohack.rescue.unrescue'),'group'=>null,'rescuer'=>null,'info'=>[]],
             'model'=>User::class,
             'detail'=>'救助状況',
+            'edit'=>['name'=>'回答','icon'=>'<i class="material-icons">question_answer</i>'],
         ]);
 
         InfoTemplate::create([

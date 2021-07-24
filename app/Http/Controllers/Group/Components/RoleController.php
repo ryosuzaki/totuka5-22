@@ -14,16 +14,7 @@ use Validator;
 
 class RoleController extends Controller
 {
-    public function __construct()
-    {
-        $this->middleware('auth');
-    }
-    /**
-     * Display a listing of the resource.
-     *
-     * @param int $group_id
-     * @return \Illuminate\Http\Response
-     */
+    //
     public function index(Group $group)
     {
         Gate::authorize('viewAny-group-roles',$group);
