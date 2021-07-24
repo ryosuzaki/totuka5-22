@@ -8,18 +8,18 @@
 
     <p class="h5 mt-4 mb-0">【性別】</p>{{$base->info()->info['you2']}}
     <div>
-        <input type="hidden" name="info[you2]" value="{{$base->info()->info['you2']}}">
-        <div class="form-check form-check-radio">
+        <input type="hidden" id="sex" name="info[you2]" value="{{$base->info()->info['you2']}}">
+        <div class="form-check form-check-radio" form-check-inline>
             <label class="form-check-label">
-                <input type="radio" class="form-check-input" name="info[you2]" value="男性">男性
+                <input type="radio" class="form-check-input" id="man" name="info[you2]" value="男性">男性
                 <span class="circle">
                     <span class="check"></span>
         　      </span>
             </label>
         </div>
-        <div class="form-check form-check-radio">
+        <div class="form-check form-check-radio form-check-inline">
             <label class="form-check-label">
-                <input type="radio" class="form-check-input" name="info[you2]" value="女性">女性
+                <input type="radio" class="form-check-input" id="woman" name="info[you2]" value="女性">女性
                 <span class="circle">
                     <span class="check"></span>
                 </span>
@@ -27,7 +27,7 @@
         </div>
         <div class="form-check form-check-radio form-check-inline">
             <label class="form-check-label">
-                <input type="radio" class="form-check-input" name="info[fami2]" value="その他">その他
+                <input type="radio" class="form-check-input" id="other" name="info[fami2]" value="その他">その他
                 <span class="circle">
                     <span class="check"></span>
                 </span>
@@ -69,7 +69,7 @@
         <p class="h5 mt-4 mb-0">【位置情報サービス】</p>
         <div>
             <input type="hidden" name="info[you10]" value="{{$base->info()->info['you10']}}">
-            <div class="form-check form-check-radio">
+            <div class="form-check form-check-radio form-check-inline">
                 <label class="form-check-label">    
                     <input type="radio" class="form-check-input" name="info[you10]" value="ON">ON
                     <span class="circle">
@@ -77,7 +77,7 @@
                     </span>
                 </label>
             </div>
-            <div class="form-check form-check-radio">
+            <div class="form-check form-check-radio form-check-inline">
                 <label class="form-check-label">
                     <input type="radio" class="form-check-input" name="info[you10]" value="OFF">OFF
                         <span class="circle">
@@ -96,3 +96,18 @@
 </div>
 
 </form>
+<script>
+    var sex = document.getElementById("sex");
+    sex = sex.value;
+    if(sex=="男性"){
+        var check = document.getElementById("man");
+        check.setAttribute("checked");
+    }else if(sex=="女性"){
+        var check = document.getElementById("woman");
+        check.setAttribute("checked","");
+    }else if(sex==""){
+    }else{
+        var check = document.getElementById("other");
+        check.setAttribute("checked","");
+    }
+</script>
