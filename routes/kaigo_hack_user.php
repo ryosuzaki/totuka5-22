@@ -2,7 +2,7 @@
 
 
 //
-Route::name('user.')->prefix('user')->namespace('User')->group(function(){
+Route::name('user.')->prefix('user')->namespace('User')->middleware('auth')->group(function(){
     //
     Route::get('', 'UserController@show')->name('show');
     Route::get('edit', 'UserController@edit')->name('edit');

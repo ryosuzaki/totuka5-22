@@ -17,16 +17,7 @@ use Validator;
 
 class GroupInfoBaseController extends Controller
 {
-    public function __construct()
-    {
-        $this->middleware('auth');
-    }
-
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
+    //
     public function index(Group $group)
     {
         Gate::authorize('viewAny-group-info-bases', $group);

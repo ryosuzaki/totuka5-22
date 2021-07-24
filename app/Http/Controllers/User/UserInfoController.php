@@ -13,11 +13,6 @@ use App\Models\Info\InfoBase;
 
 class UserInfoController extends Controller
 {
-    public function __construct()
-    {
-        $this->middleware('auth');
-    }
-
     //
     public function edit(InfoBase $info_base)
     {

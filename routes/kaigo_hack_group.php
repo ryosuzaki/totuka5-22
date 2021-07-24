@@ -4,7 +4,7 @@
 
 
 //
-Route::name('group.')->prefix('group')->namespace('Group')->group(function(){
+Route::name('group.')->prefix('group')->namespace('Group')->middleware('auth')->group(function(){
     //
     Route::get('create/{type}', 'GroupController@create')->name('create');
     Route::post('store/{type}', 'GroupController@store')->name('store');

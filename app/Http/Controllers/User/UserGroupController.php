@@ -15,16 +15,7 @@ use Validator;
 
 class UserGroupController extends Controller
 {
-    public function __construct()
-    {
-        $this->middleware('auth');
-    }
-    /**
-     * 参加グループ一覧
-     *
-     * @param  int  $user_id
-     * @return \Illuminate\Http\Response
-     */
+    //
     public function index()
     {
         $user=Auth::user();

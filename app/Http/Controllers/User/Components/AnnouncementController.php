@@ -12,13 +12,6 @@ use Illuminate\Support\Facades\Auth;
 class AnnouncementController extends Controller
 {
     //
-    public function __construct()
-    {
-        $this->middleware('auth');
-        
-    }
-    
-    //
     public function index(){
         return view('user.components.announcement.index')->with([
             'user'=>Auth::user(),
