@@ -44,7 +44,7 @@ class InfoTableSeeder extends Seeder
         InfoTemplate::create([
             'id' => 4,
             'name' => '基本情報',
-            'default'=>['you_sex'=>'','you_year'=>'','you_month'=>'','you_day'=>'','you_post'=>'','you_addr1'=>'','you_addr2'=>'','you_tel'=>'',//'you10'=>'OFF'
+            'default'=>['you_sex'=>'','you_year'=>'','you_month'=>'','you_day'=>'','you_post'=>'','you_addr1'=>'','you_addr2'=>'','you_tel'=>'',
             ],
             'model'=>User::class,
             'detail'=>'基本情報',
@@ -53,7 +53,7 @@ class InfoTableSeeder extends Seeder
         InfoTemplate::create([
             'id' => 5,
             'name' => '健康アンケート',
-            'default'=>['main'=>'回答なし','comment'=>''],
+            'default'=>['is_long'=>true,'feeling'=>'回答なし','comment'=>''],
             'model'=>User::class,
             'detail'=>'健康アンケート',
             'edit'=>['name'=>'回答','icon'=>'<i class="material-icons">question_answer</i>'],
@@ -62,7 +62,7 @@ class InfoTableSeeder extends Seeder
         InfoTemplate::create([
             'id' => 6,
             'name' => '避難/救助状況',
-            'default'=>['rescue'=>config('kaigohack.rescue.unrescue'),'group'=>null,'rescuer'=>null,'info'=>[]],
+            'default'=>['rescue'=>config('kaigohack.rescue.unrescue'),'group'=>null,'rescuer'=>null,'evacuation'=>'回答なし','shelter'=>'','last_answer'=>''],
             'model'=>User::class,
             'detail'=>'救助状況',
             'edit'=>['name'=>'回答','icon'=>'<i class="material-icons">question_answer</i>'],

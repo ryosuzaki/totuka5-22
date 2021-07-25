@@ -3,13 +3,13 @@
     @method('PUT')
     <h2>医療</h2>
         <div><p class="h5 mt-4 mb-0">【平熱】℃</p>
-            <input type="control" class="form-control" name="info[temp]" value="{{$base->info()->info['temp']}}" placeholder="℃">
+            <input type="number" class="form-control" name="info[temp]" value="{{$base->info()->info['temp']}}" placeholder="℃">
         </div>
         <div><p class="h5 mt-4 mb-0">【身長】cm</p>
-            <input type="control" class="form-control" name="info[height]" value="{{$base->info()->info['height']}}" placeholder="cm">
+            <input type="number" class="form-control" name="info[height]" value="{{$base->info()->info['height']}}" placeholder="cm">
         </div>
         <div><p class="h5 mt-4 mb-0">【体重】kg</p>
-             <input type="control" class="form-control" name="info[weight]" value="{{$base->info()->info['weight']}}" placeholder="kg">
+             <input type="number" class="form-control" name="info[weight]" value="{{$base->info()->info['weight']}}" placeholder="kg">
          </div>
          <p class="h5 mt-4 mb-0">【使用中の薬】</p>
         <input type="text" class="form-control" name="info[medicine]" value="{{$base->info()->info['medicine']}}">
