@@ -28,6 +28,7 @@
                     $template=$base->getTemplate();
                     @endphp
                     <div class="tab-pane @if($bases[0]==$base) active @endif" id="pill{{$base->index}}">
+                        <p class="h3 text-center mb-4">{{$base->name}}</p>
                         @include('user.info.show.'.$template->id, ['base'=>$base])
                         <div class="row">
                             <a class="btn btn-outline-primary btn-block mx-auto" href="{{route('user.info.edit',$base->id)}}">{!! $template->edit['icon'] !!} {{$template->edit['name']}}</a>

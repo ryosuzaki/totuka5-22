@@ -1,4 +1,3 @@
-<h2>家族情報</h2>
 <div class="table-responsive">
     <table class="table text-nowrap">
 		<tr><td style="width: 30%">氏名</td><td style="width: 70%">{{$base->info()->info["fami_name"]}}</td></tr>	

@@ -4,8 +4,8 @@
 
     <label>今日の体調</label>
     <div>
-        <div class="form-check form-check-radio m-4">
-        <label class="form-check-label" style="transform:scale(1.5);">
+        <div class="form-check form-check-radio">
+        <label class="form-check-label">
             <input class="form-check-input btn-check" type="radio" name="info[main]" value="良い"> 良い
             <span class="circle">
                 <span class="check"></span>
@@ -13,8 +13,8 @@
         </label>
         </div>
 
-        <div class="form-check form-check-radio m-4">
-        <label class="form-check-label" style="transform:scale(1.5);">
+        <div class="form-check form-check-radio">
+        <label class="form-check-label">
             <input class="form-check-input" type="radio" name="info[main]" value="普通" checked> 普通
             <span class="circle">
                 <span class="check"></span>
@@ -22,8 +22,8 @@
         </label>
         </div>
 
-        <div class="form-check form-check-radio m-4">
-        <label class="form-check-label" style="transform:scale(1.5);">
+        <div class="form-check form-check-radio">
+        <label class="form-check-label">
             <input class="form-check-input" type="radio" name="info[main]" value="悪い"> 悪い
             <span class="circle">
                 <span class="check"></span>
@@ -32,7 +32,7 @@
         </div>
     </div>
     
-    <div class="form-group mt-5">
+    <div class="form-group mt-3">
         <label for="comment">コメント</label>
         <textarea class="form-control" id="comment" name="info[comment]" rows="5"></textarea>
     </div>

@@ -44,7 +44,8 @@ class InfoTableSeeder extends Seeder
         InfoTemplate::create([
             'id' => 4,
             'name' => '基本情報',
-            'default'=>['you_sex'=>'','you_year'=>'','you_month'=>'','you_day'=>'','you_post'=>'','you_addr1'=>'','you_addr2'=>'','you_tel'=>'','you10'=>'OFF'],
+            'default'=>['you_sex'=>'','you_year'=>'','you_month'=>'','you_day'=>'','you_post'=>'','you_addr1'=>'','you_addr2'=>'','you_tel'=>'',//'you10'=>'OFF'
+            ],
             'model'=>User::class,
             'detail'=>'基本情報',
         ]);
@@ -54,7 +55,7 @@ class InfoTableSeeder extends Seeder
             'name' => '健康アンケート',
             'default'=>['main'=>'回答なし','comment'=>''],
             'model'=>User::class,
-            'detail'=>'簡易版健康アンケート',
+            'detail'=>'健康アンケート',
             'edit'=>['name'=>'回答','icon'=>'<i class="material-icons">question_answer</i>'],
         ]);
 

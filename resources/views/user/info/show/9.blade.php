@@ -1,4 +1,3 @@
-<h2>医療</h2>
 <div class="table-responsive">
 	<table class="table text-nowrap"> 
 		<tr><td style="width: 30%">平熱</td><td style="width: 70%">{{$base->info()->info["temp"]}}℃</td></tr>		
