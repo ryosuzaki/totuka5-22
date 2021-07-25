@@ -44,7 +44,7 @@ class InfoTableSeeder extends Seeder
         InfoTemplate::create([
             'id' => 4,
             'name' => '基本情報',
-            'default'=>['you1'=>'a','you2'=>'','you3'=>'','you4'=>'','you5'=>'','you6'=>'','you7'=>'','you8'=>'','you9'=>'','you10'=>'OFF','home1'=>'','home2'=>''],
+            'default'=>['you_sex'=>'','you_year'=>'','you_month'=>'','you_day'=>'','you_post'=>'','you_addr1'=>'','you_addr2'=>'','you_tel'=>'','you10'=>'OFF'],
             'model'=>User::class,
             'detail'=>'基本情報',
         ]);
@@ -79,7 +79,7 @@ class InfoTableSeeder extends Seeder
         InfoTemplate::create([
             'id' => 8,
             'name' => '家族情報',
-            'default'=>['fami1'=>'','fami2'=>'','fami3'=>'','fami4'=>'','fami5'=>'','fami6'=>'','fami7'=>'','fami8'=>'','fami9'=>''],
+            'default'=>['fami_name'=>'','fami_sex'=>'','fami_age'=>'','fami_posi'=>'','fami_post'=>'','fami_addr1'=>'','fami_addr2'=>'','fami_tel'=>'','fami_mail'=>''],
             'model'=>User::class,
             'detail'=>'家族情報',
         ]);
@@ -87,7 +87,7 @@ class InfoTableSeeder extends Seeder
         InfoTemplate::create([
             'id' => 9,
             'name' => '医療',
-            'default'=>['care1'=>'36.2','care2'=>'170.0','care3'=>'60','care4'=>'','care5'=>'','care6'=>'','care7'=>'','care8'=>''],
+            'default'=>['temp'=>'36.2','height'=>'170.0','weight'=>'60','medicine'=>'','allergy'=>'','medical'=>'','surgery'=>'','hospital'=>''],
             'model'=>User::class,
             'detail'=>'医療',
         ]);
@@ -95,9 +95,10 @@ class InfoTableSeeder extends Seeder
         InfoTemplate::create([
             'id' => 10,
             'name' => '福祉',
-            'default'=>['help1'=>'','help2'=>'','help3'=>'','help4'=>'','help5'=>'','help6'=>'','help7'=>'','help8'=>'','help9'=>'','use1'=>'利用しない','use2'=>'通常版','use3'=>'利用する'],
+            'default'=>['hindrance'=>'','nursing'=>'','caregiver'=>'','caregiver_posi'=>'','service'=>'','use_service'=>'','institution'=>'','oxygen'=>'','assistance'=>'','housemate'=>'','shelter'=>''],
             'model'=>User::class,
             'detail'=>'福祉',
         ]);
+
     }
 }
