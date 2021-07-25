@@ -18,7 +18,7 @@ use Validator;
 class GroupController extends Controller
 {   
     //
-    public function index()
+    public function index(GroupType $type)
     {
         //
     }

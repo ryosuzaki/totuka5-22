@@ -13,7 +13,9 @@
                     <div class="form-group">
                         <select class="form-control selectpicker h4" data-style="btn btn-link" name="role_id">
                             @foreach($group->roles()->get() as $role)
+                            @if($role->index!=0)
                             <option value="{{$role->id}}">{{$role->role_name}}</option>
+                            @endif
                             @endforeach
                         </select>
                     </div>

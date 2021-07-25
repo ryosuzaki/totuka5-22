@@ -175,7 +175,7 @@ class Group extends Model
     //
     public function removeUser(int $user_id){
         $user=User::find($user_id);
-        $role_id=$user->getRole($this->id)->id;
+        $role_id=$user->getRoleByGroup($this->id)->id;
         $user->removeRole($role_id);
         return $this->users()->detach($user->id);
     }
