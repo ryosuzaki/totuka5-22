@@ -3,9 +3,11 @@
         <thead>
         <tr>
             <th>ユーザー名</th>
-            <th>メールアドレス</th>
-            <th>回答日時</th>
+            <!--<th>メールアドレス</th>-->
+            <th>健康状態 回答日時</th>
             <th>健康状態</th>
+            <th>避難状況 回答日時</th>
+            <th>避難状況</th>
             <th>救助状況</th>
             <th>アクション</th>
         </tr>
@@ -15,7 +17,7 @@
             @foreach ($users as $user)
             <tr>
                 <td><a href="{{route('group.user.show',[$group->id,$user->id,$role->index])}}">{{$user->name}}</a></td>
-                <td>{{$user->email}}</td>
+                <!--<td>{{$user->email}}</td>-->
 
 
                 @php
@@ -26,7 +28,7 @@
                 @endphp
                 @if($exist)
                 <td>{{($info->updated_at)}}</td>
-                <td>{{$info->info['main']}}</td>
+                <td>{{$info->info['feeling']}}</td>
                 @else
                 <td></td><td></td>
                 @endif
@@ -41,6 +43,8 @@
                 }
                 @endphp
                 @if($exist)
+                <td>{{$info->info['last_answer']}}</td>
+                <td>{{$info->info['evacuation']}}</td>
                 <td>
                 @if($rescue==config('kaigohack.rescue.rescue'))
                     @if($rescue_group==$group)
@@ -69,6 +73,7 @@
                 @endif
                 </td>
                 @else
+                <td></td>
                 <td></td>
                 @endif
 

@@ -20,7 +20,7 @@
     <label>今日の体調</label>
     <div>
         <div class="form-check form-check-radio">
-        <label class="form-check-label" style="transform:scale(1.2);transform-origin:left;">
+        <label class="form-check-label">
             <input class="form-check-input btn-check" type="radio" name="info[feeling]" value="良い"> 良い
             <span class="circle">
                 <span class="check"></span>
@@ -29,7 +29,7 @@
         </div>
 
         <div class="form-check form-check-radio">
-        <label class="form-check-label" style="transform:scale(1.2);transform-origin:left;">
+        <label class="form-check-label">
             <input class="form-check-input" type="radio" name="info[feeling]" value="普通" checked> 普通
             <span class="circle">
                 <span class="check"></span>
@@ -38,7 +38,7 @@
         </div>
 
         <div class="form-check form-check-radio">
-        <label class="form-check-label" style="transform:scale(1.2);transform-origin:left;">
+        <label class="form-check-label">
             <input class="form-check-input" type="radio" name="info[feeling]" value="悪い"> 悪い
             <span class="circle">
                 <span class="check"></span>
