@@ -8,7 +8,7 @@
         <p class="h5 mt-4 mb-0">【性別】</p>
         <div>
             <input type="hidden" id="sex" name="info[fami_sex]" value="{{$base->info()->info['fami_sex']}}">
-           <div class="form-check form-check-radio form-check-inline">
+            <div class="form-check form-check-radio form-check-inline">
                 <label class="form-check-label">
                 <input type="radio" id="man" class="form-check-input" name="info[fami_sex]" value="男性">男性
                     <span class="circle">

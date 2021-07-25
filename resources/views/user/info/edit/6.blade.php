@@ -4,8 +4,8 @@
 
 
     <div>
-        <div class="form-check form-check-radio m-4">
-        <label class="form-check-label" style="transform:scale(1.5);">
+        <div class="form-check form-check-radio">
+        <label class="form-check-label">
             <input class="form-check-input btn-check" type="radio" name="info[main]" value="元気"> 元気
             <span class="circle">
                 <span class="check"></span>
@@ -13,8 +13,8 @@
         </label>
         </div>
 
-        <div class="form-check form-check-radio m-4">
-        <label class="form-check-label" style="transform:scale(1.5);">
+        <div class="form-check form-check-radio">
+        <label class="form-check-label">
             <input class="form-check-input" type="radio" name="info[main]" value="普通"> 普通
             <span class="circle">
                 <span class="check"></span>
@@ -22,8 +22,8 @@
         </label>
         </div>
 
-        <div class="form-check form-check-radio m-4">
-        <label class="form-check-label" style="transform:scale(1.5);">
+        <div class="form-check form-check-radio">
+        <label class="form-check-label">
             <input class="form-check-input" type="radio" name="info[main]" value="不調"> 不調
             <span class="circle">
                 <span class="check"></span>

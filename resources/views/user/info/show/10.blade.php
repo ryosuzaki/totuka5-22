@@ -1,4 +1,3 @@
-<h2>福祉</h2>
 <div class="table-responsive">
 	<table class="table text-nowrap"> 
 		<tr><td style="width: 30%">障害の有無</td><td style="width: 70%">{{$base->info()->info["hindrance"]}}</td></tr>		
@@ -13,7 +12,7 @@
 	</table>
 </div>
 
-<h2>住まい</h2>	
+<p class="h3">住まい</p>	
 <div class="table-responsive">
 	<table class="table text-nowrap"> 
 		<tr><td style="width: 30%">同居人の有無</td><td style="width: 70%">{{$base->info()->info["housemate"]}}</td></tr>			
