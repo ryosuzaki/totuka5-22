@@ -16,7 +16,7 @@
     <link href="{{asset('material-kit-master/assets/css/material-kit.css?v=2.0.4')}}" rel="stylesheet" />
     <!-- tablesorter -->
     <script type="module" src="https://cdnjs.cloudflare.com/ajax/libs/jquery.tablesorter/2.31.0/js/jquery.tablesorter.min.js"></script>
-
+    
     <style type="text/css">
       .tablesorter td,.tablesorter th{
         padding-right:1.5rem;
@@ -57,6 +57,11 @@
       .img-fluid{
         max-width: 100%;
         height: auto;
+      }
+
+      .form-check-radio>.form-check-label{
+        transform:scale(1.2);
+        transform-origin:left;
       }
 
     </style>

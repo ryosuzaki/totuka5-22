@@ -10,7 +10,7 @@
     <input type="hidden" name="info[rescuer]" value="{{$info['rescuer']}}">
     <input type="hidden" name="info[last_answer]" value="{{now()}}">
     <div>
-        <p class="h4">避難状況</p>
+        <label>避難状況</label>
         <div class="form-check form-check-radio">
         <label class="form-check-label">
             <input class="form-check-input btn-check" type="radio" name="info[evacuation]" value="避難済み"> 避難済み
@@ -22,7 +22,7 @@
 
         <div class="form-check form-check-radio">
         <label class="form-check-label">
-            <input class="form-check-input" type="radio" name="info[evacuation]" value="未避難" checked> 未避難
+            <input class="form-check-input" type="radio" name="info[evacuation]" value="避難中" checked> 避難中
             <span class="circle">
                 <span class="check"></span>
             </span>

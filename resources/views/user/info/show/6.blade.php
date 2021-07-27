@@ -1,6 +1,7 @@
 @php
 $info=$base->info()->info;
 @endphp
+
 <p class="h4">救助状況</p>
 <div class="table-responsive">
 	<table class="table text-nowrap"> 
@@ -19,3 +20,7 @@ $info=$base->info()->info;
         <tr><td>位置情報</td><td>{{$info["location"]["latitude"]}} {{$info["location"]["longitude"]}}</td></tr>		
 	</table>
 </div>
+
+
+
+
