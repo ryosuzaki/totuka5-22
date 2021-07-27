@@ -16,9 +16,7 @@
     <link href="{{asset('material-kit-master/assets/css/material-kit.css?v=2.0.4')}}" rel="stylesheet" />
     <!-- tablesorter -->
     <script type="module" src="https://cdnjs.cloudflare.com/ajax/libs/jquery.tablesorter/2.31.0/js/jquery.tablesorter.min.js"></script>
-    <!-- bootgrid -->
-    <script type="module" src="https://cdnjs.cloudflare.com/ajax/libs/jquery-bootgrid/1.3.1/jquery.bootgrid.js"></script>
-
+    
     <style type="text/css">
       .tablesorter td,.tablesorter th{
         padding-right:1.5rem;

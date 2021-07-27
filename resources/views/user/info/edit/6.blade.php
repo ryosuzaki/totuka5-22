@@ -22,7 +22,7 @@
 
         <div class="form-check form-check-radio">
         <label class="form-check-label">
-            <input class="form-check-input" type="radio" name="info[evacuation]" value="未避難" checked> 未避難
+            <input class="form-check-input" type="radio" name="info[evacuation]" value="避難中" checked> 避難中
             <span class="circle">
                 <span class="check"></span>
             </span>

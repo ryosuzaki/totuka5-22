@@ -42,6 +42,16 @@ class InfoBase extends Model
         ]);
     }
     //
+    public function partlyUpdateInfo(array $new_info){
+        $info=$this->info()->info;
+        foreach($new_info as $key=>$value){
+            $info[$key]=$value;
+        }
+        return $this->infos()->create([
+            'info'=>$info,
+        ]);
+    }
+    //
     public function changeName($name){
         return $this->fill(['name'=>$name])->save();
     }
