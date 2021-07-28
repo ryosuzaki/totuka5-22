@@ -88,7 +88,7 @@ class InfoTableSeeder extends Seeder
         InfoTemplate::create([
             'id' => 9,
             'name' => '医療',
-            'default'=>['temp'=>'36.2','height'=>'170.0','weight'=>'60','medicine'=>'','allergy'=>'','medical'=>'','surgery'=>'','hospital'=>''],
+            'default'=>['temp'=>'','height'=>'','weight'=>'','medicine'=>'','allergy'=>'','medical'=>'','surgery'=>'','hospital'=>''],
             'model'=>User::class,
             'detail'=>'医療',
         ]);
