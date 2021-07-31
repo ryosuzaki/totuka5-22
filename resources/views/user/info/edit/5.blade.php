@@ -363,10 +363,12 @@
                     <script type="module">
                         $(function(){
                             $('.change_next_pill_tab').click(function(){
+                                $(window).scrollTop($('#long_version').offset().top);
                                 var next_id=Number($(this).parent('.tab-pane').attr('id'))+1;
                                 $('#t'+next_id).tab('show');
                             });
                             $('.change_prev_pill_tab').click(function(){
+                                $(window).scrollTop($('#long_version').offset().top);
                                 var prev_id=Number($(this).parent('.tab-pane').attr('id'))-1;
                                 $('#t'+prev_id).tab('show');
                             });
