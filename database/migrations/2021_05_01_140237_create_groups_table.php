@@ -27,7 +27,8 @@ class CreateGroupsTable extends Migration
             $table->string('name')->index()->unique();
             $table->timestamps();
             $table->string('formatted_name');
-            $table->boolean('need_location');
+            $table->boolean('need_location')->default(1);
+            $table->boolean('available_index')->default(1);
             $table->text('required_info');
             $table->text('user_info');
             $table->text('creator_permissions');

@@ -147,7 +147,7 @@
                                 <div class="form-check">
                                     <label class="form-check-label col-12">
                                         <input class="form-check-input" type="checkbox" name="permissions[]" value="group_role.{{$role->index}}.viewUsers">
-                                        {{$role->role_name}}を持つユーザーの閲覧
+                                        {{$role->role_name}}に登録されたユーザーの閲覧
                                         <span class="form-check-sign">
                                             <span class="check"></span>
                                         </span>

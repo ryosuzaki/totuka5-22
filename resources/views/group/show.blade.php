@@ -8,7 +8,13 @@
             {{ Breadcrumbs::render('group.show',$group) }}
 
             <div class="card-body">
-
+            <div class="row">
+                <div class="ml-auto">
+                    @can('viewAny-group-roles',$group)
+                    <a class="btn btn-success btn-sm btn-round text-white" href="{{route('group.role.index',$group->id)}}"><i class="material-icons">assignment_ind</i>　役割</a>
+                    @endcan
+                </div>
+            </div>
             @include('group.show.header.'.$type->name, ['group'=>$group,'bases'=>$bases])
             
             @if(Auth::user()->hasGroup($group->id))
@@ -38,9 +44,11 @@
             </div>
             </div>
             @endif
+            @can('update',$group)
             <div class="row">
                 <a class="btn btn-primary btn-block" href="{{route('group.edit',[$group->id])}}">変更/削除</a>
             </div>
+            @endcan
             @endif
 
             </div>

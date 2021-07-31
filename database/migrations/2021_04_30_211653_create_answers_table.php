@@ -18,7 +18,6 @@ class CreateAnswersTable extends Migration
             $table->unsignedBigInteger('user_id');
             $table->date('date');
             $table->timestamps();
-            //$table->json('answer')->nullable();
         });
     }
 

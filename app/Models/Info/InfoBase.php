@@ -11,9 +11,6 @@ class InfoBase extends Model
     //
     protected $guarded=['id'];
 
-
-
-
     //
     public function model(){
         return $this->morphTo();

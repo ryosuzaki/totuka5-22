@@ -43,6 +43,7 @@ class CreateInfoTable extends Migration
             $table->timestamps();
             $table->text('default');
             $table->string('edit')->default(serialize(['name'=>'変更','icon'=>'<i class="material-icons">edit</i>']));
+            $table->unique(['name','model']);
         });
     }
 
