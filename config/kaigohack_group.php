@@ -41,8 +41,8 @@ return [
 
     'info'=>[
         'template'=>[
-            
+            ['name' => '基本情報','default'=>['body'=>''],],
+            ['name' => '混雑状況','default'=>['degree'=>'0%','detail'=>''],]
         ],
-
     ]
 ];
