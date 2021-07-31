@@ -7,7 +7,6 @@
         {{ Breadcrumbs::render('home') }}
             <div class="card-body">
                 <h3 class="text-center mb-4">ホーム</h3>
-                <h2>使い方</h2>
                 @foreach($types as $type)
                 <h4><a href="{{route('home.group_type',$type)}}">{{$type->formatted_name}}</a></h4>
                 @endforeach

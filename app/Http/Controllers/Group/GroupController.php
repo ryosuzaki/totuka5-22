@@ -20,7 +20,7 @@ class GroupController extends Controller
     //
     public function index(GroupType $type)
     {
-        //
+        Gate::authorize('viewAny', [Group::class,$type]);
     }
 
     //

@@ -3,6 +3,7 @@
 namespace App\Policies;
 
 use App\Models\Group\Group;
+use App\Models\Group\GroupType;
 use App\User;
 use Illuminate\Auth\Access\HandlesAuthorization;
 
@@ -10,6 +11,10 @@ class GroupPolicy
 {
     use HandlesAuthorization;
 
+    //
+    public function viewAny(User $user,GroupType $type){
+        return $type->available_index;
+    }
     //
     public function update(User $user, Group $group)
     {

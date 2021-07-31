@@ -50,8 +50,40 @@
                                         <td><a href="{{route('group.show',$group->id)}}">{{$group->name}}</a></td>
                                         <td>{{$group->getRole($group->pivot->role_id)->role_name}}</td>                                    
                                         <td class="p-1">
-                                        <a class="btn btn-success btn-sm btn-round m-0 text-white" href="{{route('user.group.accept_join_request',$group->id)}}"><i class="material-icons">login</i> 参加する</a>
-                                        <a class="btn btn-danger btn-sm btn-round m-0 text-white" href="{{route('user.group.denied_join_request',$group->id)}}"><i class="material-icons">close</i> 参加しない</a>
+                                        <a class="btn btn-success btn-round btn-sm text-white" data-toggle="modal" data-target="#accept_join{{$group->id}}"><i class="material-icons">login</i> 参加する</a>
+                                        <div class="modal fade" id="accept_join{{$group->id}}" tabindex="-1" role="dialog" aria-labelledby="{{$group->id}}Label" aria-hidden="true">
+                                            <div class="modal-dialog" role="document">
+                                                <div class="modal-content">
+                                                <div class="modal-body">
+                                                    参加すると、{{$group->name}}があなたの
+                                                    @foreach($group->getType()->user_info as $user_info)
+                                                    <p class="mb-0">{{$user_info}}</p>
+                                                    @endforeach
+                                                    を見られるようになります。<br>
+                                                    本当に参加しますか？
+                                                </div>
+                                                <div class="modal-footer">
+                                                    <button type="button" class="btn btn-secondary" data-dismiss="modal">戻る</button>
+                                                    <a class="btn btn-success text-white" href="{{route('user.group.accept_join_request',$group->id)}}">参加する</a>
+                                                </div>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <a class="btn btn-danger btn-round btn-sm text-white" data-toggle="modal" data-target="#denied_join{{$group->id}}"><i class="material-icons">close</i> 参加しない</a>
+                                        <div class="modal fade" id="denied_join{{$group->id}}" tabindex="-1" role="dialog" aria-labelledby="{{$group->id}}Label" aria-hidden="true">
+                                            <div class="modal-dialog" role="document">
+                                                <div class="modal-content">
+                                                <div class="modal-body">
+                                                    本当に参加をやめますか？
+                                                </div>
+                                                <div class="modal-footer">
+                                                    <button type="button" class="btn btn-secondary" data-dismiss="modal">戻る</button>
+                                                    <a class="btn btn-danger text-white" href="{{route('user.group.denied_join_request',$group->id)}}">参加しない</a>
+                                                </div>
+                                                </div>
+                                            </div>
+                                        </div>
                                         </td>
                                     </tr>
                                     @endforeach
@@ -85,8 +117,8 @@
                                         <td>{{$role->role_name}}</td>                                     
                                         <td class="p-1">
                                         @if($role->index!=0)
-                                        <a class="btn btn-primary btn-sm btn-round m-0 text-white" href="{{route('user.group.edit',[$group->id])}}"><i class="material-icons">autorenew</i> 変更</a>
-                                        <a class="btn btn-danger btn-round btn-sm m-0 text-white" data-toggle="modal" data-target="#delete{{$group->id}}"><i class="material-icons">logout</i> 退出</a>
+                                        <a class="btn btn-primary btn-sm btn-round text-white" href="{{route('user.group.edit',[$group->id])}}"><i class="material-icons">autorenew</i> 変更</a>
+                                        <a class="btn btn-danger btn-round btn-sm text-white" data-toggle="modal" data-target="#delete{{$group->id}}"><i class="material-icons">logout</i> 退出</a>
                                         <div class="modal fade" id="delete{{$group->id}}" tabindex="-1" role="dialog" aria-labelledby="{{$group->id}}Label" aria-hidden="true">
                                             <div class="modal-dialog" role="document">
                                                 <div class="modal-content">

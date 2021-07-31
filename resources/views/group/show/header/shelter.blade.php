@@ -3,9 +3,6 @@ $role_name=config('kaigohack.watch');
 @endphp
 <div class="row">
     <div class="ml-auto">
-        @if(Auth::user()->hasGroup($group->id))
-        <a class="btn btn-success btn-sm btn-round text-white" href="{{route('group.role.index',$group->id)}}"><i class="material-icons">assignment_ind</i>　役割</a>
-        @endif
         @if(Auth::user()->hasExtraGroup($group->id,$role_name))
         <a class="btn btn-primary btn-round btn-sm" href="{{route('group.unwatch',$group->id)}}">{{$role_name}}中</a>
         @else

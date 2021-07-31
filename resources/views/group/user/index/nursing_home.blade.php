@@ -48,8 +48,8 @@
                 <td>
                 @if($rescue==config('kaigohack.rescue.rescue'))
                     @if($rescue_group==$group)
-                    <a class="btn btn-danger btn-round btn-sm text-white m-0" href="{{route('group.user.unrescue',[$info->info['group']->id,$user->id])}}"><i class="material-icons">close</i> やめる</a>
-                    <button type="button" data-toggle="modal" data-target="#rescued{{$user->id}}" class="btn btn-success btn-round btn-sm text-white m-0"><i class="material-icons">done</i> 完了</button>
+                    <a class="btn btn-danger btn-sm text-white m-0" href="{{route('group.user.unrescue',[$info->info['group']->id,$user->id])}}"><i class="material-icons">close</i> やめる</a>
+                    <button type="button" data-toggle="modal" data-target="#rescued{{$user->id}}" class="btn btn-success btn-sm text-white m-0"><i class="material-icons">done</i> 完了</button>
                     <div class="modal fade" id="rescued{{$user->id}}" tabindex="-1" role="dialog" aria-labelledby="rescuedLabel" aria-hidden="true">
                         <div class="modal-dialog" role="document">
                             <div class="modal-content">
@@ -67,7 +67,7 @@
                     <a href="{{route('group.show',$rescue_group->id)}}">{{$rescue_group->name}}</a>が救助中
                     @endif
                 @elseif($rescue==config('kaigohack.rescue.unrescue'))
-                <a class="btn btn-warning btn-round btn-sm text-white m-0" href="{{route('group.user.rescue',[$group->id,$user->id])}}">救助に向かう</a>
+                <a class="btn btn-warning btn-sm text-white m-0" href="{{route('group.user.rescue',[$group->id,$user->id])}}">救助に向かう</a>
                 @elseif($rescue==config('kaigohack.rescue.rescued'))
                 <a href="{{route('group.show',$rescue_group->id)}}">{{$rescue_group->name}}</a>が救助済み
                 @endif

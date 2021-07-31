@@ -11,8 +11,8 @@ use Illuminate\Support\Facades\Auth;
 trait InfoFuncs
 {
     //
-    public function createInfoBase(int $template_id){
-        $template=InfoTemplate::find($template_id);
+    public function createInfoBase($template){
+        $template=InfoTemplate::findByIdOrName($template,$this);
         $base=$this->infoBases()->create([
             'index'=>$this->calcInfoBaseIndex(),
             'info_template_id'=>$template->id,
@@ -48,16 +48,18 @@ trait InfoFuncs
         return $this->infoBases()->get()->find($id);
     }
     //
-    public function getInfoBaseByTemplate(int $template_id){
-        return $this->infoBases()->where('info_template_id',$template_id)->get();
+    public function getInfoBaseByTemplate($template){
+        $template=InfoTemplate::findByIdOrName($template,$this);
+        return $this->infoBases()->where('info_template_id',$template->id)->get();
     }
     //
     public function getInfoBaseByIndex(int $index){
         return $this->infoBases()->where('index',$index)->first();
     }
     //
-    public function hasInfoBase(int $template_id){
-        return $this->infoBases()->get()->contains('info_template_id',$template_id);
+    public function hasInfoBase($template){
+        $template=InfoTemplate::findByIdOrName($template,$this);
+        return $this->infoBases()->get()->contains('info_template_id',$template->id);
     }
 
 

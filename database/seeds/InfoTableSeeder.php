@@ -62,7 +62,7 @@ class InfoTableSeeder extends Seeder
         InfoTemplate::create([
             'id' => 6,
             'name' => '避難/救助状況',
-            'default'=>['rescue'=>config('kaigohack.rescue.unrescue'),'group'=>null,'rescuer'=>null,'evacuation'=>'回答なし','shelter'=>'','last_answer'=>'','comment'=>'','location'=>['latitude'=>'','longitude'=>'']],
+            'default'=>['rescue'=>'','group'=>null,'rescuer'=>null,'evacuation'=>'回答なし','shelter'=>'','last_answer'=>'','comment'=>'','location'=>['latitude'=>'','longitude'=>'']],
             'model'=>User::class,
             'detail'=>'救助状況',
             'edit'=>['name'=>'回答','icon'=>'<i class="material-icons">question_answer</i>'],
@@ -88,7 +88,7 @@ class InfoTableSeeder extends Seeder
         InfoTemplate::create([
             'id' => 9,
             'name' => '医療',
-            'default'=>['temp'=>'36.2','height'=>'170.0','weight'=>'60','medicine'=>'','allergy'=>'','medical'=>'','surgery'=>'','hospital'=>''],
+            'default'=>['temp'=>'','height'=>'','weight'=>'','medicine'=>'','allergy'=>'','medical'=>'','surgery'=>'','hospital'=>''],
             'model'=>User::class,
             'detail'=>'医療',
         ]);
@@ -101,5 +101,6 @@ class InfoTableSeeder extends Seeder
             'detail'=>'福祉',
         ]);
 
+        
     }
 }
