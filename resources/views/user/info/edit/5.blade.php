@@ -82,38 +82,44 @@
     <div id="long_version">
 
 
+                    <div class="card-header card-header-primary mx-0 my-4">
+                        <div class="nav-tabs-navigation">
+                            <div class="nav-tabs-wrapper">
+                                <ul class="nav nav-tabs" data-tabs="tabs">
+                                        <li class="nav-item mx-auto">
+                                            <a class="nav-link h4 active" href="#1" id="t1" data-toggle="tab">調子</a>
+                                        </li>
+                                        <li class="nav-item mx-auto">
+                                            <a class="nav-link h4" href="#2" id='t2' data-toggle="tab">食欲</a>
+                                        </li>
+                                        <li class="nav-item mx-auto">
+                                            <a class="nav-link h4" href="#3" id="t3" data-toggle="tab">お通じ</a>
+                                        </li>
+                                        <li class="nav-item mx-auto">
+                                            <a class="nav-link h4" href="#4" id="t4" data-toggle="tab">体温</a>
+                                        </li>
+                                        <li class="nav-item mx-auto">
+                                            <a class="nav-link h4" href="#5" id="t5" data-toggle="tab">体重</a>
+                                        </li>
+                                        <li class="nav-item mx-auto">
+                                            <a class="nav-link h4" href="#6" id="t6" data-toggle="tab">血圧</a>
+                                        </li>
+                                        <li class="nav-item mx-auto">
+                                            <a class="nav-link h4" href="#7" id="t7" data-toggle="tab">症状</a>
+                                        </li>
+                                        <li class="nav-item mx-auto">
+                                            <a class="nav-link h4" href="#8" id="t8" data-toggle="tab">コメント</a>
+                                        </li>
+                                        <li class="nav-item mx-auto">
+                                            <a class="nav-link h4" href="#9"  id="t9" data-toggle="tab">回答一覧</a>
+                                        </li>
+                                
 
-        
-                    <ul class="nav nav-pills nav-pills-primary mb-4">
-                        <li class="nav-item mx-auto">
-                            <a class="nav-link h4 active" href="#1" id="t1" data-toggle="tab">調子</a>
-                        </li>
-                        <li class="nav-item mx-auto">
-                            <a class="nav-link h4" href="#2" id='t2' data-toggle="tab">食欲</a>
-                        </li>
-                        <li class="nav-item mx-auto">
-                            <a class="nav-link h4" href="#3" id="t3" data-toggle="tab">お通じ</a>
-                        </li>
-                        <li class="nav-item mx-auto">
-                            <a class="nav-link h4" href="#4" id="t4" data-toggle="tab">体温</a>
-                        </li>
-                        <li class="nav-item mx-auto">
-                            <a class="nav-link h4" href="#5" id="t5" data-toggle="tab">体重</a>
-                        </li>
-                        <li class="nav-item mx-auto">
-                            <a class="nav-link h4" href="#6" id="t6" data-toggle="tab">血圧</a>
-                        </li>
-                        <li class="nav-item mx-auto">
-                            <a class="nav-link h4" href="#7" id="t7" data-toggle="tab">症状</a>
-                        </li>
-                        <li class="nav-item mx-auto">
-                            <a class="nav-link h4" href="#8" id="t8" data-toggle="tab">コメント</a>
-                        </li>
-                        <li class="nav-item mx-auto">
-                            <a class="nav-link h4" href="#9"  id="t9" data-toggle="tab">回答一覧</a>
-                        </li>
-                    </ul>
-
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                        
 
                 <div class="tab-content text-center">
 
