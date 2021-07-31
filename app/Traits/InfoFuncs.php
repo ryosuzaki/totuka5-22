@@ -44,6 +44,10 @@ trait InfoFuncs
         return $this->morphMany('App\Models\Info\InfoBase','model');
     }
     //
+    public function getTemplates(){
+        return InfoTemplate::where('model',get_class($this));
+    }
+    //
     public function getInfoBase(int $id){
         return $this->infoBases()->get()->find($id);
     }
