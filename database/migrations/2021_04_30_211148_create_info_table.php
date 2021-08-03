@@ -39,10 +39,11 @@ class CreateInfoTable extends Migration
             $table->unsignedBigInteger('id');
             $table->string('name')->index();
             $table->string('detail')->default('');
-            $table->string('model')->nullable();
+            $table->string('model');
+            $table->boolean('available')->default(true);
             $table->timestamps();
             $table->text('default');
-            $table->string('edit')->default(serialize(['name'=>'変更','icon'=>'<i class="material-icons">edit</i>']));
+            $table->text('edit')->default(serialize(['name'=>'変更','icon'=>'<i class="material-icons">edit</i>']));
             $table->unique(['name','model']);
         });
     }

@@ -24,7 +24,9 @@
                 </script>
 
                 @if($role->index!=0)
+                @can('invite-group-users',[$group,$role->index]);
                 <a class="btn btn-success btn-sm btn-round text-white" href="{{route('group.user.create',[$group->id,$role->index])}}"><i class="material-icons">person_add</i>招待</a>
+                @endcan
                 @endif
 
 

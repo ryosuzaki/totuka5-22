@@ -17,6 +17,7 @@ trait InfoFuncs
             'index'=>$this->calcInfoBaseIndex(),
             'info_template_id'=>$template->id,
             'name'=>$template->name,
+            'available'=>$template->available,
         ]);
         $base->infos()->create([
             'info'=>$template->default,
