@@ -62,7 +62,7 @@ class InfoTableSeeder extends Seeder
         InfoTemplate::create([
             'id' => 6,
             'name' => '避難/救助状況',
-            'default'=>['rescue'=>'','group'=>null,'rescuer'=>null,'evacuation'=>'回答なし','shelter'=>'','last_answer'=>'','comment'=>'','location'=>['latitude'=>'','longitude'=>'']],
+            'default'=>['rescue'=>config('kaigohack.rescue.unrescue'),'group'=>null,'rescuer'=>null,'evacuation'=>'回答なし','shelter'=>'','last_answer'=>'','comment'=>'','location'=>['latitude'=>'','longitude'=>'']],
             'model'=>User::class,
             'detail'=>'救助状況',
             'edit'=>['name'=>'回答','icon'=>'<i class="material-icons">question_answer</i>'],
@@ -73,6 +73,7 @@ class InfoTableSeeder extends Seeder
             'name' => 'お知らせ',
             'default'=>[],
             'model'=>Group::class,
+            'available'=>false,
             'detail'=>'お知らせ',
             'edit'=>['name'=>'送信','icon'=>'<i class="material-icons">mail_outline</i>'],
         ]);
@@ -101,6 +102,22 @@ class InfoTableSeeder extends Seeder
             'detail'=>'福祉',
         ]);
 
-        
+        InfoTemplate::create([
+            'id' => 11,
+            'name' => '避難/救助状況',
+            'default'=>[],
+            'available'=>false,
+            'model'=>Group::class,
+            'edit'=>[],
+        ]);
+
+        InfoTemplate::create([
+            'id' => 12,
+            'name' => '健康アンケート',
+            'default'=>[],
+            'available'=>false,
+            'model'=>Group::class,
+            'edit'=>[],
+        ]);
     }
 }

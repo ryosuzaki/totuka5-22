@@ -71,9 +71,11 @@
                     <div class="tab-pane @if($base->index==$index) active @endif" id="pill{{$base->index}}">
                         @include('group.info.show.'.$template->id, ['base'=>$base,'info'=>$base->info(),'group'=>$group])
                         @can('update-group-info',[$group,$base->index])
+                        @if(!empty($template->edit))
                         <div class="row">
                             <a class="btn btn-outline-primary btn-block mx-auto" href="{{route('group.info.edit',[$group->id,$base->index])}}">{!! $template->edit['icon'] !!} {{$template->edit['name']}}</a>
                         </div>
+                        @endif
                         @endcan
                     </div>
                     @endforeach

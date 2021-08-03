@@ -15,7 +15,6 @@ class RescueController extends Controller
 {
     //
     public function rescue(Group $group,User $user){
-
         $info=$user->getInfoBaseByTemplate(6)->first();
         if($info->rescue==config('kaigohack.rescue.rescue')){
             return redirect()->back()->with('error', '先に'.$info->rescuer->name.'さんが救助に向かいました。');

@@ -22,7 +22,7 @@
                 <div class="tab-content tab-space pb-0">
                     @foreach ($bases as $base)
                     <div class="tab-pane @if($bases[0]==$base) active @endif" id="pill{{$base->id}}">
-                        @include('info.info.show.'.$base->getTemplate()->id, ['base'=>$base])
+                        @include('user.info.show.'.$base->getTemplate()->id, ['base'=>$base])
                     </div>
                     @endforeach
                 </div>

@@ -44,11 +44,6 @@
         <input id="shelter" type="text" class="form-control form-control-lg" name="info[shelter]" value="{{$info['shelter']}}">
     </div>
 
-    <div class="form-group mt-4">
-        <label for="comment">コメント</label>
-        <textarea class="form-control" id="comment" name="info[comment]" rows="5"></textarea>
-    </div>
-
     <input type="hidden" name="info[location][latitude]" id="latitude">
     <input type="hidden" name="info[location][longitude]" id="longitude">
     <div class="form-check my-4">
@@ -78,6 +73,11 @@
             })
         })
     </script>
+
+    <div class="form-group mt-4">
+        <label for="comment">コメント</label>
+        <textarea class="form-control" id="comment" name="info[comment]" rows="5"></textarea>
+    </div>
 
     <div class="form-group mb-0 mt-4">
         <button type="submit" class="btn btn-primary btn-block">
