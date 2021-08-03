@@ -67,8 +67,8 @@
         </div>
 
         <div class="form-group mt-4">
-            <label for="comment">他に気になること</label>
-            <textarea class="form-control" id="comment" name="info[comment]" rows="5"></textarea>
+            <label for="comment_short">コメント</label>
+            <textarea class="form-control" id="comment_short" name="info[comment]" rows="5"></textarea>
         </div>
 
         <div class="form-group mb-0 mt-3">
@@ -108,7 +108,7 @@
                                             <a class="nav-link h4" href="#7" id="t7" data-toggle="tab">症状</a>
                                         </li>
                                         <li class="nav-item mx-auto">
-                                            <a class="nav-link h4" href="#8" id="t8" data-toggle="tab">その他</a>
+                                            <a class="nav-link h4" href="#8" id="t8" data-toggle="tab">コメント</a>
                                         </li>
                                         <li class="nav-item mx-auto">
                                             <a class="nav-link h4" href="#9"  id="t9" data-toggle="tab">回答一覧</a>
@@ -127,7 +127,7 @@
 
                     <div class="tab-pane active" id="1">
                         <span class="h2">調子</span>
-                        <input type="hidden" name="info[feeling]" value="{{$base->info()->info['feeling']}}">
+                        
                         <div class="form-check">
                             <input type="radio" name="info[feeling]" id = "tyousi_yoi" value = "良い" class="form-check-input">
                             <label for = "tyousi_yoi"  class="btn btn-outline-primary  btn-block check"><img src="{{asset('img/health-questionnaire/mark_face_laugh.png')}}"><p class="h3 text-dark">よい</p></label>
@@ -142,11 +142,7 @@
                         </div>
                         
                         <button type="button" class="btn btn-primary btn-block change_next_pill_tab mt-4">次の質問へ</button>
-                        <div class="form-group mb-0 mt-3">
-                            <button type="submit" class="btn btn-primary btn-block">
-                            回答して終了
-                            </button>
-                        </div>
+                        
                         
                     </div>
 
@@ -154,7 +150,7 @@
 
                     <div class="tab-pane" id="2"> <!質問２>
                         <span class=h2>食欲</span>
-                        <input type="hidden" name="info[syokuyoku]" value="{{$base->info()->info['syokuyoku']}}">
+
                         <div class="form-check">
                           <input type="radio" class="form-check-input" id="syokuyoku_yoi" name="info[syokuyoku]" value="良い">
                           <label class="btn btn-outline-primary  btn-block check" for="syokuyoku_yoi"><img src="{{asset('img/health-questionnaire/mark_face_laugh.png')}}"><p class="h3 text-dark">よい</p></label>
@@ -168,20 +164,18 @@
                             <label for = "syokuyoku_warui" class="btn btn-outline-primary  btn-block check"><img src="{{asset('img/health-questionnaire/mark_face_cry.png')}}"><p class="h3 text-dark">わるい</p></label>
                         </div>
 
-                        <button type="button" class="btn btn-primary btn-block change_next_pill_tab mt-4">次の質問へ</button>
-                        <button type="button" class="btn btn-primary btn-block change_prev_pill_tab mt-4">前の質問へ</button>
-                        <div class="form-group mb-0 mt-3">
-                            <button type="submit" class="btn btn-primary btn-block">
-                            回答して終了
-                            </button>
+                        <div>
+                            <button type="button" class="btn btn-primary change_prev_pill_tab mt-4">前の質問へ</button>
+                            <button type="button" class="btn btn-primary change_next_pill_tab mt-4">次の質問へ</button>
                         </div>
+                        
 
                     </div>
 
 
                     <div class="tab-pane" id="3"><!質問３>
                         <span class=h2>お通じ</span>
-                        <input type="hidden" name="info[otuzi]" value="{{$base->info()->info['otuzi']}}">
+                        
                         <div class="form-check">
                           <input type = "radio" name = "info[otuzi]" id= "otuzi_katai" value = "固い" class="form-check-input">
                           <label for = "otuzi_katai" class="btn btn-outline-primary  btn-block check"><img src="{{asset('img/health-questionnaire/コロコロ(かたい).png')}}" width="200"><p class="h3 text-dark">かたい</p></label>
@@ -199,13 +193,11 @@
                             <label for = "otuzi_denai" class="btn btn-outline-primary  btn-block check"><img src="{{asset('img/health-questionnaire/でない.png')}}" width="200"><p class="h3 text-dark">でない</p></label>
                         </div>
 
-                        <button type="button" class="btn btn-primary btn-block change_next_pill_tab mt-4">次の質問へ</button>
-                        <button type="button" class="btn btn-primary btn-block change_prev_pill_tab mt-4">前の質問へ</button>
-                        <div class="form-group mb-0 mt-3">
-                            <button type="submit" class="btn btn-primary btn-block">
-                            回答して終了
-                            </button>
+                        <div>
+                            <button type="button" class="btn btn-primary change_prev_pill_tab mt-4">前の質問へ</button>
+                            <button type="button" class="btn btn-primary change_next_pill_tab mt-4">次の質問へ</button>
                         </div>
+                        
                     </div>
 
 
@@ -214,13 +206,11 @@
                         <span class=h2>体温（℃）</span>
                         <input type = "number" id = "taion" name = "info[taion]" step="0.1" class="btn btn-outline-secondary form-control" value="{{$base->info()->info['taion']}}">
                         
-                        <button type="button" class="btn btn-primary btn-block change_next_pill_tab mt-4">次の質問へ</button>
-                        <button type="button" class="btn btn-primary btn-block change_prev_pill_tab mt-4">前の質問へ</button>
-                        <div class="form-group mb-0 mt-3">
-                            <button type="submit" class="btn btn-primary btn-block">
-                            回答して終了
-                            </button>
+                        <div>
+                            <button type="button" class="btn btn-primary change_prev_pill_tab mt-4">前の質問へ</button>
+                            <button type="button" class="btn btn-primary change_next_pill_tab mt-4">次の質問へ</button>
                         </div>
+                        
 
                     </div>
 
@@ -230,13 +220,11 @@
                         <span class=h2>体重（kg）</span>
                         <input type = "number" name = "info[taiju]" id="taiju" class="btn btn-outline-secondary form-control" value="{{$base->info()->info['taiju']}}">
                         
-                        <button type="button" class="btn btn-primary btn-block change_next_pill_tab mt-4">次の質問へ</button>
-                        <button type="button" class="btn btn-primary btn-block change_prev_pill_tab mt-4">前の質問へ</button>
-                        <div class="form-group mb-0 mt-3">
-                            <button type="submit" class="btn btn-primary btn-block">
-                            回答して終了
-                            </button>
+                        <div>
+                            <button type="button" class="btn btn-primary change_prev_pill_tab mt-4">前の質問へ</button>
+                            <button type="button" class="btn btn-primary change_next_pill_tab mt-4">次の質問へ</button>
                         </div>
+                        
                     </div>
 
 
@@ -246,12 +234,9 @@
                         <input type = "number" name = "info[ketuatu_saikou]" id="ketuatu_saikou" class="btn btn-outline-secondary form-control" placeholder="最高" value="{{$base->info()->info['ketuatu_saikou']}}">
                         <input type = "number" name = "info[ketuatu_saitei]" id="ketuatu_saitei" class="btn btn-outline-secondary form-control" placeholder="最低" value="{{$base->info()->info['ketuatu_saitei']}}">
                         
-                        <button type="button" class="btn btn-primary btn-block change_next_pill_tab mt-4">次の質問へ</button>
-                        <button type="button" class="btn btn-primary btn-block change_prev_pill_tab mt-4">前の質問へ</button>
-                        <div class="form-group mb-0 mt-3">
-                            <button type="submit" class="btn btn-primary btn-block">
-                            回答して終了
-                            </button>
+                        <div>
+                            <button type="button" class="btn btn-primary change_prev_pill_tab mt-4">前の質問へ</button>
+                            <button type="button" class="btn btn-primary change_next_pill_tab mt-4">次の質問へ</button>
                         </div>
 
                     </div>
@@ -259,7 +244,6 @@
 
                     <div class="tab-pane" id="7"><!質問7>
                         <span class=h2>症状</span>
-                        <input type="hidden" name="info[warui_bui][]" value="@foreach($base->info()->info['warui_bui'] as $bui) {{$bui}} @endforeach">
                         <div class="form-check">
                             <input type = "checkbox" id = "zutuu" name = "info[warui_bui][]" value = "頭痛" class="form-check-input">
                             <label for="zutuu" class="btn btn-outline-primary  btn-block check"><img src="{{asset('img/health-questionnaire/症状/頭痛.png')}}" width="100%"  height="100%"></label>
@@ -301,26 +285,21 @@
                         </div>
 
 
-                        <button type="button" class="btn btn-primary btn-block change_next_pill_tab mt-4">次の質問へ</button>
-                        <button type="button" class="btn btn-primary btn-block change_prev_pill_tab mt-4">前の質問へ</button>
-                        <div class="form-group mb-0 mt-3">
-                            <button type="submit" class="btn btn-primary btn-block">
-                            回答して終了
-                            </button>
+                        <div>
+                            <button type="button" class="btn btn-primary change_prev_pill_tab mt-4">前の質問へ</button>
+                            <button type="button" class="btn btn-primary change_next_pill_tab mt-4">次の質問へ</button>
                         </div>
 
                     </div>
 
 
                     <div class="tab-pane" id="8">
-                        <p class="h2">他に気になること</p>
-                        <textarea class="form-control" id="comment1" name="info[comment1]" rows="5">{{$base->info()->info["comment1"]}}</textarea>
-                        <button type="button" class="btn btn-primary btn-block change_next_pill_tab mt-4">次の質問へ</button>
-                        <button type="button" class="btn btn-primary btn-block change_prev_pill_tab mt-4">前の質問へ</button>
-                        <div class="form-group mb-0 mt-3">
-                            <button type="submit" class="btn btn-primary btn-block">
-                            回答して終了
-                            </button>
+                        <p class="h2">コメント</p>
+                        <textarea class="form-control" id="comment" name="info[comment]" rows="5"></textarea>
+                        
+                        <div>
+                            <button type="button" class="btn btn-primary change_prev_pill_tab mt-4">前の質問へ</button>
+                            <button type="button" class="btn btn-primary change_next_pill_tab mt-4">次の質問へ</button>
                         </div>
 
                     </div>
@@ -336,14 +315,8 @@
                             <tr><td>体重 </td><td><div id="taiju_out"></div></td></tr>
                             <tr><td>血圧 </td><td><div id="ketuatu_out"></div></td></tr>
                             <tr><td>症状</td><td><div id="warui_bui_out"></div></td></tr>
-                            <tr><td>他に気になること</td><td><div id="comment_out"></div></td></tr>
+                            <tr><td>コメント</td><td><div id="comment_out"></div></td></tr>
                         </table>
-
-                        <div class="form-group mb-0 mt-3">
-                            <button type="submit" class="btn btn-primary btn-block">
-                                回答
-                            </button>
-                        </div>
 
                         <script type="module">
                         $(function(){
@@ -387,7 +360,7 @@
                             }
 
 
-                            var jscomment = $('#comment1').val();
+                            var jscomment = $('#comment').val();
                             var idcomment = document.getElementById('comment_out');
                             idcomment.innerHTML = jscomment;
                             });
@@ -400,17 +373,24 @@
                         $(function(){
                             $('.change_next_pill_tab').click(function(){
                                 $(window).scrollTop($('#long_version').offset().top);
-                                var next_id=Number($(this).parent('.tab-pane').attr('id'))+1;
+                                var next_id=Number($(this).closest('.tab-pane').attr('id'))+1;
                                 $('#t'+next_id).tab('show');
                             });
                             $('.change_prev_pill_tab').click(function(){
                                 $(window).scrollTop($('#long_version').offset().top);
-                                var prev_id=Number($(this).parent('.tab-pane').attr('id'))-1;
+                                var prev_id=Number($(this).closest('.tab-pane').attr('id'))-1;
                                 $('#t'+prev_id).tab('show');
                             });
                         })
                     </script>
 
+
+
+                    <div class="form-group mb-0 mt-5">
+                        <button type="submit" class="btn btn-primary btn-block">
+                        回答して終了
+                        </button>
+                    </div>
                 </div>
                         
 
