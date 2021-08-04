@@ -127,7 +127,7 @@
 
                     <div class="tab-pane active" id="1">
                         <span class="h2">調子</span>
-                        
+                        <input type="hidden" name="info[feeling]" value="">
                         <div class="form-check">
                             <input type="radio" name="info[feeling]" id = "tyousi_yoi" value = "良い" class="form-check-input">
                             <label for = "tyousi_yoi"  class="btn btn-outline-primary  btn-block check"><img src="{{asset('img/health-questionnaire/mark_face_laugh.png')}}"><p class="h3 text-dark">よい</p></label>
@@ -150,7 +150,7 @@
 
                     <div class="tab-pane" id="2"> <!質問２>
                         <span class=h2>食欲</span>
-
+                        <input type="hidden" name="info[syokuyoku]" value="">
                         <div class="form-check">
                           <input type="radio" class="form-check-input" id="syokuyoku_yoi" name="info[syokuyoku]" value="良い">
                           <label class="btn btn-outline-primary  btn-block check" for="syokuyoku_yoi"><img src="{{asset('img/health-questionnaire/mark_face_laugh.png')}}"><p class="h3 text-dark">よい</p></label>
@@ -175,7 +175,7 @@
 
                     <div class="tab-pane" id="3"><!質問３>
                         <span class=h2>お通じ</span>
-                        
+                        <input type="hidden" name="info[otuzi]" value="">
                         <div class="form-check">
                           <input type = "radio" name = "info[otuzi]" id= "otuzi_katai" value = "固い" class="form-check-input">
                           <label for = "otuzi_katai" class="btn btn-outline-primary  btn-block check"><img src="{{asset('img/health-questionnaire/コロコロ(かたい).png')}}" width="200"><p class="h3 text-dark">かたい</p></label>
@@ -244,6 +244,7 @@
 
                     <div class="tab-pane" id="7"><!質問7>
                         <span class=h2>症状</span>
+                        <input type="hidden" name="info[warui_bui][]" value="">
                         <div class="form-check">
                             <input type = "checkbox" id = "zutuu" name = "info[warui_bui][]" value = "頭痛" class="form-check-input">
                             <label for="zutuu" class="btn btn-outline-primary  btn-block check"><img src="{{asset('img/health-questionnaire/症状/頭痛.png')}}" width="100%"  height="100%"></label>

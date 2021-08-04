@@ -195,12 +195,13 @@
                             </div>
                         </div>
                     </div>
+                    <div class="form-group mt-5 mb-0">
+                        <button type="submit" class="btn btn-primary btn-block">
+                        変更
+                        </button>
+                    </div>
                 </div>
-                <div class="form-group row mt-5 mb-0">
-                    <button type="submit" class="btn btn-primary btn-block">
-                    変更
-                    </button>
-                </div>
+
 
 
                 <script type="module">
