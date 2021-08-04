@@ -60,7 +60,7 @@
                 @endif
                 </td>
                 <td>{{$info->info['shelter']}}</td>
-                <td>{{$info["location"]["latitude"]}} {{$info["location"]["longitude"]}}</td>
+                <td>{{$info->info["location"]["latitude"]}} {{$info->info["location"]["longitude"]}}</td>
                 <td>{{$info->info['comment']}}</td>
             </tr>
             @endif
