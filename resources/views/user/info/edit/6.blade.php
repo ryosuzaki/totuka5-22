@@ -44,6 +44,9 @@
         <input id="shelter" type="text" class="form-control form-control-lg" name="info[shelter]" value="{{$info['shelter']}}">
     </div>
 
+    <input type="hidden" name="info[location][latitude]" value="">
+    <input type="hidden" name="info[location][longitude]" value="">
+    
     <input type="hidden" name="info[location][latitude]" id="latitude">
     <input type="hidden" name="info[location][longitude]" id="longitude">
     <div class="form-check my-4">
