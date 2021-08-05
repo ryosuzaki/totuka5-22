@@ -20,7 +20,7 @@ class Role extends SpatieRole
 
     //
     public function model(){
-        return $this->morphTo();;
+        return $this->morphTo();
     }
     
 
@@ -29,7 +29,7 @@ class Role extends SpatieRole
     //
     public function changeName($name){
         return $this->fill([
-            'name'=>$this->model()->unique_name.$name,
+            'name'=>$this->model()->first()->unique_name.$name,
             'role_name'=>$name,
         ])->save();
     }
