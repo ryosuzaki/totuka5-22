@@ -3,7 +3,7 @@
 @section('content')
 <div class="row justify-content-center">
     <div class="col-md-8">
-        <form method="POST" action="{{route('group.role.update',[$group->id,$role->id])}}">
+        <form method="POST" action="{{route('group.role.update',[$group->id,$role->index])}}">
             @csrf
             {{ method_field('PUT') }}
             <div class="card">
