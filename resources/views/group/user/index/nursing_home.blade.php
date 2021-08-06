@@ -195,7 +195,7 @@
 				j++;
 			}
             i = 4
-            for(;i < 8;){
+            for(;i < txt_array.length;){
                 check1 = document.getElementById( txt_array[i] );
                 i++
                 check2 = document.getElementById( txt_array[i] );
