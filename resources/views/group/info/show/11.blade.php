@@ -1,9 +1,13 @@
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 
 <div>           <!-- 検索用のhtml -->
-    <input type="text" class="" id="search1"> <input type="button" class="btn btn-primary" value="絞り込む" id="button"> <input type="button" class="btn btn-primary" value="すべて表示" id="button2">
+    <div class="form-group">
+        <label>検索</label>
+        <input class="form-control" type="text" id="search_in_table{{$base->index}}">
+    </div>
+    <input type="button" class="btn btn-primary btn-block" value="すべて表示" id="button2">
     <br>
-        <div class="card">
+        <div class="card" id="selct_row_value{{$base->index}}">
             <ul>
                 <li class="card-text">避難／救助状況アンケート<br>
                     <label><input type="checkbox" id="check3" checked="checked">回答あり</label>
@@ -111,6 +115,25 @@
         $("#sorter{{$base->index}}").tablesorter();
     });
 </script>
+<script type="module">
+    $(document).ready(function() { 
+        //一致した行のみ表示
+        $("#search_in_table{{$base->index}}").keyup(function(){
+            var re = new RegExp($(this).val());
+            $("#sorter{{$base->index}} tbody tr").each(function(){
+                for(var i=0;i<$(this).find("td").length;i++){
+                    var txt = $(this).find("td:eq("+i+")").text();
+                    if(txt.match(re) != null){
+                        $(this).show();
+                        break;
+                    }else{
+                        $(this).hide();
+                    }
+                }
+            });
+        });
+    });
+</script>
 <script>
 	$(function(){
 	  
@@ -126,7 +149,7 @@
 	var l = 0;
 	  
 			//検索内容を取って判別する関数
-		$('#button').bind("click",function(){
+            $('#selct_row_value{{$base->index}}').find('input[type="checkbox"]').change(function(){
 			var re = new RegExp($('#search1').val());   //テキストに入れた文字を取得
 	  
 					  //ここから次のfunctionまでは一つの質問でチェックの有無が違う場合にcheck_arrayにその添字を格納しているもの
