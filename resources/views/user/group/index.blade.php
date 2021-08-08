@@ -50,6 +50,9 @@
                                         <td><a href="{{route('group.show',$group->id)}}">{{$group->name}}</a></td>
                                         <td>{{$group->getRole($group->pivot->role_id)->role_name}}</td>                                    
                                         <td class="p-1">
+
+                                        <a class="btn btn-success btn-round btn-sm text-white" href="{{route('user.group.accept_join_request',$group->id)}}"><i class="material-icons">login</i> 参加する</a>
+                                        <!--
                                         <a class="btn btn-success btn-round btn-sm text-white" data-toggle="modal" data-target="#accept_join{{$group->id}}"><i class="material-icons">login</i> 参加する</a>
                                         <div class="modal fade" id="accept_join{{$group->id}}" tabindex="-1" role="dialog" aria-labelledby="{{$group->id}}Label" aria-hidden="true">
                                             <div class="modal-dialog" role="document">
@@ -69,6 +72,7 @@
                                                 </div>
                                             </div>
                                         </div>
+-->
 
                                         <a class="btn btn-danger btn-round btn-sm text-white" data-toggle="modal" data-target="#denied_join{{$group->id}}"><i class="material-icons">close</i> 参加しない</a>
                                         <div class="modal fade" id="denied_join{{$group->id}}" tabindex="-1" role="dialog" aria-labelledby="{{$group->id}}Label" aria-hidden="true">
