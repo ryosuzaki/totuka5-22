@@ -16,6 +16,7 @@ Route::name('user.')->prefix('user')->namespace('User')->middleware('auth')->gro
     Route::get('{info_base}/info/edit', 'UserInfoController@edit')->name('info.edit');
     Route::put('{info_base}/info', 'UserInfoController@update')->name('info.update');
 
+   
     //
     Route::get('group', 'UserGroupController@index')->name('group.index');
     Route::get('group/create', 'UserGroupController@create')->name('group.create');
@@ -42,6 +43,10 @@ Route::name('user.')->prefix('user')->namespace('User')->middleware('auth')->gro
         Route::resource('announcement', 'AnnouncementController',['only' => [
             'index','show','destroy'
         ]]);
+
+        //
+        Route::put('{info_base}/questionnaire', 'QuestionnaireController@update')->name('questionnaire.update');
+
         //
         Route::resource('setting', 'SettingController');
     });

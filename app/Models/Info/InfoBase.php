@@ -49,6 +49,16 @@ class InfoBase extends Model
         ]);
     }
     //
+    public function updateInfoEmptyFillDefault(array $new_info){
+        $info=$this->getTemplate()->default;
+        foreach($new_info as $key=>$value){
+            $info[$key]=$value;
+        }
+        return $this->infos()->create([
+            'info'=>$info,
+        ]);
+    }
+    //
     public function changeName($name){
         return $this->fill(['name'=>$name])->save();
     }

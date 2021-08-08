@@ -9,11 +9,9 @@
                 <h3 class="text-center mb-4">{{$base->name}}の{{$base->getTemplate()->edit['name']}}</h3>
 
 
-                <form method="POST" action="{{ route('user.info.update',[$base->id]) }}">
-                    @csrf
-                    @method('PUT')
+                
                     @include('user.info.edit.'.$base->getTemplate()->id, ['info' => $info])
-                </form>
+                
             </div>
         </div>
     </div>
