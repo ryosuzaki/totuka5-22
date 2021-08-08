@@ -1,4 +1,4 @@
-<form method="POST" action="{{ route('user.info.update',[$base->id]) }}">
+<form method="POST" action="{{ route('user.questionnaire.update',[$base->id]) }}">
     @csrf
     @method('PUT')
 
@@ -77,7 +77,12 @@
             </button>
         </div>
     </div>
+</form>
 
+<form method="POST" action="{{ route('user.questionnaire.update',[$base->id]) }}">
+    @csrf
+    @method('PUT')
+    <input type="hidden" name="info[is_long]" value="1">
 
     <div id="long_version">
 
