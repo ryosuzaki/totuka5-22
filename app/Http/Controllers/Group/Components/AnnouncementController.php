@@ -13,7 +13,6 @@ use Illuminate\Support\Facades\Auth;
 class AnnouncementController extends Controller
 {
     public function send(Request $request,Group $group){
-        info($request);
         $group->sendAnnouncement($group->extraUsers(config('kaigohack.watch'))->get(),$request->title,(string)$request->content);
         return redirect()->route('group.show',$group->id);
     }
