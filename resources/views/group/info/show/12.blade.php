@@ -9,7 +9,7 @@
     <br>
         <div class="card" id="selct_row_value{{$base->index}}">
             <ul>
-                <li class="card-text">避難／救助状況アンケート<br>
+                <li class="card-text">健康状態アンケート<br>
                     <label><input type="checkbox" id="check11" checked="checked">回答あり</label>
                     <label><input type="checkbox" id="check12" checked="checked">回答なし</label>
                 </li>
@@ -344,6 +344,7 @@
 	  
 		  //全て表示のボタン↓
 		$('#button4').bind("click",function(){
+            $("#search_in_table{{$base->index}}").val('');
 			$('#search2').val('');
 			$('.result2 tr').show();
 			var s = 0;
