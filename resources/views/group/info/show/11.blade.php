@@ -66,6 +66,7 @@
             @php
             $info=$info_base->first()->info();
             $rescue=$info->info['rescue'];
+            $rescuer=$info->info['rescuer'];
             $rescue_group=$info->info['group'];
             @endphp
             <tr>
@@ -75,7 +76,7 @@
                 <td>{{$info->info['evacuation']}}</td>
                 <td>
                 @if($rescue==config('kaigohack.rescue.rescue'))
-                    @if($rescue_group==$group)
+                    @if($rescue_group==$group&&$rescuer->id==$user->id)
                     <a class="btn btn-danger btn-sm text-white m-0" href="{{route('group.user.unrescue',[$info->info['group']->id,$user->id])}}"><i class="material-icons">close</i> やめる</a>
                     <button type="button" data-toggle="modal" data-target="#rescued{{$user->id}}" class="btn btn-success btn-sm text-white m-0"><i class="material-icons">done</i> 完了</button>
                     <div class="modal fade" id="rescued{{$user->id}}" tabindex="-1" role="dialog" aria-labelledby="rescuedLabel" aria-hidden="true">
@@ -92,7 +93,7 @@
                         </div>
                     </div>
                     @else
-                    <a href="{{route('group.show',$rescue_group->id)}}">{{$rescue_group->name}}</a>が救助中
+                    <a href="{{route('group.show',$rescue_group->id)}}">{{$rescue_group->name}}</a>の{{$rescuer->name}}が救助中
                     @endif
                 @elseif($rescue==config('kaigohack.rescue.unrescue'))
                 <a class="btn btn-warning btn-sm text-white m-0" href="{{route('group.user.rescue',[$group->id,$user->id])}}">救助に向かう</a>
