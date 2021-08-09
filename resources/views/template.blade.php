@@ -64,6 +64,14 @@
         transform-origin:left;
       }
 
+      .hamburger-menu-badge{
+        position:relative;
+        top: -15px;
+        left: 25px;
+        z-index: 1;
+        padding: 3px 5px !important;
+      }
+
     </style>
   </head>
   <body>
@@ -73,12 +81,23 @@
         <div class="navbar-translate">
           <a class="navbar-brand" href="{{route('home')}}">戸塚ハッカソン</a>
   
-          <button class="navbar-toggler" type="button" data-toggle="collapse" aria-expanded="false" aria-label="Toggle navigation">
-              <span class="sr-only">Toggle navigation</span>
-              <span class="navbar-toggler-icon"></span>
-              <span class="navbar-toggler-icon"></span>
-              <span class="navbar-toggler-icon"></span>
-          </button>
+          @php
+          $unread=Auth::user()->countUnreadAnnouncements();
+          $request=Auth::user()->countGroupsRequestJoin();
+          $total=$unread+$request;
+          @endphp
+          <div>
+          @if($total>0)
+          <span class="badge badge-pill badge-danger hamburger-menu-badge">{{$total}}</span>
+          @endif
+            <button class="navbar-toggler" type="button" data-toggle="collapse" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="navbar-toggler-icon"></span>
+                <span class="navbar-toggler-icon"></span>
+                <span class="navbar-toggler-icon"></span>
+            </button>
+          </div>
+          
         </div>
   
         <div class="collapse navbar-collapse">
@@ -126,11 +145,7 @@
             </li>
 
             <li class="nav-item dropdown">
-              @php
-              $unread=Auth::user()->countUnreadAnnouncements();
-              $request=Auth::user()->countGroupsRequestJoin();
-              $total=$unread+$request;
-              @endphp
+        
               <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
                 <i class="material-icons">notifications</i>通知
                 @if($total>0)<span class="ml-2 badge badge-pill badge-danger">{{$total}}</span>@endif

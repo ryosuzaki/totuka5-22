@@ -322,6 +322,7 @@
 	  
 		  //全て表示のボタン↓
 		$('#button2').bind("click",function(){
+            $("#search_in_table{{$base->index}}").val('');
 			$('#search1').val('');
 			$('.result1 tr').show();
 			var s = 0;
