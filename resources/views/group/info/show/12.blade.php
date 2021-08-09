@@ -7,25 +7,25 @@
     </div> 
     <input type="button" class="btn btn-primary btn-block" value="すべて表示" id="button4">
     <br>
-        <div class="card" id="selct_row_value{{$base->index}}">
-            <ul>
-                <li class="card-text">健康状態アンケート<br>
+        <div class="card m-0" id="selct_row_value{{$base->index}}">
+            <ul class="list-unstyled">
+                <li class="card-text list-unstyled">健康状態アンケート<br>
                     <label><input type="checkbox" id="check11" checked="checked">回答あり</label>
                     <label><input type="checkbox" id="check12" checked="checked">回答なし</label>
                 </li>
                 
-                <li class="card-text">健康状態<br>
+                <li class="card-text list-unstyled">健康状態<br>
                     <label><input type="checkbox" id="check13" checked="checked">良い</label>
                     <label><input type="checkbox" id="check14" checked="checked">普通</label>
                     <label><input type="checkbox" id="check15" checked="checked">悪い</label>
                 </li>
 
-                <li class="card-text">体温<br>
+                <li class="card-text list-unstyled">体温<br>
                     <label><input type="checkbox" id="check16" checked="checked">通常</label>
                     <label><input type="checkbox" id="check17" checked="checked">微熱（37℃以上）</label>
                     <label><input type="checkbox" id="check18" checked="checked">高熱（38℃以上）</label>
                 </li>
-                <li class="card-text">症状<br>
+                <li class="card-text list-unstyled">症状<br>
                     <label><input type="checkbox" id="check19" checked="checked">頭痛</label>
                     <label><input type="checkbox" id="check20" checked="checked">鼻水</label>
                     <label><input type="checkbox" id="check21" checked="checked">のどの痛み</label>
@@ -40,7 +40,7 @@
                 
     <table class="card">
         <tr class="card-text">
-            <td><label><input type="checkbox" id="time_check2" onclick="checkbox_cell(this,'time2')" checked="checked">回答時間</label></td>
+            <td><label><input type="checkbox" id="time_check2" onclick="checkbox_cell(this,'time2')" checked="checked">回答日時</label></td>
             <td><label><input type="checkbox" id="comment_check2" onclick="checkbox_cell(this,'comment2')" checked="checked">コメント</label></td>
             <td><label><input type="checkbox" id="bad_check" onclick="checkbox_cell(this,'bad')" checked="checked">症状</label></td>            
             <td><label><input type="checkbox" id="weight_check" onclick="checkbox_cell(this,'weight')" checked="checked">体重</label></td>            
@@ -53,7 +53,7 @@
         <thead>
         <tr>
             <th>ユーザー名</th>
-            <th id="time2">健康状態 回答日時</th>
+            <th id="time2">回答日時</th>
             <th>健康状態</th>
             <th id="comment2">コメント</th>
             <th>体温</th>
