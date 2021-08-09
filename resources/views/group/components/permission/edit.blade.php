@@ -174,7 +174,7 @@
                                 </div>
                                 <div class="form-check">
                                     <label class="form-check-label col-12">
-                                        <input class="form-check-input" type="checkbox" name="permissions[]" value="group_role.{{$role->index}}.invite">
+                                        <input class="form-check-input" type="checkbox" name="permissions[]" value="group_users.{{$role->index}}.invite">
                                         {{$role->role_name}}にユーザーを招待
                                         <span class="form-check-sign">
                                             <span class="check"></span>
@@ -183,7 +183,7 @@
                                 </div>
                                 <div class="form-check">
                                     <label class="form-check-label col-12">
-                                        <input class="form-check-input" type="checkbox" name="permissions[]" value="group_role.{{$role->index}}.remove">
+                                        <input class="form-check-input" type="checkbox" name="permissions[]" value="group_users.{{$role->index}}.remove">
                                         {{$role->role_name}}のユーザーを退会
                                         <span class="form-check-sign">
                                             <span class="check"></span>
