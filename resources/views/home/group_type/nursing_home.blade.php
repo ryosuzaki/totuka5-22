@@ -14,6 +14,20 @@
                 </nav>
                 <h3 class="text-center mb-4">{{$type->formatted_name}}の利用者安否確認システム</h3>
 
+                <form method="POST" action="{{ route('user.initial_setting') }}">
+                    @csrf
+                    
+                    <input type="hidden" name="types[]" value="{{$type->id}}">
+
+                    <div class="form-group m-5">
+                        <button type="submit" class="btn btn-primary btn-block">
+                        {{$type->formatted_name}}を使う
+                        </button>
+                    </div>
+
+                </form>
+
+
                 <a class="btn btn-success btn-lg text-white btn-block" href="{{route('group.create',$type)}}"><i class="material-icons">add_circle_outline</i> 新しく登録する</a>
             </div>
         </div>
