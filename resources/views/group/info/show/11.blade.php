@@ -7,20 +7,20 @@
     </div>
     <input type="button" class="btn btn-primary btn-block" value="すべて表示" id="button2">
     <br>
-        <div class="card" id="selct_row_value{{$base->index}}">
-            <ul>
-                <li class="card-text">避難／救助状況アンケート<br>
+        <div class="card m-0" id="selct_row_value{{$base->index}}">
+            <ul class="list-unstyled">
+                <li class="card-text list-unstyled">避難／救助状況アンケート<br>
                     <label><input type="checkbox" id="check3" checked="checked">回答あり</label>
                     <label><input type="checkbox" id="check4" checked="checked">回答なし</label>
                 </li>
                 
-                <li class="card-text">避難状況<br>
+                <li class="card-text list-unstyled">避難状況<br>
                     <label><input type="checkbox" id="check5" checked="checked">避難済み</label>
                     <label><input type="checkbox" id="check6" checked="checked">避難中</label>
                     <label><input type="checkbox" id="check7" checked="checked">要救助</label>
                 </li>
 
-                <li class="card-text">救助状況<br>
+                <li class="card-text list-unstyled">救助状況<br>
                     <label><input type="checkbox" id="check8" checked="checked">向かっていない</label>
                     <label><input type="checkbox" id="check9" checked="checked">救助中</label>
                     <label><input type="checkbox" id="check10" checked="checked">救助済み</label>
@@ -31,7 +31,7 @@
                 
     <table class="card">
         <tr class="card-text">
-            <td><label><input type="checkbox" id="time_check" onclick="checkbox_cell(this,'time')" checked="checked">回答時間</label></td>
+            <td><label><input type="checkbox" id="time_check" onclick="checkbox_cell(this,'time')" checked="checked">回答日時</label></td>
             <td><label><input type="checkbox" id="shelter_check" onclick="checkbox_cell(this,'shelter')" checked="checked">避難した避難所</label></td>
             <td><label><input type="checkbox" id="where_check" onclick="checkbox_cell(this,'where')" checked="checked">位置情報</label></td>
             <td><label><input type="checkbox" id="comment_check" onclick="checkbox_cell(this,'comment')" checked="checked">コメント</label></td>
@@ -44,7 +44,7 @@
         <thead>
         <tr>
             <th>ユーザー名</th>
-            <th id="time">避難状況 回答日時</th>
+            <th id="time">回答日時</th>
             <th>避難状況</th>
             <th>救助状況</th>
             <th id="shelter">避難した場所</th>
