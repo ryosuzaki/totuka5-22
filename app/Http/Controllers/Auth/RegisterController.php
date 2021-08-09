@@ -33,7 +33,7 @@ class RegisterController extends Controller
      */
     protected function redirectTo()
     {
-        return route('user.initial_setting_form');
+        return route('user.show');
     }
     /**
      * Create a new controller instance.
