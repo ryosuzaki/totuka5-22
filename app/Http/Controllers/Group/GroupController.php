@@ -64,6 +64,13 @@ class GroupController extends Controller
             ]);
     }
 
+    public function getInfo(Group $group,int $index=0)
+    {
+        Gate::authorize('view-group-info',[$group,$index]);
+        $base=$group->getInfoBaseByIndex($index);
+        return response()->view('group.info.show.'.$base->info_template_id, ['base'=>$base,'info'=>$base->info(),'group'=>$group]);
+    }
+
     /**
      * Show the form for editing the specified resource.
      *

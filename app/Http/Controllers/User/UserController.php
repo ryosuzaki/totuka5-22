@@ -15,21 +15,22 @@ use Validator;
 class UserController extends Controller
 {
     //
-    public function show()
+    public function show(int $index=0)
     {
-        $user=Auth::user();
         return view('user.show')->with([
-            'user'=>$user,
-            'bases'=>$user->infoBases()->get(),
+            'bases'=>Auth::user()->infoBases()->get(),
+            'index'=>$index,
             ]);
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
+    //
+    public function getInfo(int $index=0)
+    {
+        $base=Auth::user()->getInfoBaseByIndex($index);
+        return response()->view('user.info.show.'.$base->info_template_id, ['base'=>$base,'info'=>$base->info()]);
+    }
+
+    //
     public function edit()
     {
         return view('user.edit')->with(['user'=>Auth::user()]);

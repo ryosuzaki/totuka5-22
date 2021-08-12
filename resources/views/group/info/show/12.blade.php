@@ -1,6 +1,4 @@
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-
-<div>           <!-- 検索用のhtml -->
+<div>           
     <div class="form-group">
         <label>検索</label>
         <input class="form-control" type="text" id="search_in_table{{$base->index}}">
@@ -76,10 +74,10 @@
             $info_base=$user->getInfoBaseByTemplate(5);
             @endphp
 
-            @if($info_base->isNotEmpty())
+            @if(!empty($info_base))
 
             @php
-            $info=$info_base->first()->info();
+            $info=$info_base->info();
             @endphp
 
             <tr>
@@ -109,13 +107,9 @@
     </table>
 </div>
 
-<script type="module">
-    $(document).ready(function() { 
+<script>
+    $(function() { 
         $("#sorter{{$base->index}}").tablesorter();
-    });
-</script>
-<script type="module">
-    $(document).ready(function() { 
         //一致した行のみ表示
         $("#search_in_table{{$base->index}}").keyup(function(){
             var re = new RegExp($(this).val());

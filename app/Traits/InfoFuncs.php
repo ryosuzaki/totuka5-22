@@ -55,6 +55,11 @@ trait InfoFuncs
     //
     public function getInfoBaseByTemplate($template){
         $template=InfoTemplate::findByIdOrName($template,$this);
+        return $this->infoBases()->where('info_template_id',$template->id)->first();
+    }
+    //
+    public function getInfoBasesByTemplate($template){
+        $template=InfoTemplate::findByIdOrName($template,$this);
         return $this->infoBases()->where('info_template_id',$template->id)->get();
     }
     //

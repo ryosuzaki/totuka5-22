@@ -53,6 +53,33 @@
 
             </div>
         </div>
+
+        <script type="module">
+        function embed_info_view(type,url,embed_to){
+            $.ajax({
+                type:type, 
+                url:url,
+                dataType: 'html',
+            })
+            .done((response)=>{
+                $(embed_to).html(response);
+            })
+            .fail((error)=>{
+                console.log(error)
+            })
+        }
+        $(function(){
+            window.history.replaceState(null,null,"{{route('group.show',['group'=>$group,'index'=>$index])}}");
+            embed_info_view("get","{{route('group.get_info',['group'=>$group,'index'=>$index])}}","#embed_info{{$index}}");
+            @foreach ($bases as $base)
+            $("a[href='#pill{{$base->index}}']").click(function(){
+                window.history.replaceState(null,null,"{{route('group.show',['group'=>$group,'index'=>$base->index])}}");
+                embed_info_view("get","{{route('group.get_info',['group'=>$group,'index'=>$base->index])}}","#embed_info{{$base->index}}");
+            });
+            @endforeach
+        });
+        </script>
+
         <div class="card mt-0 mb-2">
             <div class="card-body">
                 <ul class="nav nav-pills nav-pills-primary">
@@ -69,7 +96,7 @@
                     $template=$base->getTemplate();
                     @endphp
                     <div class="tab-pane @if($base->index==$index) active @endif" id="pill{{$base->index}}">
-                        @include('group.info.show.'.$template->id, ['base'=>$base,'info'=>$base->info(),'group'=>$group])
+                        <div id="embed_info{{$base->index}}"></div>
                         @can('update-group-info',[$group,$base->index])
                         @if(!empty($template->edit))
                         <div class="row">
@@ -79,6 +106,7 @@
                         @endcan
                     </div>
                     @endforeach
+
                 </div>
                 @can('viewAny-group-info-bases', $group)
                 <div class="row">

@@ -19,6 +19,7 @@ Route::name('group.')->prefix('group')->namespace('Group')->middleware('auth')->
     Route::prefix('{group}')->group(function(){
         //
         Route::get('show/{index?}', 'GroupController@show')->name('show');
+        Route::get('get_info/{index?}', 'GroupController@getInfo')->name('get_info');
         //
         Route::get('user/index/{index?}', 'GroupUserController@index')->name('user.index');
         Route::get('user/create/{index}', 'GroupUserController@create')->name('user.create');
@@ -57,7 +58,7 @@ Route::name('group.')->prefix('group')->namespace('Group')->middleware('auth')->
             Route::get('user/{user}/rescue', 'RescueController@rescue')->name('user.rescue');
             Route::get('user/{user}/unrescue', 'RescueController@unrescue')->name('user.unrescue');
             Route::get('user/{user}/rescued', 'RescueController@rescued')->name('user.rescued');
-
+            Route::get('user/{user}/reverse_rescue', 'RescueController@reverseRescue')->name('user.reverse_rescue');
             //
             Route::get('permission/{index}/edit', 'PermissionController@edit')->name('permission.edit');
             Route::put('permission/{index}', 'PermissionController@update')->name('permission.update');

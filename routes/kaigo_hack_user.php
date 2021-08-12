@@ -4,7 +4,8 @@
 //
 Route::name('user.')->prefix('user')->namespace('User')->middleware('auth')->group(function(){
     //
-    Route::get('', 'UserController@show')->name('show');
+    Route::get('show/{index?}', 'UserController@show')->name('show');
+    Route::get('get_info/{index?}', 'UserController@getInfo')->name('get_info');
     Route::get('edit', 'UserController@edit')->name('edit');
     Route::put('', 'UserController@update')->name('update');
 
