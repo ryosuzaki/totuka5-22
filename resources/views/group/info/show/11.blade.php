@@ -1,6 +1,4 @@
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-
-<div>           <!-- 検索用のhtml -->
+<div>
     <div class="form-group">
         <label>検索</label>
         <input class="form-control" type="text" id="search_in_table{{$base->index}}">
@@ -9,7 +7,7 @@
     <br>
         <div class="card m-0" id="selct_row_value{{$base->index}}">
             <ul class="list-unstyled">
-                <li class="card-text list-unstyled">避難／救助状況アンケート<br>
+                <li class="card-text list-unstyled">避難状況アンケート<br>
                     <label><input type="checkbox" id="check3" checked="checked">回答あり</label>
                     <label><input type="checkbox" id="check4" checked="checked">回答なし</label>
                 </li>
@@ -40,6 +38,26 @@
 </div>
 
 <div class="table-responsive">
+			
+
+	<script>
+	function embed_table(url){
+		$.ajax({
+			type:"get", 
+			url:url,
+			dataType: 'html',
+		})
+		.done((response)=>{
+			table=$(response).find("#sorter{{$base->index}}").html();
+			$("#sorter{{$base->index}}").html(table);
+		})
+		.fail((error)=>{
+			console.log(error)
+		})
+	}
+	</script>
+
+
     <table class="table text-nowrap tablesorter result1" id="sorter{{$base->index}}">
         <thead>
         <tr>
@@ -53,70 +71,93 @@
         </tr>
         </thead>
         <tbody>
-            @php
+		@php
             $users=$group->users()->get();
             @endphp
             @foreach ($users as $user)
 
-            @php
-            $info_base=$user->getInfoBaseByTemplate(6);
-            @endphp
+				@php
+				$info_base=$user->getInfoBaseByTemplate(config('kaigohack.rescue.user_info_template_id'));
+				@endphp
 
-            @if($info_base->isNotEmpty())
-            @php
-            $info=$info_base->first()->info();
-            $rescue=$info->info['rescue'];
-            $rescuer=$info->info['rescuer'];
-            $rescue_group=$info->info['group'];
-            @endphp
-            <tr>
-                <td>{{$user->name}}</td>
-                
-                <td id="time_check">{{$info->info['last_answer']}}</td>
-                <td>{{$info->info['evacuation']}}</td>
-                <td>
-                @if($rescue==config('kaigohack.rescue.rescue'))
-                    @if($rescue_group==$group&&$rescuer->id==$user->id)
-                    <a class="btn btn-danger btn-sm text-white m-0" href="{{route('group.user.unrescue',[$info->info['group']->id,$user->id])}}"><i class="material-icons">close</i> やめる</a>
-                    <button type="button" data-toggle="modal" data-target="#rescued{{$user->id}}" class="btn btn-success btn-sm text-white m-0"><i class="material-icons">done</i> 完了</button>
-                    <div class="modal fade" id="rescued{{$user->id}}" tabindex="-1" role="dialog" aria-labelledby="rescuedLabel" aria-hidden="true">
-                        <div class="modal-dialog" role="document">
-                            <div class="modal-content">
-                                <div class="modal-body">
-                                    本当に救助を完了しますか？
-                                </div>
-                                <div class="modal-footer">
-                                    <button type="button" class="btn btn-secondary" data-dismiss="modal">やめる</button>
-                                    <a class="btn btn-success text-white" href="{{route('group.user.rescued',[$info->info['group']->id,$user->id])}}">救助を完了</a>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    @else
-                    <a href="{{route('group.show',$rescue_group->id)}}">{{$rescue_group->name}}</a>の{{$rescuer->name}}が救助中
-                    @endif
-                @elseif($rescue==config('kaigohack.rescue.unrescue'))
-                <a class="btn btn-warning btn-sm text-white m-0" href="{{route('group.user.rescue',[$group->id,$user->id])}}">救助に向かう</a>
-                @elseif($rescue==config('kaigohack.rescue.rescued'))
-                <a href="{{route('group.show',$rescue_group->id)}}">{{$rescue_group->name}}</a>が救助済み
-                @endif
-                </td>
-                <td id="shelter_check">{{$info->info['shelter']}}</td>
-                <td id="where_check">{{$info->info["location"]["latitude"]}} {{$info->info["location"]["longitude"]}}</td>
-                <td id="comment_check">{{$info->info['comment']}}</td>
-            </tr>
-            @endif
+				@if(!empty($info_base))
+
+				<script>
+				$(function(){
+					@if(isset($rescue_collision_error))
+					alert($rescue_collision_error);
+					@endif
+					$("#rescue{{$user->id}}").click(function(){
+						embed_table("{{route('group.user.rescue',[$group->id,$user->id])}}");
+					});
+					$("#rescued{{$user->id}}").click(function(){
+						embed_table("{{route('group.user.rescued',[$group->id,$user->id])}}");
+					});
+					$("#unrescue{{$user->id}}").click(function(){
+						embed_table("{{route('group.user.unrescue',[$group->id,$user->id])}}");
+					});
+					$("#reverse_rescue{{$user->id}}").click(function(){
+						embed_table("{{route('group.user.reverse_rescue',[$group->id,$user->id])}}");
+					});
+				});
+				</script>
+
+				@php
+				$info=$info_base->info();
+				$rescue=$info->info['rescue'];
+				$rescuer=$info->info['rescuer'];
+				$rescue_group=$info->info['group'];
+				@endphp
+				<tr>
+					<td>{{$user->name}}</td>
+					
+					<td id="time_check">{{$info->info['last_answer']}}</td>
+					<td>{{$info->info['evacuation']}}</td>
+					<td>
+					@if($rescue==config('kaigohack.rescue.rescue'))
+						<a href="{{route('group.show',$rescue_group->id)}}">{{$rescue_group->name}}</a>の{{$rescuer->name}}が救助中
+						@if($rescue_group==$group&&$rescuer->id==$user->id)
+						<a class="btn btn-danger btn-sm text-white m-0" id="unrescue{{$user->id}}"><i class="material-icons">close</i> 救助をやめる</a>
+						<button type="button" data-toggle="modal" data-target="#rescued_modal{{$user->id}}" class="btn btn-success btn-sm text-white m-0"><i class="material-icons">done</i> 救助を完了</button>
+						<div class="modal fade" id="rescued_modal{{$user->id}}" tabindex="-1" role="dialog" aria-labelledby="rescuedLabel" aria-hidden="true">
+							<div class="modal-dialog" role="document">
+								<div class="modal-content">
+									<div class="modal-body">
+										本当に{{$user->name}}さんの救助を完了しますか？
+									</div>
+									<div class="modal-footer">
+										<button type="button" class="btn btn-secondary" data-dismiss="modal">やめる</button>
+										<a class="btn btn-success text-white" id="rescued{{$user->id}}" data-dismiss="modal">救助を完了</a>
+									</div>
+								</div>
+							</div>
+						</div>
+						@endif
+					@elseif($rescue==config('kaigohack.rescue.unrescue'))
+					<a class="btn btn-warning btn-sm text-white m-0" id="rescue{{$user->id}}">救助に向かう</a>
+					@elseif($rescue==config('kaigohack.rescue.rescued'))
+					<a href="{{route('group.show',$rescue_group->id)}}">{{$rescue_group->name}}</a>の{{$rescuer->name}}が救助済み
+					@if($rescuer->id==$user->id)
+					<a class="btn btn-default btn-sm text-white m-0" id="reverse_rescue{{$user->id}}"><i class="material-icons">undo</i> 元に戻す</a>
+					@endif
+					@endif
+					</td>
+					<td id="shelter_check">{{$info->info['shelter']}}</td>
+					<td id="where_check">{{$info->info["location"]["latitude"]}} {{$info->info["location"]["longitude"]}}</td>
+					<td id="comment_check">{{$info->info['comment']}}</td>
+				</tr>
+				@endif
             @endforeach
         </tbody>
     </table>
 </div>
 
-<script type="module">
+<script>
     $(document).ready(function() { 
         $("#sorter{{$base->index}}").tablesorter();
     });
 </script>
-<script type="module">
+<script>
     $(document).ready(function() { 
         //一致した行のみ表示
         $("#search_in_table{{$base->index}}").keyup(function(){

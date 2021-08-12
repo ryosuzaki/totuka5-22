@@ -15,33 +15,51 @@ class RescueController extends Controller
 {
     //
     public function rescue(Group $group,User $user){
-        $info=$user->getInfoBaseByTemplate(6)->first();
-        if($info->rescue==config('kaigohack.rescue.rescue')){
-            return redirect()->back()->with('error', '先に'.$info->rescuer->name.'さんが救助に向かいました。');
+        $user_base=$user->getInfoBaseByTemplate(config('kaigohack.rescue.user_info_template_id'));
+        $user_info=$user_base->info();
+        $group_base=$group->getInfoBaseByTemplate(config('kaigohack.rescue.group_info_template_id'));
+        if($user_info->info['rescue']==config('kaigohack.rescue.rescue')){
+            return response()->view('group.info.show.'.config('kaigohack.rescue.group_info_template_id'), ['base'=>$group_base,'info'=>$group_base->info(),'group'=>$group,'rescue_collision_error'=>'先に'.$user_info->info['rescuer']->name.'さんが救助に向かいました。']);
         }
-        $info->partlyUpdateInfo([
+        $user_base->partlyUpdateInfo([
             'rescue'=>config('kaigohack.rescue.rescue'),
             'group'=>$group,
             'rescuer'=>Auth::user(),
         ]);
-        return redirect()->back();
+        //
+        return response()->view('group.info.show.'.config('kaigohack.rescue.group_info_template_id'), ['base'=>$group_base,'info'=>$group_base->info(),'group'=>$group]);
     }
     //
     public function unrescue(Group $group,User $user){
-        $user->getInfoBaseByTemplate(6)->first()->partlyUpdateInfo([
+        $user->getInfoBaseByTemplate(config('kaigohack.rescue.user_info_template_id'))->partlyUpdateInfo([
             'rescue'=>config('kaigohack.rescue.unrescue'),
             'group'=>null,
             'rescuer'=>null,
         ]);
-        return redirect()->back();
+        //
+        $base=$group->getInfoBaseByTemplate(config('kaigohack.rescue.group_info_template_id'));
+        return response()->view('group.info.show.'.config('kaigohack.rescue.group_info_template_id'), ['base'=>$base,'info'=>$base->info(),'group'=>$group]);
     }
     //
     public function rescued(Group $group,User $user){
-        $user->getInfoBaseByTemplate(6)->first()->partlyUpdateInfo([
+        $user->getInfoBaseByTemplate(config('kaigohack.rescue.user_info_template_id'))->partlyUpdateInfo([
             'rescue'=>config('kaigohack.rescue.rescued'),
             'group'=>$group,
             'rescuer'=>Auth::user(),
         ]);
-        return redirect()->back();
+        //
+        $base=$group->getInfoBaseByTemplate(config('kaigohack.rescue.group_info_template_id'));
+        return response()->view('group.info.show.'.config('kaigohack.rescue.group_info_template_id'), ['base'=>$base,'info'=>$base->info(),'group'=>$group]);
+    }
+    //
+    public function reverseRescue(Group $group,User $user){
+        $user->getInfoBaseByTemplate(config('kaigohack.rescue.user_info_template_id'))->partlyUpdateInfo([
+            'rescue'=>config('kaigohack.rescue.unrescue'),
+            'group'=>null,
+            'rescuer'=>null,
+        ]);
+        //
+        $base=$group->getInfoBaseByTemplate(config('kaigohack.rescue.group_info_template_id'));
+        return response()->view('group.info.show.'.config('kaigohack.rescue.group_info_template_id'), ['base'=>$base,'info'=>$base->info(),'group'=>$group]);
     }
 }
