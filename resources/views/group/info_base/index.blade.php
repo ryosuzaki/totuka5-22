@@ -15,7 +15,6 @@
                             <thead>
                             <tr>
                                 <th>テンプレート</th>
-                                <th>名前</th>
                                 <th>公開</th>
                                 <th>アクション</th>
                             </tr>
@@ -23,8 +22,7 @@
                             <tbody>
                                 @foreach($bases as $base)
                                 <tr>
-                                    <td><a href="{{route('info_template.show',$base->infoTemplate()->first()->id)}}">{{$base->infoTemplate()->first()->name}}</a></td>
-                                    <td>{{$base->name}}</td> 
+                                    <td><a href="{{route('info_template.show',$base->infoTemplate()->first()->id)}}">{{$base->name}}</a></td>
                                     <td>@if($base->available)　一般公開　@else　権限を持つユーザーのみ　@endif</td>                              
                                     <td>
                                     <a class="btn btn-primary btn-sm btn-round m-0 text-white" href="{{route('group.info_base.edit',[$group->id,$base->id])}}"><i class="material-icons">edit</i> 変更</a>

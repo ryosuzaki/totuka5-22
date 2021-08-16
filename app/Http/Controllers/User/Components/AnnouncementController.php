@@ -5,7 +5,7 @@ namespace App\Http\Controllers\User\Components;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 
-use App\Notifications\Announcement;
+use Illuminate\Notifications\DatabaseNotification;
 
 use Illuminate\Support\Facades\Auth;
 
@@ -20,8 +20,7 @@ class AnnouncementController extends Controller
     }
 
     //
-    public function show(string $id){
-        $announcement=Auth::user()->announcements()->find($id);
+    public function show(DatabaseNotification $announcement){
         $announcement->markAsRead();
         return view('user.components.announcement.show')->with([
             'user'=>Auth::user(),

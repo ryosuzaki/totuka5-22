@@ -88,14 +88,12 @@ class GroupInfoBaseController extends Controller
     {
         Gate::authorize('update-group-info-bases',$group);
         $validator = Validator::make($request->all(),[
-            'name'=>'required|string|max:255',
             'available'=>'required|boolean',
         ]);
         if ($validator->fails()) {
             return back()->withErrors($validator)->withInput();
         }
         $group->getInfoBase($id)->fill([
-            'name'=>$request->name,
             'available'=>(bool)$request->available,
         ])->save();
         return redirect()->route('group.info_base.index',$group->id);
