@@ -48,7 +48,7 @@ $imgs=$group->getImgs();
     @csrf
     <div class="form-row">
         <div class="form-group form-file-upload form-file-multiple col-6">
-            <input type="file" name="img" multiple="" class="inputFileHidden">
+            <input type="file" name="img" multiple="" accept="image/*" class="inputFileHidden">
             <div class="input-group">
                 <input type="text" class="form-control inputFileVisible" placeholder="写真を選択">
                 <span class="input-group-btn">

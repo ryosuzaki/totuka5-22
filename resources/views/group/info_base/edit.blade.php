@@ -12,11 +12,6 @@
                 <form method="POST" action="{{route('group.info_base.update',[$group->id,$base->id])}}">
                     @csrf
                     {{ method_field('PUT') }}
-                    <div class="form-group">
-                        <label for="name">情報名</label>
-                        <input id="name" type="text" class="form-control" name="name" value="{{$base->name}}" required autofocus>
-                    </div> 
-
                     <div class="form-check">
                         <label class="form-check-label">
                             <input type="hidden" name="available" value="0">
@@ -28,7 +23,7 @@
                         </label>
                     </div>
 
-                    <div class="form-group mb-0">
+                    <div class="form-group mb-0 mt-4">
                         <button type="submit" class="btn btn-primary btn-block">
                         変更
                         </button>

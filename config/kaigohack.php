@@ -26,6 +26,11 @@ return [
     ],
 
     //
+    'shelter'=>[
+        'group_info_template_id'=>2,
+    ],
+
+    //
     'like'=>'いいね',
     'watch'=>'ウォッチ',
 

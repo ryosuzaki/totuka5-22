@@ -43,6 +43,7 @@ Route::name('group.')->prefix('group')->namespace('Group')->middleware('auth')->
             Route::post('location/set_here', 'LocationController@setHere')->name('location.set_here');
             //
             Route::put('announcement/send', 'AnnouncementController@send')->name('announcement.send');
+            Route::get('announcement/{announcement}/show', 'AnnouncementController@show')->name('announcement.show');
             //
             Route::get('watch', 'WatchController@watch')->name('watch');
             Route::get('unwatch', 'WatchController@unwatch')->name('unwatch');

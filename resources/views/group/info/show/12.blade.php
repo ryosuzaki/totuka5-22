@@ -111,19 +111,24 @@
     $(function() { 
         $("#sorter{{$base->index}}").tablesorter();
         //一致した行のみ表示
-        $("#search_in_table{{$base->index}}").keyup(function(){
-            var re = new RegExp($(this).val());
-            $("#sorter{{$base->index}} tbody tr").each(function(){
-                for(var i=0;i<$(this).find("td").length;i++){
-                    var txt = $(this).find("td:eq("+i+")").text();
-                    if(txt.match(re) != null){
-                        $(this).show();
-                        break;
-                    }else{
-                        $(this).hide();
+        function search_in_table(input_id,table_id){
+            $("#"+input_id).keyup(function(){
+                var re = new RegExp($(this).val());
+                $("#"+table_id+" tbody tr").each(function(){
+                    for(var i=0;i<$(this).find("td").length;i++){
+                        var txt = $(this).find("td:eq("+i+")").text();
+                        if(txt.match(re) != null){
+                            $(this).show();
+                            break;
+                        }else{
+                            $(this).hide();
+                        }
                     }
-                }
+                });
             });
+        }
+        $(document).ready(function() { 
+            search_in_table("search_in_table{{$base->index}}","sorter{{$base->index}}");
         });
     });
 </script>

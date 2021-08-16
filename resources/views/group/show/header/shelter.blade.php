@@ -13,7 +13,7 @@ $role_name=config('kaigohack.watch');
 <h3 class="text-center">{{$group->name}}</h3>
 <h6 class="text-center">{{$group->countExtraUsers($role_name)}}人が{{$role_name}}中</h6>
     @php
-    $degree=substr($group->getInfoByTemplate(2)->first()->info['degree'], 0, -1);
+    $degree=substr($group->getInfoByTemplate(config('kaigohack.shelter.group_info_template_id'))->info['degree'], 0, -1);
     @endphp
     <div class="row"><p class="h5 mx-auto">混雑度：<strong>{{$degree}}%</strong></p></div>
     

@@ -91,11 +91,11 @@ trait InfoFuncs
     }
     //
     public function getInfoByTemplate(int $template_id){
-        $infos=[];
-        foreach($this->getInfoBaseByTemplate($template_id) as $base){
-            $infos[]=$base->info();
-        }
-        return collect($infos);
+        return $this->getInfoBaseByTemplate($template_id)->info();
+    }
+    //
+    public function getInfoByIndex(int $index){
+        return $this->getInfoBaseByIndex($index)->info();
     }
     //
     public function infoLogs(int $base_id){

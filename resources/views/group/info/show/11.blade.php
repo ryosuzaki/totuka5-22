@@ -84,6 +84,7 @@
 
 				<script>
 				$(function(){
+					$('#selct_row_value{{$base->index}} input[type="checkbox"]').trigger('change');
 					@if(isset($rescue_collision_error))
 					alert($rescue_collision_error);
 					@endif
@@ -158,11 +159,11 @@
     });
 </script>
 <script>
-    $(document).ready(function() { 
-        //一致した行のみ表示
-        $("#search_in_table{{$base->index}}").keyup(function(){
+	//一致した行のみ表示
+	function search_in_table(input_id,table_id){
+		$("#"+input_id).keyup(function(){
             var re = new RegExp($(this).val());
-            $("#sorter{{$base->index}} tbody tr").each(function(){
+            $("#"+table_id+" tbody tr").each(function(){
                 for(var i=0;i<$(this).find("td").length;i++){
                     var txt = $(this).find("td:eq("+i+")").text();
                     if(txt.match(re) != null){
@@ -174,11 +175,15 @@
                 }
             });
         });
+	}
+    $(document).ready(function() { 
+        search_in_table("search_in_table{{$base->index}}","sorter{{$base->index}}");
     });
 </script>
 <script>
 	$(function(){
 	  
+		
 		  //利用者の名前検索
 	var txt_array = [ "check3" , "check4" , "check5" , "check6" , "check7" , "check8" , "check9" , "check10"];
 	var re_array = [  "回答なし" , "要救助" , "避難済み"  , "避難中" , "救助に向かう" , "救助済み" ];
@@ -192,7 +197,7 @@
 	  
 			//検索内容を取って判別する関数
             $('#selct_row_value{{$base->index}}').find('input[type="checkbox"]').change(function(){
-			var re = new RegExp($('#search1').val());   //テキストに入れた文字を取得
+				var re = new RegExp($('#search1').val());   //テキストに入れた文字を取得
 	  
 					  //ここから次のfunctionまでは一つの質問でチェックの有無が違う場合にcheck_arrayにその添字を格納しているもの
 					  //排他的論理和で１になるものを調べている
