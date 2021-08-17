@@ -137,8 +137,8 @@
 					<a class="btn btn-warning btn-sm text-white m-0" id="rescue{{$user->id}}">救助に向かう</a>
 					@elseif($rescue==config('kaigohack.rescue.rescued'))
 					<a href="{{route('group.show',$rescue_group->id)}}">{{$rescue_group->name}}</a>の{{$rescuer->name}}が救助済み
-					@if($rescuer->id==$user->id)
-					<a class="btn btn-default btn-sm text-white m-0" id="reverse_rescue{{$user->id}}"><i class="material-icons">undo</i> 元に戻す</a>
+					@if($rescuer->id==Auth::id())
+					<a class="btn btn-default btn-sm text-white m-0" id="reverse_rescue{{$user->id}}">元に戻す</a>
 					@endif
 					@endif
 					</td>
