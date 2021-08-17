@@ -17,6 +17,7 @@ class PermissionController extends Controller
     //
     public function edit(Group $group,int $index)
     {
+        info($group->permissions);
         Gate::authorize('permission-group-users',[$group,$index]);
         return view('group.components.permission.edit')->with([
             'group'=>$group,

@@ -3,7 +3,7 @@
     @method('PUT')
 
     <div class="form-group">
-        <label for="info">詳細情報</label>
+        <label for="info">地点情報</label>
         <textarea class="form-control" id="info" name="info[detail]" rows="5">{{$info->info['detail']}}</textarea>
     </div>
 

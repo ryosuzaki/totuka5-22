@@ -32,6 +32,7 @@ class CreateInfoTable extends Migration
             $table->unique(['index','model_id','model_type']);
             $table->timestamps();
             $table->boolean('available')->default(true);
+            $table->string('edit');
             $table->string('name')->index();
         });
 
@@ -40,9 +41,9 @@ class CreateInfoTable extends Migration
             $table->string('name')->index();
             $table->string('detail')->default('');
             $table->string('model');
-            $table->boolean('available')->default(true);
             $table->timestamps();
             $table->text('default');
+            $table->boolean('available')->default(true);
             $table->string('edit')->default(serialize(['name'=>'変更','icon'=>'<i class="material-icons">edit</i>']));
             $table->unique(['name','model']);
         });

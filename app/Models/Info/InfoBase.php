@@ -62,4 +62,12 @@ class InfoBase extends Model
     public function changeName($name){
         return $this->fill(['name'=>$name])->save();
     }
+    //
+    public function setEditAttribute($value){
+        $this->attributes['edit'] = serialize($value);
+    }
+    //
+    public function getEditAttribute($value){
+        return unserialize($value);
+    }
 }

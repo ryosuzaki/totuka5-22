@@ -43,6 +43,15 @@
                             <p class="h5 mt-5">情報</p>
                             <div class="form-check">
                                 <label class="form-check-label col-12">
+                                    <input class="form-check-input" type="checkbox" name="permissions[]" value="group_info_bases.viewAny">
+                                    情報一覧の閲覧
+                                    <span class="form-check-sign">
+                                        <span class="check"></span>
+                                    </span>
+                                </label>
+                            </div>
+                            <div class="form-check">
+                                <label class="form-check-label col-12">
                                     <input class="form-check-input" type="checkbox" name="permissions[]" value="group_info_bases.create">
                                     情報の追加
                                     <span class="form-check-sign">
@@ -74,9 +83,10 @@
 
                         
                         <div class="permissions">
-                            @foreach($group->infoBases()->where('available',false)->get() as $base)
+                            @foreach($group->infoBases()->get() as $base)
                             <div class="permissions">
                                 <p class="h5 mt-4">{{$base->name}}</p>
+                                @if(!$base->available)
                                 <div class="form-check">
                                     <label class="form-check-label col-12">
                                         <input class="form-check-input" type="checkbox" name="permissions[]" value="group_info.{{$base->index}}.view">
@@ -86,6 +96,9 @@
                                         </span>
                                     </label>
                                 </div>
+                                @endif
+
+                                @if(!empty($base->edit))
                                 <div class="form-check">
                                     <label class="form-check-label col-12">
                                         <input class="form-check-input" type="checkbox" name="permissions[]" value="group_info.{{$base->index}}.update">
@@ -95,6 +108,7 @@
                                         </span>
                                     </label>
                                 </div>
+                                @endif
                             </div>
                             @endforeach
                         </div>

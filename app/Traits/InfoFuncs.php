@@ -18,6 +18,7 @@ trait InfoFuncs
             'info_template_id'=>$template->id,
             'name'=>$template->name,
             'available'=>$template->available,
+            'edit'=>$template->edit,
         ]);
         $base->infos()->create([
             'info'=>$template->default,
