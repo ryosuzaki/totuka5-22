@@ -5,7 +5,7 @@
     </div> 
     <input type="button" class="btn btn-primary btn-block" value="すべて表示" id="button4">
     <br>
-        <div class="card m-0" id="selct_row_value{{$base->index}}">
+        <div class="card m-0" id="select_row_value{{$base->index}}">
             <ul class="list-unstyled">
                 <li class="card-text list-unstyled">健康状態アンケート<br>
                     <label><input type="checkbox" id="check11" checked="checked">回答あり</label>
@@ -36,7 +36,7 @@
         </div>
 
                 
-    <table class="card">
+    <table class="card" id="select_row{{$base->index}}">
         <tr class="card-text">
             <td><label><input type="checkbox" id="time_check2" onclick="checkbox_cell(this,'time2')" checked="checked">回答日時</label></td>
             <td><label><input type="checkbox" id="comment_check2" onclick="checkbox_cell(this,'comment2')" checked="checked">コメント</label></td>
@@ -127,6 +127,7 @@
                 });
             });
         }
+        //
         $(document).ready(function() { 
             search_in_table("search_in_table{{$base->index}}","sorter{{$base->index}}");
         });
@@ -144,9 +145,10 @@
 	var i = 0;
 	var l = 0;
         
+
 	  
 		//検索内容を取って判別する関数
-	    $('#selct_row_value{{$base->index}}').find('input[type="checkbox"]').change(function(){
+	    $('#select_row_value{{$base->index}}').find('input[type="checkbox"]').change(function(){
 			var re = new RegExp($('#search2').val());   //テキストに入れた文字を取得
 
 					  //ここから次のfunctionまでは一つの質問でチェックの有無が違う場合にcheck_arrayにその添字を格納しているもの

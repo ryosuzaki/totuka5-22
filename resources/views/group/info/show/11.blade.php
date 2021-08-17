@@ -27,7 +27,7 @@
         </div>
 
                 
-    <table class="card">
+    <table class="card" id="select_row{{$base->index}}">
         <tr class="card-text">
             <td><label><input type="checkbox" id="time_check" onclick="checkbox_cell(this,'time')" checked="checked">回答日時</label></td>
             <td><label><input type="checkbox" id="shelter_check" onclick="checkbox_cell(this,'shelter')" checked="checked">避難した避難所</label></td>
@@ -84,7 +84,6 @@
 
 				<script>
 				$(function(){
-					$('#selct_row_value{{$base->index}} input[type="checkbox"]').trigger('change');
 					@if(isset($rescue_collision_error))
 					alert($rescue_collision_error);
 					@endif
@@ -117,7 +116,7 @@
 					<td>
 					@if($rescue==config('kaigohack.rescue.rescue'))
 						<a href="{{route('group.show',$rescue_group->id)}}">{{$rescue_group->name}}</a>の{{$rescuer->name}}が救助中
-						@if($rescue_group==$group&&$rescuer->id==$user->id)
+						@if($rescue_group==$group&&$rescuer->id==Auth::id())
 						<a class="btn btn-danger btn-sm text-white m-0" id="unrescue{{$user->id}}"><i class="material-icons">close</i> 救助をやめる</a>
 						<button type="button" data-toggle="modal" data-target="#rescued_modal{{$user->id}}" class="btn btn-success btn-sm text-white m-0"><i class="material-icons">done</i> 救助を完了</button>
 						<div class="modal fade" id="rescued_modal{{$user->id}}" tabindex="-1" role="dialog" aria-labelledby="rescuedLabel" aria-hidden="true">

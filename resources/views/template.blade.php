@@ -90,7 +90,7 @@
           $total=$unread+$request;
           @endphp
           @if($total>0)
-          <span class="badge badge-pill badge-danger hamburger-menu-badge">{{$total}}</span>
+          <span class="d-inline-block d-lg-none d-xs-none badge badge-pill badge-danger hamburger-menu-badge">{{$total}}</span>
           @endif
           @endauth
             <button class="navbar-toggler" type="button" data-toggle="collapse" aria-expanded="false" aria-label="Toggle navigation">
