@@ -15,7 +15,7 @@
                     @endcan
                 </div>
             </div>
-            @include('group.show.header.'.$type->name, ['group'=>$group,'bases'=>$bases])
+            @include('group.show.'.$type->name, ['group'=>$group,'bases'=>$bases])
             
             @if(Auth::user()->hasGroup($group->id))
             @if($type->need_location)
