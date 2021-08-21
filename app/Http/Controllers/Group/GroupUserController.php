@@ -52,8 +52,8 @@ class GroupUserController extends Controller
         $role=$group->getRoleByIndex($index);
         $user=User::findByEmail($request->email);
         $group->requestJoin($user->id,$role->id);
-        //return redirect()->back();
-        return redirect()->route('group.show',$group->id);
+        return redirect()->back();
+        //return redirect()->route('group.show',$group->id);
     }
 
     //

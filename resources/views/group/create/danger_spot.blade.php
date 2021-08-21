@@ -9,6 +9,7 @@
     </label>
 </div>
 @endforeach
+
 <div class="form-group mb-0">
     <button type="submit" class="btn btn-primary btn-block">
     危険地点投稿

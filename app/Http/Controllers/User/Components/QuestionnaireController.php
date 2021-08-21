@@ -22,4 +22,23 @@ class QuestionnaireController extends Controller
         $info_base->updateInfoEmptyFillDefault($request->toArray()['info']); 
         return redirect()->route('user.show');
     }
+    //
+    public function settingForm(InfoBase $info_base){
+        return view('user.components.questionnaire.setting_form')->with([
+            'base'=>$info_base,
+            'info'=>$info_base->info(),
+            ]);
+    }
+    //
+    public function setting(Request $request,InfoBase $info_base){
+        $validator = Validator::make($request->all(),[
+            
+        ]);
+        if ($validator->fails()) {
+            return back()->withErrors($validator)->withInput();
+        }
+        //
+        $info_base->partlyUpdateInfo($request->toArray()['info']);
+        return redirect()->route('user.show');
+    }
 }

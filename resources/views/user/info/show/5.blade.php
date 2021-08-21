@@ -5,6 +5,7 @@
             $info=$base->info()->info;
             @endphp
             <tr><td>バージョン</td><td>@if($info["is_long"]) 完全版 @else 短縮版 @endif</td></tr>
+
             <tr><td style="width: 30%">回答日時</td><td style="width: 70%">{{$base->info()->updated_at}}</td></tr>
             <tr><td>調子</td><td>{{$info["feeling"]}}</td></tr>
             @if($info["is_long"])
@@ -24,3 +25,7 @@
         </tbody>
     </table>
 </div>
+<div class="row">
+    <a class="btn btn-outline-default btn-block mx-auto" href="{{route('user.questionnaire.setting_form',$base->id)}}">アンケート設定</a>
+</div>
+

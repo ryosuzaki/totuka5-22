@@ -167,7 +167,11 @@ class Group extends Model
         $user=User::find($user_id);
         $role_id=$this->getRole($role)->id;
         if ($user->hasGroup($this->id)) {
-            $this->removeUser($user_id);
+            if($user->getRoleByGroup($this->id)->index==0){
+                return false;
+            }else{
+                $this->removeUser($user_id);
+            }
         }
         $user->assignRole($role_id);
         return $this->users()->attach($user_id,['role_id'=>$role_id]);
