@@ -71,7 +71,10 @@
         </tr>
         </thead>
         <tbody>
-		@php
+			@php
+			@if(isset($rescue_collision_error))
+			alert($rescue_collision_error);
+			@endif
             $users=$group->users()->get();
             @endphp
             @foreach ($users as $user)
@@ -84,9 +87,6 @@
 
 				<script>
 				$(function(){
-					@if(isset($rescue_collision_error))
-					alert($rescue_collision_error);
-					@endif
 					$("#rescue{{$user->id}}").click(function(){
 						embed_table("{{route('group.user.rescue',[$group->id,$user->id])}}");
 					});
@@ -175,6 +175,34 @@
             });
         });
 	}
+	//
+	function select_cell_value(table_id,column_id,cell_value){
+		var column_idx=$("#"+column_id).eq();
+		console.log(column_idx);
+		$("#"+table_id+" tbody tr").each(function(){
+			var txt = $(this).find("td:eq("+column_idx+")").text();
+			if(txt==cell_value){
+				$(this).show();
+				break;
+			}else{
+				$(this).hide();
+			}
+		});
+	}
+	//
+	function select_cell_range(table_id,column_id,min,max){
+		var column_idx=$("#"+column_id).eq();
+		console.log(column_idx);
+		$("#"+table_id+" tbody tr").each(function(){
+			var val=Number($(this).find("td:eq("+column_idx+")").text());
+			if(val>=min&&val<=max){
+				$(this).show();
+				break;
+			}else{
+				$(this).hide();
+			}
+		});
+	}
     $(document).ready(function() { 
         search_in_table("search_in_table{{$base->index}}","sorter{{$base->index}}");
     });
@@ -182,7 +210,7 @@
 <script>
 	$(function(){
 	  
-		
+
 		  //利用者の名前検索
 	var txt_array = [ "check3" , "check4" , "check5" , "check6" , "check7" , "check8" , "check9" , "check10"];
 	var re_array = [  "回答なし" , "要救助" , "避難済み"  , "避難中" , "救助に向かう" , "救助済み" ];

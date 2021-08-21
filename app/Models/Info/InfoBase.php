@@ -41,8 +41,10 @@ class InfoBase extends Model
     //
     public function partlyUpdateInfo(array $new_info){
         $info=$this->info()->info;
-        foreach($new_info as $key=>$value){
-            $info[$key]=$value;
+        foreach($info as $key=>$value){
+            if(isset($new_info[$key])){
+                $info[$key]=$new_info[$key];
+            }
         }
         return $this->infos()->create([
             'info'=>$info,
@@ -51,8 +53,10 @@ class InfoBase extends Model
     //
     public function updateInfoEmptyFillDefault(array $new_info){
         $info=$this->getTemplate()->default;
-        foreach($new_info as $key=>$value){
-            $info[$key]=$value;
+        foreach($info as $key=>$value){
+            if(isset($new_info[$key])){
+                $info[$key]=$new_info[$key];
+            }
         }
         return $this->infos()->create([
             'info'=>$info,

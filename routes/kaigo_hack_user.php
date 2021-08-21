@@ -47,6 +47,8 @@ Route::name('user.')->prefix('user')->namespace('User')->middleware('auth')->gro
 
         //
         Route::put('{info_base}/questionnaire', 'QuestionnaireController@update')->name('questionnaire.update');
+        Route::get('{info_base}/questionnaire/setting_form', 'QuestionnaireController@settingForm')->name('questionnaire.setting_form');
+        Route::post('{info_base}/questionnaire/setting', 'QuestionnaireController@setting')->name('questionnaire.setting');
 
         //
         Route::resource('setting', 'SettingController');

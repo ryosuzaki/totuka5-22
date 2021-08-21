@@ -51,7 +51,7 @@
                     </li>
                     @endforeach
                 </ul>
-                <div class="tab-content tab-space pb-0">
+                <div class="tab-content tab-space pb-3">
                     @foreach ($bases as $base)
                     @php
                     $template=$base->getTemplate();
