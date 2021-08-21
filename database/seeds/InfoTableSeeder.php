@@ -53,7 +53,7 @@ class InfoTableSeeder extends Seeder
         InfoTemplate::create([
             'id' => 5,
             'name' => '健康アンケート',
-            'default'=>['is_long'=>true,'not_use_items'=>[],'feeling'=>'回答なし','comment'=>'','syokuyoku'=>'','otuzi'=>'','taion'=>'','taiju'=>'','ketuatu_saikou'=>'','ketuatu_saitei'=>'','warui_bui'=>['']],
+            'default'=>['not_use_items'=>[],'feeling'=>'回答なし','comment'=>'','syokuyoku'=>'','otuzi'=>'','taion'=>'','taiju'=>'','ketuatu_saikou'=>'','ketuatu_saitei'=>'','warui_bui'=>['']],
             'model'=>User::class,
             'detail'=>'健康アンケート',
             'edit'=>['name'=>'回答','icon'=>'<i class="material-icons">question_answer</i>'],

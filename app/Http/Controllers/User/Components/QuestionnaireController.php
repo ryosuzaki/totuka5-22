@@ -22,7 +22,6 @@ class QuestionnaireController extends Controller
         $now_info=$info_base->info()->info;
         $new_info=$request->toArray()['info'];
         $new_info['not_use_items']=$now_info['not_use_items'];
-        $new_info['is_long']=$now_info['is_long'];
         $info_base->updateInfoEmptyFillDefault($new_info); 
         return redirect()->route('user.show');
     }
