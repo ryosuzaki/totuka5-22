@@ -3,89 +3,7 @@
     @method('PUT')
 
 
-    <div class="form-check my-5">
-        <label class="form-check-label">
-            <input type="hidden" name="info[is_long]" value="1">
-            <input class="form-check-input" type="checkbox" name="info[is_long]" value="0" @if(!$base->info()->info["is_long"]) checked @endif>
-            短縮バージョンを使う
-            <span class="form-check-sign">
-                <span class="check"></span>
-            </span>
-        </label>
-    </div>
-
-    <script type="module">
-    $(document).ready(function() {
-        if($('input[name="info[is_long]"][type="checkbox"]').prop('checked')){
-            $('#short_version').removeClass('d-none');
-            $('#long_version').addClass('d-none');
-        }else{
-            $('#short_version').addClass('d-none');
-            $('#long_version').removeClass('d-none');
-        }
-        
-        $('input[name="info[is_long]"][type="checkbox"]').change(function() {
-            if($(this).prop('checked')){
-                $('#short_version').removeClass('d-none');
-                $('#long_version').addClass('d-none');
-            }else{
-                $('#short_version').addClass('d-none');
-                $('#long_version').removeClass('d-none');
-            }
-        });
-    });
-    </script>
-
-    <div id="short_version">
-        <label>体調</label>
-        <div>
-            <div class="form-check form-check-radio">
-            <label class="form-check-label">
-                <input class="form-check-input btn-check" type="radio" name="info[feeling]" value="良い"> 良い
-                <span class="circle">
-                    <span class="check"></span>
-                </span>
-            </label>
-            </div>
-
-            <div class="form-check form-check-radio">
-            <label class="form-check-label">
-                <input class="form-check-input" type="radio" name="info[feeling]" value="普通" checked> 普通
-                <span class="circle">
-                    <span class="check"></span>
-                </span>
-            </label>
-            </div>
-
-            <div class="form-check form-check-radio">
-            <label class="form-check-label">
-                <input class="form-check-input" type="radio" name="info[feeling]" value="悪い"> 悪い
-                <span class="circle">
-                    <span class="check"></span>
-                </span>
-            </label>
-            </div>
-        </div>
-
-        <div class="form-group mt-4">
-            <label for="comment_short">コメント</label>
-            <textarea class="form-control" id="comment_short" name="info[comment]" rows="5"></textarea>
-        </div>
-
-        <div class="form-group mb-0 mt-3">
-            <button type="submit" class="btn btn-primary btn-block">
-                回答
-            </button>
-        </div>
-    </div>
-</form>
-
-<form method="POST" action="{{ route('user.questionnaire.update',[$base->id]) }}">
-    @csrf
-    @method('PUT')
-    <input type="hidden" name="info[is_long]" value="1">
-
-    <div id="long_version">
+    <div id="questionnaire_body">
 
 
                     <div class="card-header card-header-primary mx-0 my-4">
@@ -328,7 +246,7 @@
                         <script type="module">
                         $(function(){
                             
-                            $('#long_version input').change(function(){
+                            $('#questionnaire_body input').change(function(){
                             var jstyousi = $('[name="info[feeling]"]:checked').val();//1
                             var idtyousi = document.getElementById("tyousi_out");
                             idtyousi.innerHTML = jstyousi;
@@ -379,11 +297,11 @@
                     <script type="module">
                         $(function(){
                             $('.change_next_pill_tab').click(function(){
-                                $(window).scrollTop($('#long_version').offset().top);
+                                $(window).scrollTop($('#questionnaire_body').offset().top);
                                 $(".nav-link[href='#"+$(this).closest('.tab-pane').attr('id')+"']").closest('.nav-item').next('.nav-item').find('.nav-link').tab('show');
                             });
                             $('.change_prev_pill_tab').click(function(){
-                                $(window).scrollTop($('#long_version').offset().top);
+                                $(window).scrollTop($('#questionnaire_body').offset().top);
                                 $(".nav-link[href='#"+$(this).closest('.tab-pane').attr('id')+"']").closest('.nav-item').prev('.nav-item').find('.nav-link').tab('show');
                             });
                         })

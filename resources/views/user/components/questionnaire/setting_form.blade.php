@@ -10,18 +10,7 @@
                 <form action="{{route('user.questionnaire.setting',$base->id)}}" method="post">
                     @csrf
 
-                    <div>
-                        <div class="form-check my-5">
-                            <label class="form-check-label">
-                                <input type="hidden" name="info[is_long]" value="1">
-                                <input class="form-check-input" type="checkbox" name="info[is_long]" value="0" @if(!$info->info["is_long"]) checked @endif>
-                                短縮バージョンを使う
-                                <span class="form-check-sign">
-                                    <span class="check"></span>
-                                </span>
-                            </label>
-                        </div>
-                        
+                    <div>                    
                         <p>回答する項目を減らす</p>
     
                         <div class="form-check">
