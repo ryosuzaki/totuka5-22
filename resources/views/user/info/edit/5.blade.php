@@ -2,6 +2,7 @@
     @csrf
     @method('PUT')
 
+
     <div class="form-check my-5">
         <label class="form-check-label">
             <input type="hidden" name="info[is_long]" value="1">
