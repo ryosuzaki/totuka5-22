@@ -11,7 +11,7 @@
                             <div class="nav-tabs-wrapper">
                                 <ul class="nav nav-tabs" data-tabs="tabs">
                                         <li class="nav-item mx-auto @if(in_array('feeling', $info->info['not_use_items'])) d-none @endif">
-                                            <a class="nav-link h4 active" href="#1" id="t1" data-toggle="tab">調子</a>
+                                            <a class="nav-link h4" href="#1" id="t1" data-toggle="tab">調子</a>
                                         </li>
                                         <li class="nav-item mx-auto @if(in_array('syokuyoku', $info->info['not_use_items'])) d-none @endif">
                                             <a class="nav-link h4" href="#2" id='t2' data-toggle="tab">食欲</a>
@@ -49,7 +49,7 @@
 
 
 
-                    <div class="tab-pane active @if(in_array('feeling', $info->info['not_use_items'])) d-none @endif" id="1">
+                    <div class="tab-pane @if(in_array('feeling', $info->info['not_use_items'])) d-none @endif" id="1">
                         <span class="h2">調子</span>
                         <input type="hidden" name="info[feeling]" value="">
                         <div class="form-check">
@@ -322,12 +322,39 @@
                         $(function(){
                             $('.change_next_pill_tab').click(function(){
                                 $(window).scrollTop($('#questionnaire_body').offset().top);
-                                $(".nav-link[href='#"+$(this).closest('.tab-pane').attr('id')+"']").closest('.nav-item').next('.nav-item').find('.nav-link').tab('show');
+                                var now = $(this).closest('.tab-pane').attr('id');
+                                var next = Number(now) + 1;
+                                for(;next < 10;next++){
+                                    var nextclass = $('#' + next).attr("class");
+                                    if(nextclass.match(/d-none/)){
+                                    }else{
+                                        var nexttab = "t" + next;
+                                        var nowtab = "t" + now;
+                                        $('#' + now).removeClass("active");
+                                        $('#' + nowtab).removeClass("active");
+                                        $('#' + next).addClass("active");
+                                        $('#' + nexttab).addClass("active");
+                                        break;
+                                    }
+                                }
                             });
                             $('.change_prev_pill_tab').click(function(){
                                 $(window).scrollTop($('#questionnaire_body').offset().top);
-                                $(".nav-link[href='#"+$(this).closest('.tab-pane').attr('id')+"']").closest('.nav-item').prev('.nav-item').find('.nav-link').tab('show');
-                            });
+                                var now = $(this).closest('.tab-pane').attr('id');
+                                var prev = Number(now) - 1;
+                                for(;prev > 0;prev--){
+                                    var prevclass = $('#' + prev).attr("class");
+                                    if(prevclass.match(/d-none/)){
+                                    }else{
+                                        var prevtab = "t" + prev;
+                                        var nowtab = "t" + now;
+                                        $('#' + now).removeClass("active");
+                                        $('#' + nowtab).removeClass("active");
+                                        $('#' + prev).addClass("active");
+                                        $('#' + prevtab).addClass("active");
+                                        break;
+                                    }
+                                }                            });
                         })
                     </script>
 
