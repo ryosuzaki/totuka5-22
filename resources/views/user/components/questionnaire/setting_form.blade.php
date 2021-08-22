@@ -11,7 +11,7 @@
                     @csrf
 
                     <div>                    
-                        <p>回答する項目を減らす</p>
+                        <p>回答しない項目</p>
     
                         <div class="form-check">
                             <label class="form-check-label">

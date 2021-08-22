@@ -6,10 +6,7 @@
         <div class="card">
             <div class="card-body">
                 {{ Breadcrumbs::render('group.create',$type) }}
-                <form method="POST" action="{{ route('group.store',$type) }}">
-                    @csrf
-                    @include('group.create.'.$type->name,['type'=>$type])
-                </form>
+                @include('group.create.'.$type->name,['type'=>$type])
             </div>
         </div>
     </div>
