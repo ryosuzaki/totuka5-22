@@ -12,7 +12,7 @@
 
                     <div>                    
                         <p>回答しない項目</p>
-    
+                        <input type="hidden" name="info[not_use_items][]" value="">
                         <div class="form-check">
                             <label class="form-check-label">
                                 <input class="form-check-input" type="checkbox" name="info[not_use_items][]" value="feeling" @if(in_array("feeling", $info->info["not_use_items"])) checked @endif>
