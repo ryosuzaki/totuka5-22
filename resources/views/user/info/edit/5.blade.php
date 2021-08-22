@@ -245,14 +245,15 @@
                     <div class="tab-pane" id="9">
                         <p class="h2">回答一覧</p>
                         <table class="table">
-                            <tr><td style="width: 30%">調子</td><td style="width: 70%"><div id="tyousi_out"></div></td></tr>
-                            <tr><td>食欲</td><td><div id="syokuyoku_out"></div></td></tr>
-                            <tr><td>お通じ </td><td><div id="otuzi_out"></div></td></tr>
-                            <tr><td>体温 </td><td><div id="taion_out"></div></td></tr>
-                            <tr><td>体重 </td><td><div id="taiju_out"></div></td></tr>
-                            <tr><td>血圧 </td><td><div id="ketuatu_out"></div></td></tr>
-                            <tr><td>症状</td><td><div id="warui_bui_out"></div></td></tr>
-                            <tr><td>コメント</td><td><div id="comment_out"></div></td></tr>
+                            <tr class="@if(in_array('feeling', $info->info['not_use_items'])) d-none @endif"><td>調子</td><td><div id="tyousi_out"></div></td></tr>
+                            <tr class="@if(in_array('syokuyoku', $info->info['not_use_items'])) d-none @endif"><td>食欲</td><td><div id="syokuyoku_out"></div></td></tr>
+                            <tr class="@if(in_array('otuzi', $info->info['not_use_items'])) d-none @endif"><td>お通じ </td><td><div id="otuzi_out"></div></td></tr>
+                            <tr class="@if(in_array('taion', $info->info['not_use_items'])) d-none @endif"><td>体温 </td><td><div id="taion_out"></div></td></tr>
+                            <tr class="@if(in_array('taiju', $info->info['not_use_items'])) d-none @endif"><td>体重 </td><td><div id="taiju_out"></div></td></tr>
+                            <tr class="@if(in_array('ketuatu', $info->info['not_use_items'])) d-none @endif"><td>血圧 </td><td><div id="ketuatu_out"></div></td></tr>
+                            <tr class="@if(in_array('warui_bui', $info->info['not_use_items'])) d-none @endif"><td>症状</td><td><div id="warui_bui_out"></div></td></tr>
+                            <tr class="@if(in_array('comment', $info->info['not_use_items'])) d-none @endif"><td>コメント</td><td><div id="comment_out"></div></td></tr>
+                            <tr><td width="30%"></td><td width="70%"></td></tr>
                         </table>
 
                         <script type="module">
