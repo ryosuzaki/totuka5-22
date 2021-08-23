@@ -270,7 +270,8 @@
                                     break;
                                 }
                             };
-                            
+                            $('#questionnaire_body img').css({"pointer-events":"none"});
+
                             $('#questionnaire_body input,#questionnaire_body select').change(function(){
                             var jstyousi = $('[name="info[feeling]"]:checked').val();//1
                             var idtyousi = document.getElementById("tyousi_out");
