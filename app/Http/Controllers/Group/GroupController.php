@@ -84,6 +84,8 @@ class GroupController extends Controller
     {
         Gate::authorize('view-group-info',[$group,$index]);
         $base=$group->getInfoBaseByIndex($index);
+        info($base);
+        info(response()->view('group.info.show.'.$base->info_template_id, ['base'=>$base,'info'=>$base->info(),'group'=>$group]));
         return response()->view('group.info.show.'.$base->info_template_id, ['base'=>$base,'info'=>$base->info(),'group'=>$group]);
     }
 

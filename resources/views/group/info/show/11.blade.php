@@ -27,7 +27,7 @@
         </div>
 
                 
-    <table class="card" id="select_row{{$base->index}}">
+    <table class="card">
         <tr class="card-text">
             <td><label><input type="checkbox" id="time_check" onclick="checkbox_cell(this,'time')" checked="checked">回答日時</label></td>
             <td><label><input type="checkbox" id="shelter_check" onclick="checkbox_cell(this,'shelter')" checked="checked">避難した避難所</label></td>
@@ -72,9 +72,9 @@
         </thead>
         <tbody>
 			@php
-			@if(isset($rescue_collision_error))
-			alert($rescue_collision_error);
-			@endif
+			if(isset($rescue_collision_error)){
+				alert($rescue_collision_error);
+			}
             $users=$group->users()->get();
             @endphp
             @foreach ($users as $user)
@@ -137,9 +137,9 @@
 					<a class="btn btn-warning btn-sm text-white m-0" id="rescue{{$user->id}}">救助に向かう</a>
 					@elseif($rescue==config('kaigohack.rescue.rescued'))
 					<a href="{{route('group.show',$rescue_group->id)}}">{{$rescue_group->name}}</a>の{{$rescuer->name}}が救助済み
-					@if($rescuer->id==Auth::id())
-					<a class="btn btn-default btn-sm text-white m-0" id="reverse_rescue{{$user->id}}">元に戻す</a>
-					@endif
+						@if($rescuer->id==Auth::id())
+						<a class="btn btn-default btn-sm text-white m-0" id="reverse_rescue{{$user->id}}">元に戻す</a>
+						@endif
 					@endif
 					</td>
 					<td id="shelter_check">{{$info->info['shelter']}}</td>
@@ -183,7 +183,6 @@
 			var txt = $(this).find("td:eq("+column_idx+")").text();
 			if(txt==cell_value){
 				$(this).show();
-				break;
 			}else{
 				$(this).hide();
 			}
@@ -197,7 +196,6 @@
 			var val=Number($(this).find("td:eq("+column_idx+")").text());
 			if(val>=min&&val<=max){
 				$(this).show();
-				break;
 			}else{
 				$(this).hide();
 			}
