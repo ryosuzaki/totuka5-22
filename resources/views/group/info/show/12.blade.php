@@ -36,7 +36,7 @@
         </div>
 
                 
-    <table class="card" id="select_row{{$base->index}}">
+    <table class="card">
         <tr class="card-text">
             <td><label><input type="checkbox" id="time_check2" onclick="checkbox_cell(this,'time2')" checked="checked">回答日時</label></td>
             <td><label><input type="checkbox" id="comment_check2" onclick="checkbox_cell(this,'comment2')" checked="checked">コメント</label></td>
@@ -86,7 +86,6 @@
                 <td id="time_check2">{{($info->updated_at)}}</td>
                 <td>{{$info->info['feeling']}}</td>
                 <td id="comment_check2">{{$info->info["comment"]}}</td>
-                @if($info->info["is_long"])
                 <td><input type="hidden" value="{{$info->info['taion']}}">{{$info->info["taion"]}} ℃</td>
                 <td id="bad_check">
                     @foreach($info->info["warui_bui"] as $bui)
@@ -98,7 +97,6 @@
                 <td id="weight_check">{{$info->info["taiju"]}} kg</td>
                 <td>{{$info->info["ketuatu_saikou"]}} mmHg</td>
                 <td>{{$info->info["ketuatu_saitei"]}} mmHg</td>
-                @endif
             </tr>
             @endif
 
