@@ -33,8 +33,8 @@ class RescueController extends Controller
     public function unrescue(Group $group,User $user){
         $user->getInfoBaseByTemplate(config('kaigohack.rescue.user_info_template_id'))->partlyUpdateInfo([
             'rescue'=>config('kaigohack.rescue.unrescue'),
-            'group'=>null,
-            'rescuer'=>null,
+            'group'=>"",
+            'rescuer'=>"",
         ]);
         //
         $base=$group->getInfoBaseByTemplate(config('kaigohack.rescue.group_info_template_id'));
@@ -55,8 +55,8 @@ class RescueController extends Controller
     public function reverseRescue(Group $group,User $user){
         $user->getInfoBaseByTemplate(config('kaigohack.rescue.user_info_template_id'))->partlyUpdateInfo([
             'rescue'=>config('kaigohack.rescue.unrescue'),
-            'group'=>null,
-            'rescuer'=>null,
+            'group'=>"",
+            'rescuer'=>"",
         ]);
         //
         $base=$group->getInfoBaseByTemplate(config('kaigohack.rescue.group_info_template_id'));

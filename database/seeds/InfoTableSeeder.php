@@ -62,7 +62,7 @@ class InfoTableSeeder extends Seeder
         InfoTemplate::create([
             'id' => 6,
             'name' => '避難/救助状況',
-            'default'=>['rescue'=>config('kaigohack.rescue.unrescue'),'group'=>null,'rescuer'=>null,'evacuation'=>'回答なし','shelter'=>'','last_answer'=>'','comment'=>'','location'=>['latitude'=>'','longitude'=>'']],
+            'default'=>['rescue'=>config('kaigohack.rescue.unrescue'),'group'=>"",'rescuer'=>"",'evacuation'=>'回答なし','shelter'=>'','last_answer'=>'','comment'=>'','location'=>['latitude'=>'','longitude'=>'']],
             'model'=>User::class,
             'detail'=>'救助状況',
             'edit'=>['name'=>'回答','icon'=>'<i class="material-icons">question_answer</i>'],
