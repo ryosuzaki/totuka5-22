@@ -6,13 +6,14 @@
 //
 Route::name('group.')->prefix('group')->namespace('Group')->middleware('auth')->group(function(){
     //
-    Route::get('index/{type}', 'GroupController@create')->name('create');
     Route::get('create/{type}', 'GroupController@create')->name('create');
     Route::post('store/{type}', 'GroupController@store')->name('store');
+    Route::post('store_with_location/{type}', 'GroupController@storeWithLocation')->name('store_with_location');
 
     //
     Route::namespace('Components')->group(function(){
-        Route::get('location/{group_type}', 'LocationController@index')->name('location.index');
+        Route::get('location/index/{group_types}', 'LocationController@index')->name('location.index');
+        Route::get('map/shelter_and_danger_spot', 'MapController@mapShelterAndDangerSpot')->name('map.shelter_and_danger_spot');
     });
 
     //
@@ -36,6 +37,8 @@ Route::name('group.')->prefix('group')->namespace('Group')->middleware('auth')->
 
         //
         Route::namespace('Components')->group(function(){
+            //
+            Route::get('map/get_info_window_html', 'MapController@getInfoWindowHtml')->name('map.get_info_window_html');
             //    
             Route::get('location/show', 'LocationController@show')->name('location.show');
             Route::get('location/edit', 'LocationController@edit')->name('location.edit');

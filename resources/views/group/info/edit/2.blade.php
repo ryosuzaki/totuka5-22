@@ -5,11 +5,13 @@
 
     <div class="form-group">
         <label for="degree">混雑度</label>
-        <input id="degree" type="text" class="form-control-plaintext form-control-lg" name="info[degree]" value="" readonly>
+        <input id="degree" type="text" class="form-control-plaintext form-control-lg" value="" readonly>
     </div> 
 
     <div id="slider" class="slider mb-5"></div>
 
+    <input type="hidden" name="info[degree]" value="">
+    <input type="hidden" name="info[color]" value="">
 
     <div class="form-group">
         <label for="detail">詳細情報</label>
@@ -45,5 +47,19 @@ noUiSlider.create(slider, {
 });
 slider.noUiSlider.on('update', function( values,handle) {
     input.value = parseInt(values[handle])+"%";
+    $('input[name="info[degree]"]').val(parseInt(values[handle]));
+    if(parseInt(values[handle])==0){
+        $('input[name="info[color]"]').val("#555");
+    }else if (parseInt(values[handle])==25){
+        $('input[name="info[color]"]').val("#00bcd4");
+    }else if(parseInt(values[handle])==50){
+        $('input[name="info[color]"]').val("#4caf50");
+    }else if(parseInt(values[handle])==75){
+        $('input[name="info[color]"]').val("#ff9800");
+    }else if(parseInt(values[handle])==100){
+        $('input[name="info[color]"]').val("#f44336");
+    }
 });
+
+
 </script>

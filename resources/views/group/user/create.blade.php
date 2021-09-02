@@ -19,6 +19,8 @@
                     </select>
                 </div>
 
+               
+
                 <script type="module">
                     document.getElementById("role-link").onchange = function() {
                         window.location.href = this.value;
@@ -27,10 +29,38 @@
             </div>
         </div>
 
+        @if ($errors->any())
+        <div class="modal" tabindex="-1" id="error_modal" role="dialog">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                    <h5 class="modal-title">エラー</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                    </div>
+                    <div class="modal-body">
+                        <ul>
+                            @foreach ($errors->all() as $error)
+                                <li>{{ $error }}</li>
+                            @endforeach
+                        </ul>
+                    </div>
+                    <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">閉じる</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <script type="module">
+            $('#error_modal').modal('show');
+        </script>
+        @endif
 
         <div class="card">
             <div class="card-body">
                 <h3 class="text-center mb-4">1人ずつ招待</h3>
+
                 <form method="POST" action="{{ route('group.user.store',[$group->id,$role->index]) }}">
                     @csrf
                     <div class="form-group">
@@ -51,6 +81,8 @@
             <div class="card-body">
                 <h3 class="text-center mb-4">CSVファイルを使う</h3>
                 <h4 class="text-center">1列目に招待するメールアドレスを並べてください</h4>
+               
+
                 <form method="POST" action="{{ route('group.user.store_by_csv',[$group->id,$role->index]) }}" enctype="multipart/form-data">
                     @csrf
                     <div class="form-row">

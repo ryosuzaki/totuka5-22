@@ -21,18 +21,18 @@ return [
         'rescue'=>'救助中',
         'unrescue'=>'救助者がいません',
         'rescued'=>'救助完了',
-        'user_info_template_id'=>6,
-        'group_info_template_id'=>11,
+        'user_resuce_info_template_id'=>6,
+        'group_resuce_info_template_id'=>11,
     ],
 
     //
     'shelter'=>[
-        'group_info_template_id'=>2,
+        'group_congestion_info_template_id'=>2,
     ],
 
     //
     'like'=>'いいね',
-    'watch'=>'ウォッチ',
+    'watch'=>'チェック',
 
     //
     'announcement'=>[
@@ -43,7 +43,7 @@ return [
     ],
 
     'danger_spot'=>[
-        'name'=>['土砂崩れ','水没','倒壊'],
+        'name'=>['土砂崩れ','水没','倒壊','その他'],
     ],
 
     'info'=>[

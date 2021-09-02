@@ -23,7 +23,7 @@ class QuestionnaireController extends Controller
         $new_info=$request->toArray()['info'];
         $new_info['not_use_items']=$now_info['not_use_items'];
         $info_base->updateInfoEmptyFillDefault($new_info); 
-        return redirect()->route('user.show');
+        return redirect()->route('user.show',$info_base->index);
     }
     //
     public function settingForm(InfoBase $info_base){
@@ -42,6 +42,6 @@ class QuestionnaireController extends Controller
         }
         //
         $info_base->partlyUpdateInfo($request->toArray()['info']);
-        return redirect()->route('user.show');
+        return redirect()->route('user.show',$info_base->index);
     }
 }

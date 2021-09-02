@@ -42,6 +42,6 @@ class GroupInfoController extends Controller
         }
         //
         $group->getInfoBaseByIndex($index)->updateInfo($request->toArray()['info']);
-        return redirect()->route('group.show',$group->id);
+        return redirect()->route('group.show',[$group->id,$index]);
     }
 }

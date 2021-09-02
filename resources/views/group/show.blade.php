@@ -15,8 +15,12 @@
                     @endcan
                 </div>
             </div>
+
+            @if(Illuminate\Support\Facades\View::exists('group.show.'.$group->getTypeName()))
             @include('group.show.'.$type->name, ['group'=>$group,'bases'=>$bases])
-            
+            @else
+            @endif
+
             @if(Auth::user()->hasGroup($group->id))
             @if($type->need_location)
             <div class="text-left row mt-4 mb-3">
@@ -39,6 +43,8 @@
                 })
             </script>
             @endcan
+
+
             <div>
                 <a class="btn btn-outline-primary btn-round btn-sm" href="{{route('group.location.show',$group->id)}}"><i class="material-icons">location_on</i> 地点を表示</a>
             </div>
