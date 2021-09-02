@@ -32,7 +32,7 @@ class LoginController extends Controller
         $user=Auth::user();
         $user->last_used=now();
         $user->save();
-        return route('home');
+        return route('user.show');
     }
     /**
      * Create a new controller instance.

@@ -28,7 +28,7 @@ class InfoTableSeeder extends Seeder
         InfoTemplate::create([
             'id' => 2,
             'name' => '混雑状況',
-            'default'=>['degree'=>'0%','detail'=>''],
+            'default'=>['degree'=>'0','color'=>"black",'detail'=>''],
             'model'=>Group::class,
             'detail'=>'混雑状況を表示します',
         ]);

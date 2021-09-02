@@ -44,18 +44,18 @@ class GroupController extends Controller
     }
 
     //
-    public function storeDangerSpot(Request $request,GroupType $type){
+    public function storeWithLocation(Request $request,GroupType $type){
         $validator = Validator::make($request->all(),[
             'name'=>'required|string|max:255',
-            'latitude'=>'required|numeric',
-            'longitude'=>'required|numeric',
         ]);
         if ($validator->fails()) {
             return back()->withErrors($validator)->withInput();
         }
         //
         $group=Group::setUp(Auth::id(),$request->name,$type);
-        $group->setLocation((float)$request->latitude,(float)$request->longitude);
+        if($request->latitude&&$request->longitude){
+            $group->setLocation((float)$request->latitude,(float)$request->longitude);
+        }
         return redirect()->route('group.show',$group->id);
     }
 

@@ -53,7 +53,6 @@ class GroupUserController extends Controller
         $user=User::findByEmail($request->email);
         $group->requestJoin($user->id,$role->id);
         return redirect()->back();
-        //return redirect()->route('group.show',$group->id);
     }
 
     //
@@ -73,6 +72,8 @@ class GroupUserController extends Controller
             $user=User::findByEmail($record[0]);
             if($user){
                 $group->requestJoin($user->id,$role->id);
+            }else{
+                return back()->withErrors(['store_by_csv_error'=>$record[0].'は不正なメールアドレスです。'])->withInput();
             }
         }
         return redirect()->back();

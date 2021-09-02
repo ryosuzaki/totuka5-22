@@ -17,8 +17,8 @@ class CreateMapTable extends Migration
             $table->bigIncrements('id');
             $table->morphs('model');
             $table->timestamps();
-            $table->float('longitude',10,7)->nullable();
-            $table->float('latitude',10,7)->nullable();
+            $table->float('longitude',15,12)->nullable();
+            $table->float('latitude',15,12)->nullable();
         });
     }
 

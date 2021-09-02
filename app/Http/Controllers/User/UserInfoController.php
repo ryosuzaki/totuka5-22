@@ -33,6 +33,6 @@ class UserInfoController extends Controller
         }
         //
         $info_base->updateInfo($request->toArray()['info']); 
-        return redirect()->route('user.show');
+        return redirect()->route('user.show',$info_base->index);
     }
 }

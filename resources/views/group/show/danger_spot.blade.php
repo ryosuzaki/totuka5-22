@@ -8,11 +8,10 @@ $role_name=config('kaigohack.like');
         <a class="btn btn-primary btn-round btn-sm text-white">作成者</a>
         @elseif(Auth::user()->hasExtraGroup($group->id,$role_name))
         <a class="btn btn-primary btn-round btn-sm" href="{{route('group.unlike',$group->id)}}"><i class="material-icons">thumb_up_off_alt</i>{{$group->countExtraUsers($role_name)}}</a>
-        <a class="btn btn-default btn-sm" href=""><i class="material-icons">campaign</i>通報</a>
         @else
         <a class="btn btn-outline-primary btn-round btn-sm" href="{{route('group.like',$group->id)}}"><i class="material-icons">thumb_up_off_alt</i>{{$group->countExtraUsers($role_name)}}</a>
-        <a class="btn btn-default btn-sm" href=""><i class="material-icons">campaign</i>通報</a>
         @endif
+        <a class="btn btn-warning btn-sm" href=""><i class="material-icons">campaign</i>通報</a>
     </div>
 </div>
 

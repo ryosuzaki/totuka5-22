@@ -1,6 +1,5 @@
 @php
 $info=$base->info()->info;
-info($info);
 @endphp
 
 <p class="h4">救助状況</p>

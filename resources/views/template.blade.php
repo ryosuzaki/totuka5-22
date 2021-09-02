@@ -108,7 +108,7 @@
         <div class="collapse navbar-collapse">
           <ul class="navbar-nav mr-auto">
             <li class="nav-item">
-              <a class="nav-link" href="{{route('group.location.index','shelter')}}"><i class="material-icons">run_circle</i>避難所マップ</a>
+              <a class="nav-link" href="{{route('group.map.shelter_and_danger_spot')}}"><i class="material-icons">run_circle</i>避難所マップ</a>
             </li>
             <li class="nav-item">
               <a class="nav-link" href="{{route('group.location.index','danger_spot')}}"><i class="material-icons">warning</i>危険地点マップ</a>

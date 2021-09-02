@@ -12,6 +12,7 @@ use App\Models\Group\GroupType;
 use App\Traits\InfoFuncs;
 use App\Traits\UploadImg;
 use App\Traits\SendAnnouncement;
+use App\Traits\UseLocation;
 
 use App\Models\Upload\Image;
 use Illuminate\Http\UploadedFile;
@@ -30,6 +31,7 @@ class Group extends Model
         uploadImg::uploadImg as trait_uploadImg;
     }
     use SendAnnouncement;
+    use UseLocation;
 
     //
     protected $guarded = ['id'];
@@ -57,7 +59,7 @@ class Group extends Model
 
 
     
-    //
+    //function of processes to set up group
     public static function setUp(int $user_id,string $name,GroupType $type){
         //
         $group=parent::create([
@@ -86,12 +88,18 @@ class Group extends Model
         $group->refreshPermissions();
         return $group;
     }
-    //
+    //function of processes to tear down group
     public static function tearDown(int $group_id){
         return parent::destroy($group_id);
     }
 
+
+
+
     //
+    //functions of Role and Permission
+    //
+    //refresh Permissions which this group has
     public function refreshPermissions(){
         $permissions=[];
         $permissions[]='group.*';
@@ -127,7 +135,7 @@ class Group extends Model
         ])->save();
         return $permissions;
     }
-    //
+    //refresh Permissions which Roles have
     public function refreshRoles(){
         $permissions=$this->refreshPermissions();
         foreach ($this->roles()->get() as $role){
@@ -136,7 +144,70 @@ class Group extends Model
         return $this->roles()->get();
     }
 
+    //
+    public function createRole(string $name,string $password){
+        $role=$this->roles()->create([
+            'name'=>$this->unique_name.$name,
+            'role_name'=>$name,
+            'index'=>$this->calcRoleIndex(),
+            'password'=>Hash::make($password),
+        ]);
+        $this->refreshPermissions();
+        return $role;
+    }
+    //
+    public function deleteRole($role){
+        $role=$this->getRole($role);
+        $this->users()->wherePivot('role_id',$role->id)->detach();
+        $role->permissions()->detach();
+        $role->users()->detach();
+        $role->delete();
+        return $this->refreshRoles();
+    }
+    public function deleteRoleByIndex(int $index){
+        $role_id=$this->getRoleByIndex($index)->id;
+        return $this->deleteRole($role_id);
+    }
+    //
+    public function roles(){
+        return $this->morphMany(config('kaigohack.role.namespace'),'model');
+    }
+    //
+    public function getRole($role){
+        if (is_string($role)) {
+            return $this->roles()->where('role_name',$role)->first();
+        }elseif(is_int($role)){
+            return $this->roles()->find($role);
+        }
+    }
+    //
+    public function getRoleByIndex(int $index){
+        return $this->roles()->where('index',$index)->first();
+    }
+    //
+    public function usersHaveRole($role){
+        $role=$this->getRole($role);
+        return $this->users()->wherePivot('role_id',$role->id);
+    }
+    //
+    private function calcRoleIndex(){
+        $index=$this->roles()->pluck('index');
+        for($i=0;$i<100;$i++){
+            $diff=collect(range(50*$i, 50*($i+1)))->diff($index);
+            if($diff->isNotEmpty()){
+                return $diff->min();
+            }
+        }
+    }
 
+
+
+
+
+
+    //
+    //functions of users
+    //
     //
     public function users(){
         return $this->belongsToMany(
@@ -189,67 +260,8 @@ class Group extends Model
 
 
     //
-    public function createRole(string $name,string $password){
-        $role=$this->roles()->create([
-            'name'=>$this->unique_name.$name,
-            'role_name'=>$name,
-            'index'=>$this->calcRoleIndex(),
-            'password'=>Hash::make($password),
-        ]);
-        $this->refreshPermissions();
-        return $role;
-    }
+    //functions of GroupType
     //
-    public function deleteRole($role){
-        $role=$this->getRole($role);
-        $this->users()->wherePivot('role_id',$role->id)->detach();
-        $role->permissions()->detach();
-        $role->users()->detach();
-        $role->delete();
-        return $this->refreshRoles();
-    }
-    public function deleteRoleByIndex(int $index){
-        $role_id=$this->getRoleByIndex($index)->id;
-        return $this->deleteRole($role_id);
-    }
-    //
-    public function roles(){
-        return $this->morphMany(config('kaigohack.role.namespace'),'model');
-    }
-    //
-    public function getRole($role){
-        if (is_string($role)) {
-            return $this->roles()->where('role_name',$role)->first();
-        }elseif(is_int($role)){
-            return $this->roles()->find($role);
-        }
-    }
-    //
-    public function getRoleByIndex(int $index){
-        return $this->roles()->where('index',$index)->first();
-    }
-    
-    //
-    public function usersHaveRole($role){
-        $role=$this->getRole($role);
-        return $this->users()->wherePivot('role_id',$role->id);
-    }
-    //
-    private function calcRoleIndex(){
-        $index=$this->roles()->pluck('index');
-        for($i=0;$i<100;$i++){
-            $diff=collect(range(50*$i, 50*($i+1)))->diff($index);
-            if($diff->isNotEmpty()){
-                return $diff->min();
-            }
-        }
-    }
-
-
-
-
-
-
     //
     public function type(){
         return $this->belongsTo('App\Models\Group\GroupType','group_type_id');
@@ -269,6 +281,9 @@ class Group extends Model
 
 
     //
+    //functions of localize InfoFuncs trait
+    //
+    //access user info
     public function getUserInfoBases(int $user_id){
         return $this->getUser($user_id)->infoBases()->whereIn('info_template_id',$this->getType()->user_info)->get();
     }
@@ -278,7 +293,7 @@ class Group extends Model
             return $this->getUser($user_id)->getInfoBaseByTemplate($template_id);
         }
     }
-    //
+    //get available info
     public function getAvailableInfoBases(){
         return $this->infoBases()->where('available',true)->get();
     }
@@ -295,31 +310,17 @@ class Group extends Model
         return $return;
     }
 
-
     //
+    //functions of localize uploadImg trait
+    //
+    //change upload path to group unique name
     public function uploadImg(UploadedFile $img){
         return $this->trait_uploadImg($img,$this->unique_name);
     }
     
-
-
-
-
-
     //
-    public function location(){
-        return $this->morphOne('App\Models\Components\Location', 'model');
-    }
+    //functions of join request
     //
-    public function setLocation(float $latitude,float $longitude){
-        return $this->location()->first()->fill([
-            'latitude'=>$latitude,
-            'longitude'=>$longitude,
-        ])->save();
-    }
-
-
-
     //
     public function usersRequestJoin(){
         return $this->belongsToMany(
@@ -348,7 +349,9 @@ class Group extends Model
 
 
 
-
+    //
+    //functions of extra user
+    //
     //
     public function extraUsers(string $name=null){
         if($name == null){
