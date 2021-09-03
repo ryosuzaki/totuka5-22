@@ -1,6 +1,7 @@
 <form method="POST" action="{{ route('group.store_with_location',$type) }}">
     @csrf
 
+    <p class="h3 text-center">危険地点</p>
     <div class="my-5">
         @foreach(config('kaigohack.danger_spot.name') as $name)
         <div class="form-check form-check-radio">

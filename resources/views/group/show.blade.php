@@ -44,10 +44,15 @@
             </script>
             @endcan
 
-
+            @if($group->isLocationSet())
             <div>
                 <a class="btn btn-outline-primary btn-round btn-sm" href="{{route('group.location.show',$group->id)}}"><i class="material-icons">location_on</i> 地点を表示</a>
             </div>
+            @else
+            <div>
+                <a class="btn btn-outline-default btn-round btn-sm disabled"><i class="material-icons">location_on</i> 地点未設定</a>
+            </div>
+            @endif
             </div>
             @endif
             @can('update',$group)

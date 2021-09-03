@@ -7,7 +7,7 @@ Route::name('user.')->prefix('user')->namespace('User')->middleware('auth')->gro
     Route::get('show/{index?}', 'UserController@show')->name('show');
     Route::get('get_info/{index?}', 'UserController@getInfo')->name('get_info');
     Route::get('edit', 'UserController@edit')->name('edit');
-    Route::put('', 'UserController@update')->name('update');
+    Route::put('update', 'UserController@update')->name('update');
 
     //
     Route::get('initial_setting_form', 'UserController@initialSettingForm')->name('initial_setting_form');
