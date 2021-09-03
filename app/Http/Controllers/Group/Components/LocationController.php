@@ -19,25 +19,28 @@ class LocationController extends Controller
     //
     public function index($type){
         $type=GroupType::findByIdOrName($type);
-        $type_groups=$type->groups()->get();
-        $locations=[];
+        $tmp_groups=$type->groups()->get();
         $groups=[];
-        $icons=[];
-        $labels=[];
-        foreach($type_groups as $group){
+        foreach($tmp_groups as $group){
             if($group->isLocationSet()){
                 $groups[]=$group;
-                $locations[]=$group->getLocation()->location;
-
             }
         }
-        return view('group.components.map.map')->with(["groups"=>$groups,"locations"=>$locations]);
+        return view('group.components.map.map')->with(["groups"=>$groups]);
     }
 
 
     //
     public function show(Group $group){
-        return view('group.components.location.show')->with(['initial'=>$group->getLocation()->location]);
+        $type=$group->getType();
+        $tmp_groups=$type->groups()->get();
+        $groups=[];
+        foreach($tmp_groups as $tmp_group){
+            if($tmp_group->isLocationSet()){
+                $groups[]=$tmp_group;
+            }
+        }
+        return view('group.components.map.map')->with(['initial_group'=>$group,'groups'=>$groups]);
     }
 
     //
