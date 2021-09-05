@@ -13,36 +13,21 @@ use Illuminate\Support\Facades\Auth;
 class MapController extends Controller
 {
     //
-    public function map(){
-        $all=Group::all();
+    public function mapMultipleTypes($types=[]){
         $groups=[];
-        foreach($all as $group){
-            $groups[]=$group->location()->get();
+        foreach($types as $type){
+            $tmp_groups=GroupType::findByIdOrName($type)->groups()->get();
+            foreach($tmp_groups as $group){
+                if($group->isLocationSet()){
+                    $groups[]=$group;
+                }
+            }
         }
-        return view('group.map')->with([
-            'groups'=>$groups,
-        ]);
+        return view('group.components.map.map')->with(["groups"=>$groups]);
     }
+    //
     public function mapShelterAndDangerSpot(){
-        $tmp_shelters=GroupType::findByIdOrName("shelter")->groups()->get();
-        $tmp_danger_spots=GroupType::findByIdOrName("danger_spot")->groups()->get();
-        $shelter_locations=[];
-        $danger_spot_locations=[];
-        $shelters=[];
-        $danger_spots=[];
-        foreach($tmp_shelters as $shelter){
-            if($shelter->isLocationSet()){
-                $shelters[]=$shelter;
-                $shelter_locations[]=$shelter->getLocation()->location;
-            }
-        }
-        foreach($tmp_danger_spots as $danger_spot){
-            if($danger_spot->isLocationSet()){
-                $danger_spots[]=$danger_spot;
-                $danger_spot_locations[]=$danger_spot->getLocation()->location;
-            }
-        }
-        return view('group.components.map.shelter_and_danger_spot_map')->with(["shelters"=>$shelters,"shelter_locations"=>$shelter_locations,"danger_spots"=>$danger_spots,"danger_spot_locations"=>$danger_spot_locations]);
+        return $this->mapMultipleTypes(["shelter","danger_spot"]);
     }
     //
     public function getInfoWindowHtml(Group $group){

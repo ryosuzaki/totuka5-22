@@ -78,7 +78,7 @@
   </head>
   <body>
 <div class="app index-page sidebar-collapse">
-  <nav class="navbar navbar-color-on-scroll navbar-expand-lg" color-on-scroll="100">
+  <nav class="navbar fixed-top navbar-color-on-scroll navbar-expand-lg" color-on-scroll="100">
     <div class="container">
         <div class="navbar-translate">
           <a class="navbar-brand" href="{{route('home')}}">戸塚ハッカソン</a>
@@ -108,10 +108,7 @@
         <div class="collapse navbar-collapse">
           <ul class="navbar-nav mr-auto">
             <li class="nav-item">
-              <a class="nav-link" href="{{route('group.map.shelter_and_danger_spot')}}"><i class="material-icons">run_circle</i>避難所マップ</a>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link" href="{{route('group.location.index','danger_spot')}}"><i class="material-icons">error_outline</i>危険地点マップ</a>
+              <a class="nav-link" href="{{route('group.map.shelter_and_danger_spot')}}"><i class="material-icons">run_circle</i>災害時マップ</a>
             </li>
           </ul>
           <ul class="navbar-nav">
@@ -177,9 +174,11 @@
     </div>
   </nav>
 </div>
-<main>
-  <!--ここに内容-->
-  @yield('content')
+<main style="margin-top:100px;">
+  <div class="container px-0">
+    <!--ここに内容-->
+    @yield('content')
+  </div>
 </main>
 
 <footer class="footer footer-default">

@@ -1,27 +1,27 @@
 @extends('template')
 
 @section('content')
-<div class="row justify-content-center">
-    <div class="col-md-8">
-        <div class="card">
-        {{ Breadcrumbs::render('group.info_base.create',$group) }}
-            <div class="card-body">
-                <h3 class="text-center mb-4">追加</h3>
 
 
-                <form method="POST" action="{{ route('group.info_base.store',$group->id) }}">
-                    @csrf
+<div class="card">
+{{ Breadcrumbs::render('group.info_base.create',$group) }}
+    <div class="card-body">
+        <h3 class="text-center mb-4">追加</h3>
 
-                    @include('info.info_template.create',['templates'=>$templates])
 
-                    <div class="form-group mb-0 mt-4">
-                        <button type="submit" class="btn btn-primary btn-block">
-                        追加
-                        </button>
-                    </div>
-                </form>
+        <form method="POST" action="{{ route('group.info_base.store',$group->id) }}">
+            @csrf
+
+            @include('info.info_template.create',['templates'=>$templates])
+
+            <div class="form-group mb-0 mt-4">
+                <button type="submit" class="btn btn-primary btn-block">
+                追加
+                </button>
             </div>
-        </div>
+        </form>
     </div>
 </div>
+
+
 @endsection
