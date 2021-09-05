@@ -5,9 +5,11 @@
 
 <button id="move_to_my_location" class="btn btn-white text-dark" style="padding:0;width:40px;height:40px;margin: 10px;position: absolute;bottom: 180px;right: 0px;"><i class="material-icons m-0" style="font-size: 1.5rem;">my_location</i></button>
 
+
+
 <script type="module">
 $(document).ready(function() { 
-    $("footer").addClass("d-none");
+  $("footer").addClass("d-none");
 });
 </script>
 <script>
@@ -30,18 +32,7 @@ $(document).ready(function() {
  */
 async function initMap() {
   //$initial_position,$initial_group,$groups
-  @if(isset($initial_position))
-  var khm=new kaigoHackMap($initial_position["latitude"],$initial_position["longitude"],13);
-  @elseif(isset($initial_group))
-  @php
-  $location=$initial_group->getLocation()->location;
-  info($initial_group);
-  @endphp
-  var khm=new kaigoHackMap({{$location["latitude"]}},{{$location["longitude"]}},13);
-  @else
-  var khm=new kaigoHackMap(null,null,13);
-  @endif
-
+  var khm=new kaigoHackMap();
   
   function icon(type=""){
     if(type=="shelter"){
@@ -49,7 +40,7 @@ async function initMap() {
         fillColor: "#008b8b",
         fillOpacity: 1,
         path: google.maps.SymbolPath.CIRCLE,
-        scale: 22,
+        scale: 18,
         strokeColor: "white",
         strokeWeight: 1,
       };
@@ -58,7 +49,7 @@ async function initMap() {
         fillColor: "#ff9800",
         fillOpacity: 1,
         path: google.maps.SymbolPath.CIRCLE,
-        scale: 14,
+        scale: 12,
         strokeColor: "white",
         strokeWeight: 1,
       };
@@ -100,7 +91,32 @@ async function initMap() {
   @endforeach
   //
   document.getElementById("move_to_my_location").addEventListener('click', () => {
+    if(khm.user_marker==null){
+      new Promise(async (resolve, reject) => {
+        await khm.startWatchingUserPosition();
+        resolve();
+      }).then(function(value) {
+        khm.changeCenter(khm.user_marker.getPosition().lat(),khm.user_marker.getPosition().lng());
+      });
+    }else{
+      khm.changeCenter(khm.user_marker.getPosition().lat(),khm.user_marker.getPosition().lng());
+    }
+  });
+  //
+  new Promise(async (resolve, reject) => {
+    await khm.startWatchingUserPosition();
+    resolve();
+  }).then(function(value) {
+    @if(isset($initial_position))
+    khm.changeCenter({{$initial_position["latitude"]}},{{$initial_position["longitude"]}});
+    @elseif(isset($initial_group))
+    @php
+    $initial_location=$initial_group->getLocation()->location;
+    @endphp
+    khm.changeCenter({{$initial_location["latitude"]}},{{$initial_location["longitude"]}});
+    @else
     khm.changeCenter(khm.user_marker.getPosition().lat(),khm.user_marker.getPosition().lng());
+    @endif
   });
 }
 
@@ -108,26 +124,14 @@ async function initMap() {
 
 class kaigoHackMap{
   //
-  constructor(lat=null,lng=null,zoom=13) {
-    //
+  constructor() {
     this.map = new google.maps.Map(document.getElementById("map"), {
       center: { lat: 35.46592523208098, lng: 139.61996893057855 },
-      zoom: zoom,
+      zoom: 13,
     });
     //
     this.directionsService = new google.maps.DirectionsService();
     this.directionsRenderer = new google.maps.DirectionsRenderer();
-    //
-    new Promise(async (resolve, reject) => {
-      await this.startWatchingUserPosition();
-      resolve();
-    }).then(function(value) {
-      if(lat==null||lng==null){
-        this.changeCenter(this.user_marker.getPosition().lat(),this.user_marker.getPosition().lng());
-      }else{
-        this.changeCenter(lat,lng);
-      }
-    }.bind(this));
   }
   //
   markers=[];
@@ -168,9 +172,11 @@ class kaigoHackMap{
     })
     .done(function(data){
       infowindow.setContent(data);
-      document.getElementById('guide_route').addEventListener('click', () => {
-        this.searchRouteFromUserPosition(marker);
-      });
+      if(document.getElementById('guide_route')){
+        document.getElementById('guide_route').addEventListener('click', () => {
+          this.searchRouteFromUserPosition(marker);
+        });
+      }
     }.bind(this))
     .fail(function(XMLHttpRequest, textStatus, errorThrown){
       console.log(errorThrown);
@@ -195,7 +201,7 @@ class kaigoHackMap{
         map:this.map,
         label: {text: "person",
         fontFamily: "Material Icons",
-        color: "#ffffff",fontSize: '16px'},
+        color: "#ffffff",fontSize: '20px'},
         title: '現在地',
       });
     }
@@ -208,6 +214,12 @@ class kaigoHackMap{
       this.user_position_watchID=navigator.geolocation.watchPosition((position) => {
         this.setUserMarker(position.coords.latitude,position.coords.longitude);
         resolve();
+      },(error)=>{
+        if(error.code==1){
+          alert("位置情報をオンにして、ページを再読み込みしてください。");
+        }else{
+          console.log(error);
+        }
       });
     })
   }
