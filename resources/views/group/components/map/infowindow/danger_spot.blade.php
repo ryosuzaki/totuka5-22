@@ -1,4 +1,4 @@
-<div class="row"><p class="h4 col">危険地点</p><div class="col"><a href="{{route("group.create",$group->getType())}}" class="btn btn-success btn-round py-2 px-3"><i class="material-icons m-0" style="font-size: 1.5rem;">add_location_alt</i>登録する</a></div></div>
+<div class="d-flex justify-content-between"><h4 class="">危険地点</h4><div class=""><a href="{{route("group.create",$group->getType())}}" class="btn btn-success btn-round py-2 px-3"><i class="material-icons m-0" style="font-size: 1.5rem;">add_location_alt</i>新規登録</a></div></div>
 
 <p class="h2 mt-0">{{$group->name}}</p>
 <a href="{{route("group.show",$group->id)}}" class="btn btn-round py-2 px-3"><i class="material-icons m-0" style="font-size: 1.5rem;">launch</i>ページへ</a>
@@ -29,10 +29,12 @@ $imgs=$group->getImgs();
     </a>
 </div>
 
-
-@if(Auth::user()->hasExtraGroup($group->id,$role_name))
+<a class="btn btn-warning py-2 px-3" href=""><i class="material-icons m-0" style="font-size: 1.5rem;">campaign</i>通報</a>
+@if(Auth::user()->hasGroup($group->id))
+<a class="btn btn-outline-primary btn-round py-2 px-3 text-primary"><i class="material-icons m-0" style="font-size: 1.5rem;">thumb_up_off_alt</i>{{$group->countExtraUsers($role_name)}}</a>
+@elseif(Auth::user()->hasExtraGroup($group->id,$role_name))
 <a href="{{route('group.unlike',$group->id)}}" class="btn btn-primary btn-round py-2 px-3"><i class="material-icons m-0" style="font-size: 1.5rem;">thumb_up_off_alt</i>{{$group->countExtraUsers($role_name)}}</a>
 @else
 <a href="{{route('group.like',$group->id)}}" class="btn btn-outline-primary btn-round py-2 px-3"><i class="material-icons m-0" style="font-size: 1.5rem;">thumb_up_off_alt</i>{{$group->countExtraUsers($role_name)}}</a>
 @endif
-<a class="btn btn-warning py-2 px-3" href=""><i class="material-icons m-0" style="font-size: 1.5rem;">campaign</i>通報</a>
+

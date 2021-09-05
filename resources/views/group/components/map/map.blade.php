@@ -49,16 +49,16 @@ async function initMap() {
         fillColor: "#008b8b",
         fillOpacity: 1,
         path: google.maps.SymbolPath.CIRCLE,
-        scale: 20,
+        scale: 22,
         strokeColor: "white",
         strokeWeight: 1,
       };
     }else if(type="danger_spot"){
       return {
-        fillColor: "#f44336",
+        fillColor: "#ff9800",
         fillOpacity: 1,
         path: google.maps.SymbolPath.CIRCLE,
-        scale: 16,
+        scale: 14,
         strokeColor: "white",
         strokeWeight: 1,
       };
@@ -72,14 +72,14 @@ async function initMap() {
         text: "directions_run",
         fontFamily: "Material Icons",
         color: "#ffffff",
-        fontSize: '20px',
+        fontSize: '28px',
       };
     }else if(type="danger_spot"){
       return {
         text: "priority_high",
         fontFamily: "Material Icons",
         color: "#ffffff",
-        fontSize: '20px',
+        fontSize: '25px',
       };
     }
     return {};
@@ -169,8 +169,8 @@ class kaigoHackMap{
     .done(function(data){
       infowindow.setContent(data);
       document.getElementById('guide_route').addEventListener('click', () => {
-      this.searchRouteFromUserPosition(marker);
-    });
+        this.searchRouteFromUserPosition(marker);
+      });
     }.bind(this))
     .fail(function(XMLHttpRequest, textStatus, errorThrown){
       console.log(errorThrown);
