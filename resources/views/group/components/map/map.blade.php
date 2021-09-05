@@ -216,7 +216,7 @@ class kaigoHackMap{
         resolve();
       },(error)=>{
         if(error.code==1){
-          alert("位置情報をオンにして、ページを再読み込みしてください。");
+          alert("デバイスの位置情報をONにしてください。");
         }else{
           console.log(error);
         }
