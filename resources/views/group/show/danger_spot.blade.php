@@ -1,25 +1,65 @@
 @php
-$role_name=config('kaigohack.like');
+$extra_name='good';
+$extra_name_jp=config('kaigohack.'.$extra_name);
 @endphp
 
-<div class="row">
+<div class="d-flex">
     <div class="ml-auto">
         @if(Auth::user()->hasGroup($group->id))
-        <a class="btn btn-primary btn-round btn-sm text-white">作成者</a>
-        <a class="btn btn-outline-primary btn-round btn-sm text-primary"><i class="material-icons">thumb_up_off_alt</i>{{$group->countExtraUsers($role_name)}}</a>
+        <a class="btn btn-outline-primary btn-round btn-sm text-primary"><i class="material-icons">thumb_up_off_alt</i>{{$group->countExtraUsers($extra_name)}}</a>
         @else
         <a class="btn btn-warning btn-sm" href=""><i class="material-icons">campaign</i>通報</a>
-        @if(Auth::user()->hasExtraGroup($group->id,$role_name))
-        <a class="btn btn-primary btn-round btn-sm" href="{{route('group.unlike',$group->id)}}"><i class="material-icons">thumb_up_off_alt</i>{{$group->countExtraUsers($role_name)}}</a>
-        @else
-        <a class="btn btn-outline-primary btn-round btn-sm" href="{{route('group.like',$group->id)}}"><i class="material-icons">thumb_up_off_alt</i>{{$group->countExtraUsers($role_name)}}</a>
-        @endif
+        <script type="module">
+            $(function(){
+                //
+                $("#set_extra_group_{{$extra_name}}").click(function(){
+                    $.ajax({
+                        type:"get", 
+                        url:"{{route('group.extra_group.set',[$group,$extra_name])}}",
+                        dataType: 'json',
+                    })
+                    .done((response)=>{
+                        $("#set_extra_group_{{$extra_name}}").addClass("d-none");
+                        $("#unset_extra_group_{{$extra_name}}").removeClass("d-none");
+                        $(".count_extra_group_{{$extra_name}}").text(response.count);
+                    })
+                    .fail((error)=>{
+                        console.log(error)
+                    })
+                });
+                //
+                $("#unset_extra_group_{{$extra_name}}").click(function(){
+                    $.ajax({
+                        type:"get", 
+                        url:"{{route('group.extra_group.unset',[$group,$extra_name])}}",
+                        dataType: 'json',
+                    })
+                    .done((response)=>{
+                        $("#set_extra_group_{{$extra_name}}").removeClass("d-none");
+                        $("#unset_extra_group_{{$extra_name}}").addClass("d-none");
+                        $(".count_extra_group_{{$extra_name}}").text(response.count);
+                    })
+                    .fail((error)=>{
+                        console.log(error)
+                    })
+                });
+                //
+                @if(Auth::user()->hasExtraGroup($group->id,$extra_name))
+                $("#set_extra_group_{{$extra_name}}").addClass("d-none");
+                @else
+                $("#unset_extra_group_{{$extra_name}}").addClass("d-none");
+                @endif
+            });
+        </script>
+        <button class="btn btn-primary btn-round btn-sm" id="unset_extra_group_{{$extra_name}}"><i class="material-icons">thumb_up_off_alt</i><span class="count_extra_group_{{$extra_name}}">{{$group->countExtraUsers($extra_name)}}</span></button>
+            
+        <button class="btn btn-outline-primary btn-round btn-sm" id="set_extra_group_{{$extra_name}}"><i class="material-icons">thumb_up_off_alt</i><span class="count_extra_group_{{$extra_name}}">{{$group->countExtraUsers($extra_name)}}</span></button>
         @endif
     </div>
 </div>
 
 
-<h3 class="text-center mt-0">{{$group->name}}</h3>
+<h3 class="text-center my-3">{{$group->name}}</h3>
 
 @php
 $imgs=$group->getImgs();
@@ -49,20 +89,20 @@ $imgs=$group->getImgs();
 
 <form action="{{route('group.uploadImg',$group->id)}}" method="post" enctype="multipart/form-data">
     @csrf
-    <div class="form-row">
-        <div class="form-group form-file-upload form-file-multiple col-6">
+    <div class="d-flex">
+        <div class="form-group form-file-upload form-file-multiple w-75">
             <input type="file" name="img" multiple="" accept="image/*" class="inputFileHidden">
             <div class="input-group">
                 <input type="text" class="form-control inputFileVisible" placeholder="写真を選択">
                 <span class="input-group-btn">
                     <button type="button" class="btn btn-fab btn-round btn-primary">
-                        <i class="material-icons">attach_file</i>
+                        <i class="material-icons">add_photo_alternate</i>
                     </button>
                 </span>
             </div>
         </div>
-        <div class="col-6 pt-3">
-            <button type="submit" class="btn btn-primary mb-2 w-100">投稿</button>
+        <div class="pt-3">
+            <button type="submit" class="btn btn-round btn-primary mb-2 w-100">投稿</button>
         </div>
     </div>
 </form>
@@ -71,16 +111,16 @@ $imgs=$group->getImgs();
 <form action="{{route('group.deleteImg',$group->id)}}" method="post">
     @csrf
     @method('DELETE')
-    <div class="form-row">
-        <div class="form-group col-6">
+    <div class="d-flex">
+        <div class="form-group w-75">
             <select class="form-control selectpicker" data-style="btn btn-link" id="deleteImg" name="id">
                 @for($i=0;$i<count($imgs);$i++)
                 <option value="{{$imgs[$i]->id}}">左から{{$i+1}}枚目の写真</option>
                 @endfor
             </select>
         </div>
-        <div class="col-6">
-            <button type="submit" class="btn btn-danger mb-2 w-100">削除</button>
+        <div class="">
+            <button type="submit" class="btn btn-round btn-danger mb-2 w-100">削除</button>
         </div>
     </div>
 </form>

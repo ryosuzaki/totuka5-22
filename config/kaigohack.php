@@ -27,12 +27,17 @@ return [
 
     //
     'shelter'=>[
+        'name'=>"避難所",
         'group_congestion_info_template_id'=>2,
     ],
 
     //
-    'like'=>'いいね',
-    'watch'=>'チェック',
+    'extra_group'=>[
+        'good'=>'いいね',
+        'check'=>'チェック',
+    ],
+    'good'=>'いいね',
+    'check'=>'チェック',
 
     //
     'announcement'=>[
@@ -42,8 +47,10 @@ return [
         ]
     ],
 
+
     'danger_spot'=>[
-        'name'=>['土砂崩れ','水没','倒壊','その他'],
+        'name'=>"危険地点",
+        'spot_names'=>['土砂崩れ','水没','倒壊','その他'],
     ],
 
     'info'=>[

@@ -10,8 +10,8 @@
 
     <div id="slider" class="slider mb-5"></div>
 
-    <input type="hidden" name="info[degree]" value="">
-    <input type="hidden" name="info[color]" value="">
+    <input type="hidden" name="info[degree]" value="{{$info->info['degree']}}">
+    <input type="hidden" name="info[color]" value="{{$info->info['color']}}">
 
     <div class="form-group">
         <label for="detail">詳細情報</label>
@@ -31,7 +31,7 @@
 var slider = document.getElementById('slider');
 var input = document.getElementById('degree');
 noUiSlider.create(slider, {
-    start: 50,
+    start: {{$info->info['degree']}},
     behaviour: 'snap',
     connect: [true, false],
     step: 25,

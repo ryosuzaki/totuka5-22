@@ -6,46 +6,38 @@
     <div id="questionnaire_body">
 
 
-                    <div class="card-header card-header-primary mx-0 my-4">
-                        <div class="nav-tabs-navigation">
-                            <div class="nav-tabs-wrapper">
-                                <ul class="nav nav-tabs" data-tabs="tabs">
-                                        <li class="nav-item mx-auto @if(in_array('feeling', $info->info['not_use_items'])) d-none @endif">
-                                            <a class="nav-link h4" href="#1" id="t1" data-toggle="tab">調子</a>
-                                        </li>
-                                        <li class="nav-item mx-auto @if(in_array('syokuyoku', $info->info['not_use_items'])) d-none @endif">
-                                            <a class="nav-link h4" href="#2" id='t2' data-toggle="tab">食欲</a>
-                                        </li>
-                                        <li class="nav-item mx-auto @if(in_array('otuzi', $info->info['not_use_items'])) d-none @endif">
-                                            <a class="nav-link h4" href="#3" id="t3" data-toggle="tab">お通じ</a>
-                                        </li>
-                                        <li class="nav-item mx-auto @if(in_array('taion', $info->info['not_use_items'])) d-none @endif">
-                                            <a class="nav-link h4" href="#4" id="t4" data-toggle="tab">体温</a>
-                                        </li>
-                                        <li class="nav-item mx-auto @if(in_array('taiju', $info->info['not_use_items'])) d-none @endif">
-                                            <a class="nav-link h4" href="#5" id="t5" data-toggle="tab">体重</a>
-                                        </li>
-                                        <li class="nav-item mx-auto @if(in_array('ketuatu', $info->info['not_use_items'])) d-none @endif">
-                                            <a class="nav-link h4" href="#6" id="t6" data-toggle="tab">血圧</a>
-                                        </li>
-                                        <li class="nav-item mx-auto @if(in_array('warui_bui', $info->info['not_use_items'])) d-none @endif">
-                                            <a class="nav-link h4" href="#7" id="t7" data-toggle="tab">症状</a>
-                                        </li>
-                                        <li class="nav-item mx-auto @if(in_array('comment', $info->info['not_use_items'])) d-none @endif">
-                                            <a class="nav-link h4" href="#8" id="t8" data-toggle="tab">コメント</a>
-                                        </li>
-                                        <li class="nav-item mx-auto">
-                                            <a class="nav-link h4" href="#9"  id="t9" data-toggle="tab">回答一覧</a>
-                                        </li>
-                                
-
-                                </ul>
-                            </div>
-                        </div>
-                    </div>
+            <ul class="nav nav-pills nav-pills-icons d-flex justify-content-between px-0" data-tabs="tabs">
+                <li class="nav-item mx-auto w-25 @if(in_array('feeling', $info->info['not_use_items'])) d-none @endif">
+                    <a class="nav-link h4 px-0 my-1" style="min-width:50px;" href="#1" id="t1" data-toggle="tab">調子</a>
+                </li>
+                <li class="nav-item mx-auto w-25 @if(in_array('syokuyoku', $info->info['not_use_items'])) d-none @endif">
+                    <a class="nav-link h4 px-0 my-1" style="min-width:50px;" href="#2" id='t2' data-toggle="tab">食欲</a>
+                </li>
+                <li class="nav-item mx-auto w-25 @if(in_array('otuzi', $info->info['not_use_items'])) d-none @endif">
+                    <a class="nav-link h4 px-0 my-1" style="min-width:50px;" href="#3" id="t3" data-toggle="tab">お通じ</a>
+                </li>
+                <li class="nav-item mx-auto w-25 @if(in_array('taion', $info->info['not_use_items'])) d-none @endif">
+                    <a class="nav-link h4 px-0 my-1" style="min-width:50px;" href="#4" id="t4" data-toggle="tab">体温</a>
+                </li>
+                <li class="nav-item mx-auto w-25 @if(in_array('taiju', $info->info['not_use_items'])) d-none @endif">
+                    <a class="nav-link h4 px-0 my-1" style="min-width:50px;" href="#5" id="t5" data-toggle="tab">体重</a>
+                </li>
+                <li class="nav-item mx-auto w-25 @if(in_array('ketuatu', $info->info['not_use_items'])) d-none @endif">
+                    <a class="nav-link h4 px-0 my-1" style="min-width:50px;" href="#6" id="t6" data-toggle="tab">血圧</a>
+                </li>
+                <li class="nav-item mx-auto w-25 @if(in_array('warui_bui', $info->info['not_use_items'])) d-none @endif">
+                    <a class="nav-link h4 px-0 my-1" style="min-width:50px;" href="#7" id="t7" data-toggle="tab">症状</a>
+                </li>
+                <li class="nav-item mx-auto w-25 @if(in_array('comment', $info->info['not_use_items'])) d-none @endif">
+                    <a class="nav-link h4 px-0 my-1" style="min-width:50px;" href="#8" id="t8" data-toggle="tab">コメント</a>
+                </li>
+                <li class="nav-item mx-auto w-25">
+                    <a class="nav-link h4 px-0 my-1" style="min-width:50px;" href="#9"  id="t9" data-toggle="tab">回答一覧</a>
+                </li>
+            </ul>
                         
 
-                <div class="tab-content text-center">
+                <div class="tab-content text-center mt-3">
 
 
 
@@ -323,7 +315,7 @@
                     <script type="module">
                         $(function(){
                             $('.change_next_pill_tab').click(function(){
-                                $(window).scrollTop($('#questionnaire_body').offset().top);
+                                $(window).scrollTop($('#questionnaire_body').offset().top+100px);
                                 var now = $(this).closest('.tab-pane').attr('id');
                                 var next = Number(now) + 1;
                                 for(;next < 10;next++){

@@ -1,17 +1,59 @@
 @php
-$role_name=config('kaigohack.watch');
+$extra_name='check';
+$extra_name_jp=config('kaigohack.'.$extra_name);
 @endphp
-<div class="row">
+<div class="d-flex">
     <div class="ml-auto">
-        @if(Auth::user()->hasExtraGroup($group->id,$role_name))
-        <a class="btn btn-primary btn-round btn-sm" href="{{route('group.unwatch',$group->id)}}"><i class="material-icons">check</i> {{$role_name}}中</a>
-        @else
-        <a class="btn btn-outline-primary btn-round btn-sm" href="{{route('group.watch',$group->id)}}"><i class="material-icons">check</i> {{$role_name}}する</a>
-        @endif
+        <script type="module">
+            $(function(){
+                //
+                $("#set_extra_group_{{$extra_name}}").click(function(){
+                    $.ajax({
+                        type:"get", 
+                        url:"{{route('group.extra_group.set',[$group,$extra_name])}}",
+                        dataType: 'json',
+                    })
+                    .done((response)=>{
+                        $("#set_extra_group_{{$extra_name}}").addClass("d-none");
+                        $("#unset_extra_group_{{$extra_name}}").removeClass("d-none");
+                        $(".count_extra_group_{{$extra_name}}").text(response.count);
+                    })
+                    .fail((error)=>{
+                        console.log(error)
+                    })
+                });
+                //
+                $("#unset_extra_group_{{$extra_name}}").click(function(){
+                    $.ajax({
+                        type:"get", 
+                        url:"{{route('group.extra_group.unset',[$group,$extra_name])}}",
+                        dataType: 'json',
+                    })
+                    .done((response)=>{
+                        $("#set_extra_group_{{$extra_name}}").removeClass("d-none");
+                        $("#unset_extra_group_{{$extra_name}}").addClass("d-none");
+                        $(".count_extra_group_{{$extra_name}}").text(response.count);
+                    })
+                    .fail((error)=>{
+                        console.log(error)
+                    })
+                });
+                //
+                @if(Auth::user()->hasExtraGroup($group->id,$extra_name))
+                $("#set_extra_group_{{$extra_name}}").addClass("d-none");
+                @else
+                $("#unset_extra_group_{{$extra_name}}").addClass("d-none");
+                @endif
+            });
+        </script>
+        <button class="btn btn-primary btn-round btn-sm" id="unset_extra_group_{{$extra_name}}"><i class="material-icons">check</i><span> {{$extra_name_jp}}中</span></button>
+            
+        <button class="btn btn-outline-primary btn-round btn-sm" id="set_extra_group_{{$extra_name}}"><i class="material-icons">check</i><span> {{$extra_name_jp}}する</span></button>
     </div>
 </div>
 <h3 class="text-center">{{$group->name}}</h3>
-<h6 class="text-center">{{$group->countExtraUsers($role_name)}}人が{{$role_name}}中</h6>
+<h6 class="text-center"><span class="count_extra_group_{{$extra_name}}"
+    >{{$group->countExtraUsers($extra_name)}}</span>人が{{$extra_name_jp}}中</h6>
     @php
     $degree=$group->getInfoByTemplate(config('kaigohack.shelter.group_congestion_info_template_id'))->info['degree'];
     $color=$group->getInfoByTemplate(config('kaigohack.shelter.group_congestion_info_template_id'))->info['color'];
