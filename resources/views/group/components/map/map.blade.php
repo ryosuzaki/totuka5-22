@@ -5,13 +5,42 @@
 
 <button id="move_to_my_location" class="btn btn-white text-dark" style="padding:0;width:40px;height:40px;margin: 10px;position: absolute;bottom: 180px;right: 0px;"><i class="material-icons m-0" style="font-size: 1.5rem;">my_location</i></button>
 
+<input type="checkbox" class="d-none" id="under_content_checkbox">
 
+<div id="close_under_content_block" class="d-none close_under_content" style="width:100%;position:absolute;top:0px;"></div>
+
+<div class="bg-white my-0" id="under_content_block" style="width:100%;position:absolute;bottom:0px;display:none;border-top-left-radius:10px;border-top-right-radius:10px;">
+  <div class="d-flex border-bottom"><button type="button" class="btn btn-link ml-auto close_under_content px-3"><i class="material-icons m-0" style="font-size: 1.5rem;">close</i></button></div>
+  <div id="under_content" class="mx-3 mt-3"></div>
+</div>
 
 <script type="module">
 $(document).ready(function() { 
   $("footer").addClass("d-none");
+  //
+  var under_content_height=$(window).height()*4/5;
+  $("#close_under_content_block").css("height", $(window).height()-under_content_height + "px");
+  $("#under_content_block").css("height", under_content_height + "px");
+  //
+  $(".open_under_content").click(function(){
+    $('#under_content_checkbox').prop('checked', true).change();
+  });
+  $("#under_content_checkbox").change(function(){
+    if($(this).prop('checked')){
+      $(".close_under_content").removeClass("d-none");
+      $("#under_content_block").slideDown("fast");
+    }else{
+      $(".close_under_content").addClass("d-none");
+      $("#under_content_block").slideUp("fast");
+    }
+  });
+  $(".close_under_content").click(function(){
+    $('#under_content_checkbox').prop('checked', false).change();
+  });
 });
 </script>
+
+
 <script>
 /*
 ->利用する API について
@@ -33,7 +62,7 @@ $(document).ready(function() {
 async function initMap() {
   //$initial_position,$initial_group,$groups
   var khm=new kaigoHackMap();
-  
+  //
   function icon(type=""){
     if(type=="shelter"){
       return {
@@ -85,7 +114,7 @@ async function initMap() {
   //
   @if(isset($initial_group))
   @if($initial_group==$group)
-  khm.openInfoWindow(marker{{$group->id}},"{{route('group.map.get_info_window_html',$group)}}");
+  khm.openUnderContent(marker{{$group->id}},"{{route('group.map.get_info_window_html',$group)}}");
   @endif
   @endif
   @endforeach
@@ -151,11 +180,32 @@ class kaigoHackMap{
     });
     //
     marker.addListener("click", () => {
-      this.openInfoWindow(marker,url);
+      this.openUnderContent(marker,url);
     });
     //
     this.markers.push(marker);
     return marker;
+  }
+  //
+  openUnderContent(marker,url){
+    $.ajax({
+      type: "GET",
+      url: url,
+      dataType : "html"
+    })
+    .done(function(data){
+      $('#under_content').html(data);
+      if(document.getElementById('guide_route')){
+        document.getElementById('guide_route').addEventListener('click', () => {
+          this.searchRouteFromUserPosition(marker);
+          $('#under_content_checkbox').prop('checked', false).change();
+        });
+      }
+      $('#under_content_checkbox').prop('checked', true).change();
+    }.bind(this))
+    .fail(function(XMLHttpRequest, textStatus, errorThrown){
+      console.log(errorThrown);
+    });
   }
   //
   openInfoWindow(marker,url){

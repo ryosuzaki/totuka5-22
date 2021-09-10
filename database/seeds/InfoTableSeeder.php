@@ -73,7 +73,7 @@ class InfoTableSeeder extends Seeder
             'name' => 'お知らせ',
             'default'=>[],
             'model'=>Group::class,
-            'available'=>false,
+            'available'=>true,
             'detail'=>'お知らせ',
             'edit'=>['name'=>'送信','icon'=>'<i class="material-icons">mail_outline</i>'],
         ]);

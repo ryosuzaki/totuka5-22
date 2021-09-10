@@ -31,6 +31,16 @@ class MapController extends Controller
     }
     //
     public function getInfoWindowHtml(Group $group){
-        return response()->view('group.components.map.infowindow.'.$group->getTypeName(), ['group'=>$group]);;
+        if(Auth::user()->hasGroup($group->id)){
+            $bases=$group->getAvailableInfoBasesByRole(Auth::user()->getRoleByGroup($group->id)->id);
+        }else{
+            $bases=$group->getAvailableInfoBases();
+        }
+        return response()->view('group.components.map.infowindow.'.$group->getTypeName(), [
+            'group'=>$group,
+            'type'=>$group->getType(),
+            'bases'=>$bases,
+            'index'=>0,
+        ]);
     }
 }

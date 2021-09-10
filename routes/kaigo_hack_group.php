@@ -47,16 +47,14 @@ Route::name('group.')->prefix('group')->namespace('Group')->middleware('auth')->
             //
             Route::put('announcement/send', 'AnnouncementController@send')->name('announcement.send');
             Route::get('announcement/{announcement}/show', 'AnnouncementController@show')->name('announcement.show');
-            //
-            Route::get('watch', 'WatchController@watch')->name('watch');
-            Route::get('unwatch', 'WatchController@unwatch')->name('unwatch');
 
             //
             Route::post('uploadImg', 'UploadController@uploadImg')->name('uploadImg');
             Route::delete('deleteImg', 'UploadController@deleteImg')->name('deleteImg');
+            
             //
-            Route::get('like', 'LikeController@like')->name('like');
-            Route::get('unlike', 'LikeController@unlike')->name('unlike');
+            Route::get('extra_group/set/{extra_name}', 'ExtraGroupController@set')->name('extra_group.set');
+            Route::get('extra_group/unset/{extra_name}', 'ExtraGroupController@unset')->name('extra_group.unset');
 
             //
             Route::get('user/{user}/rescue', 'RescueController@rescue')->name('user.rescue');
