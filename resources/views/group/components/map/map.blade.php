@@ -10,8 +10,10 @@
 <div id="close_under_content_block" class="d-none close_under_content" style="width:100%;position:absolute;top:0px;"></div>
 
 <div class="bg-white my-0" id="under_content_block" style="width:100%;position:absolute;bottom:0px;display:none;border-top-left-radius:10px;border-top-right-radius:10px;">
-  <div class="d-flex border-bottom"><button type="button" class="btn btn-link ml-auto close_under_content px-3"><i class="material-icons m-0" style="font-size: 1.5rem;">close</i></button></div>
-  <div id="under_content" class="mx-3 mt-3"></div>
+  <div class="d-flex border-bottom" style="height:60px;"><button type="button" class="btn btn-link ml-auto close_under_content px-3"><i class="material-icons m-0" style="font-size: 1.5rem;">close</i></button></div>
+  <div style="overflow-y:scroll;" >
+    <div id="under_content" class="px-3 pt-3"></div>
+  </div>
 </div>
 
 <script type="module">
@@ -21,6 +23,7 @@ $(document).ready(function() {
   var under_content_height=$(window).height()*4/5;
   $("#close_under_content_block").css("height", $(window).height()-under_content_height + "px");
   $("#under_content_block").css("height", under_content_height + "px");
+  $("#under_content").closest('div').css("height", under_content_height-60 + "px");
   //
   $(".open_under_content").click(function(){
     $('#under_content_checkbox').prop('checked', true).change();

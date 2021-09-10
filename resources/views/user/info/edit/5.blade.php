@@ -315,7 +315,7 @@
                     <script type="module">
                         $(function(){
                             $('.change_next_pill_tab').click(function(){
-                                $(window).scrollTop($('#questionnaire_body').offset().top+100px);
+                                $(window).scrollTop($('#questionnaire_body').offset().top);
                                 var now = $(this).closest('.tab-pane').attr('id');
                                 var next = Number(now) + 1;
                                 for(;next < 10;next++){
