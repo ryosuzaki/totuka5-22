@@ -71,7 +71,7 @@ class Group extends Model
             'unique_name'=>config('kaigohack.unique_name').$group->id,
         ])->save();
         //
-        if($type->need_location){
+        if($type->use_location){
             $group->location()->create();
         }
         //
@@ -293,17 +293,17 @@ class Group extends Model
             return $this->getUser($user_id)->getInfoBaseByTemplate($template_id);
         }
     }
-    //get available info
-    public function getAvailableInfoBases(){
-        return $this->infoBases()->where('available',true)->get();
+    //get viewable info
+    public function getViewableInfoBases(){
+        return $this->infoBases()->where('viewable',true)->get();
     }
     //
-    public function getAvailableInfoBasesByRole($role){
+    public function getViewableInfoBasesByRole($role){
         $role=$this->getRole($role);
         $bases=$this->infoBases()->get();
         $return=[];
         foreach ($bases as $base){
-            if($base->available||$role->hasPermissionTo('group_info.'.$base->index.'.view')){
+            if($base->viewable||$role->hasPermissionTo('group_info.'.$base->index.'.view')){
                 $return[]=$base;
             }
         }

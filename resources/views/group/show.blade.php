@@ -22,40 +22,6 @@
 
     @endif
 
-    @if($type->need_location)
-    <div class="d-flex justify-content-center mt-4 mb-3">
-        @can('update',$group)
-        <form id="set_here" action="{{route('group.location.set_here',$group)}}" method="POST">
-            @csrf
-            <input type="hidden" name="latitude">
-            <input type="hidden" name="longitude">
-            <button type="submit" class="btn btn-outline-success btn-round btn-sm mr-2"><i class="material-icons">my_location</i> 現在地を地点に設定</button>
-        </form>
-        <script type="module">
-            $(function(){
-            if (navigator.geolocation) {
-                navigator.geolocation.getCurrentPosition(
-                (position) => {
-                    $('input[name="latitude"]').val(position.coords.latitude); 
-                    $('input[name="longitude"]').val(position.coords.longitude); 
-                });
-            }
-            })
-        </script>
-        @endcan
-
-        @if($group->isLocationSet())
-        <div>
-            <a class="btn btn-outline-primary btn-round btn-sm" href="{{route('group.location.show',$group->id)}}"><i class="material-icons">location_on</i> 地点を表示</a>
-        </div>
-        @else
-        <div>
-            <a class="btn btn-secondary btn-round btn-sm disabled"><i class="material-icons">location_on</i> 地点未設定</a>
-        </div>
-        @endif
-    </div>
-    @endif
-
     @can('update',$group)
     <div class="row">
         <a class="btn btn-primary btn-block" href="{{route('group.edit',[$group->id])}}">変更/削除</a>
@@ -110,7 +76,7 @@ $(function(){
                 <div id="embed_info{{$base->index}}"></div>
                 @can('update-group-info',[$group,$base->index])
                 @if(!empty($template->edit))
-                <div class="row">
+                <div class="d-flex">
                     <a class="btn btn-outline-primary btn-block mx-auto" href="{{route('group.info.edit',[$group->id,$base->index])}}">{!! $template->edit['icon'] !!} {{$template->edit['name']}}</a>
                 </div>
                 @endif

@@ -15,7 +15,7 @@
             <div class="form-check">
                 <label class="form-check-label">
                     <input type="hidden" name="available" value="0">
-                    <input class="form-check-input" type="checkbox" name="available" value="1" @if($base->available) checked @endif>
+                    <input class="form-check-input" type="checkbox" name="available" value="1" @if($base->viewable) checked @endif>
                     一般に公開する
                     <span class="form-check-sign">
                         <span class="check"></span>

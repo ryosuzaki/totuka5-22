@@ -3,6 +3,7 @@
 @section('content')
 <div id="map"></div>
 
+
 <button id="move_to_my_location" class="btn btn-white text-dark" style="padding:0;width:40px;height:40px;margin: 10px;position: absolute;bottom: 180px;right: 0px;z-index:-1;"><i class="material-icons m-0" style="font-size: 1.5rem;">my_location</i></button>
 
 <input type="checkbox" class="d-none" id="under_content_checkbox">
@@ -11,7 +12,7 @@
 
 <div class="bg-white my-0" id="under_content_block" style="width:100%;position:absolute;bottom:0px;right:0px;display:none;border-top-left-radius:10px;border-top-right-radius:10px;">
   <div class="d-flex border-bottom" style="height:60px;"><button type="button" class="btn btn-link ml-auto close_under_content px-3"><i class="material-icons m-0" style="font-size: 1.5rem;">close</i></button></div>
-  <div style="overflow-y:scroll;" >
+  <div style="overflow-y:scroll;">
     <div id="under_content" class="px-3 pt-3"></div>
   </div>
 </div>
@@ -24,6 +25,13 @@
   <div class="d-flex border-bottom" style="height:60px;"><button type="button" class="btn btn-link ml-auto close_half_under_content px-3"><i class="material-icons m-0" style="font-size: 1.5rem;">close</i></button></div>
   <div id="half_under_content" class="px-3 pt-3"></div>
 </div>
+
+
+<!-- html for disaster map -->
+<button id="change_mapping_group_type" class="btn btn-white text-dark" style="padding:0;width:40px;height:40px;margin: 10px;position: absolute;top: 130px;right: 0px;z-index:-1;"><i class="material-icons m-0" style="font-size: 1.5rem;">layers</i></button>
+<a href="{{route('group.create',2)}}" id="create_danger_spot" class="btn btn-round text-white" style="padding:0;width:40px;height:40px;margin: 10px;position: absolute;top: 230px;right: 0px;background-color:#ff9800;z-index:-1;"><i class="material-icons m-0" style="font-size: 1.5rem;top:7px;">add_location_alt</i></a>
+<!-- end html for disaster map -->
+
 
 <script type="module">
 $(document).ready(function() { 
@@ -49,9 +57,7 @@ $(document).ready(function() {
   $(".close_under_content").click(function(){
     $('#under_content_checkbox').prop('checked', false).change();
   });
-  
-  
-  //
+
   var half_under_content_height=$(window).height()*3/5;
   $("#close_half_under_content_block").css("height", $(window).height()-half_under_content_height + "px");
   $("#half_under_content_block").css("height", half_under_content_height + "px");
@@ -71,6 +77,22 @@ $(document).ready(function() {
   $(".close_half_under_content").click(function(){
     $('#half_under_content_checkbox').prop('checked', false).change();
   });
+
+
+  //function for disaster map
+  /*var html="";
+  $("#create_danger_spot").click(function(){
+    //$('#half_under_content').html(html);
+    $('#half_under_content_checkbox').prop('checked', true).change();
+  });*/
+  //
+  var html="";
+  $("#change_mapping_group_type").click(function(){
+    //$('#half_under_content').html(html);
+    $('#half_under_content_checkbox').prop('checked', true).change();
+  });
+  //end function for disaster map
+
 });
 </script>
 

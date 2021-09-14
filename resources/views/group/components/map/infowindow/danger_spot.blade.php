@@ -8,7 +8,7 @@ $extra_name_jp=config('kaigohack.'.$extra_name);
     <p class="h4 mr-auto">危険地点</p>
     <div class="ml-auto">
         @if(Auth::user()->hasGroup($group->id))
-        <a class="btn btn-outline-primary btn-round btn-sm text-primary"><i  class="material-icons m-0" style="font-size: 1.5rem;">thumb_up_off_alt</i>{{$group->countExtraUsers($extra_name)}}</a>
+        <a class="btn btn-outline-primary btn-round btn-sm text-primary"><i class="material-icons m-0" style="font-size: 1.5rem;">thumb_up_off_alt</i>{{$group->countExtraUsers($extra_name)}}</a>
         @else
         <a class="btn btn-warning btn-sm" href=""><i  class="material-icons m-0" style="font-size: 1.5rem;">campaign</i>通報</a>
         <script>
@@ -53,9 +53,9 @@ $extra_name_jp=config('kaigohack.'.$extra_name);
                 @endif
             });
         </script>
-        <button class="btn btn-primary btn-round btn-sm" id="unset_extra_group_{{$extra_name}}"><i class="material-icons">thumb_up_off_alt</i><span class="count_extra_group_{{$extra_name}}">{{$group->countExtraUsers($extra_name)}}</span></button>
+        <button class="btn btn-primary btn-round btn-sm" id="unset_extra_group_{{$extra_name}}"><i class="material-icons m-0" style="font-size: 1.5rem;">thumb_up_off_alt</i><span class="count_extra_group_{{$extra_name}}">{{$group->countExtraUsers($extra_name)}}</span></button>
             
-        <button class="btn btn-outline-primary btn-round btn-sm" id="set_extra_group_{{$extra_name}}"><i class="material-icons">thumb_up_off_alt</i><span class="count_extra_group_{{$extra_name}}">{{$group->countExtraUsers($extra_name)}}</span></button>
+        <button class="btn btn-outline-primary btn-round btn-sm" id="set_extra_group_{{$extra_name}}"><i class="material-icons m-0" style="font-size: 1.5rem;">thumb_up_off_alt</i><span class="count_extra_group_{{$extra_name}}">{{$group->countExtraUsers($extra_name)}}</span></button>
         @endif
     </div>
 </div>

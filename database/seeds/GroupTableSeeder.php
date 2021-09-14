@@ -20,7 +20,7 @@ class GroupTableSeeder extends Seeder
         GroupType::create([
             'name'=>'shelter',
             'formatted_name'=>'避難所',
-            'need_location'=>true,
+            'use_location'=>true,
             'required_info'=>[1,2,7],
             'user_info'=>[],
             'creator_permissions'=>[
@@ -34,7 +34,7 @@ class GroupTableSeeder extends Seeder
         GroupType::create([
             'name'=>'danger_spot',
             'formatted_name'=>'危険地点',
-            'need_location'=>true,
+            'use_location'=>true,
             'required_info'=>[3],
             'user_info'=>[],
             'creator_permissions'=>[
@@ -45,7 +45,7 @@ class GroupTableSeeder extends Seeder
         GroupType::create([
             'name'=>'nursing_home',
             'formatted_name'=>'介護施設',
-            'need_location'=>false,
+            'use_location'=>false,
             'required_info'=>[1,11,12],
             'user_info'=>[10,9,8,4,5,6],
             'creator_permissions'=>[
