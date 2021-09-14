@@ -59,7 +59,7 @@ $(function(){
             @endphp
             <div class="tab-pane @if($base->index==$index) active @endif" id="pill{{$base->index}}">
                 <div id="embed_info{{$base->index}}"></div>
-                <div class="row">
+                <div class="d-flex">
                     <a class="btn btn-outline-primary btn-block mx-auto" href="{{route('user.info.edit',$base->id)}}">{!! $template->edit['icon'] !!} {{$template->edit['name']}}</a>
                 </div>
             </div>

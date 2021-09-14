@@ -125,3 +125,17 @@ $imgs=$group->getImgs();
     </div>
 </form>
 @endif
+
+
+<div class="d-flex justify-content-center mt-4 mb-3">
+    @if($group->isLocationSet())
+    <div>
+        <a class="btn btn-outline-primary btn-round btn-sm" href="{{route('group.location.show',$group->id)}}"><i class="material-icons">location_on</i> マップに表示</a>
+    </div>
+    @else
+    <div>
+        <a class="btn btn-secondary btn-round btn-sm disabled"><i class="material-icons">location_on</i> 地点未設定</a>
+    </div>
+    @endif
+</div>
+    

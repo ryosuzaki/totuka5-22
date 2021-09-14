@@ -68,9 +68,9 @@ class GroupController extends Controller
     public function show(Group $group,int $index=0)
     {
         if(Auth::user()->hasGroup($group->id)){
-            $bases=$group->getAvailableInfoBasesByRole(Auth::user()->getRoleByGroup($group->id)->id);
+            $bases=$group->getViewableInfoBasesByRole(Auth::user()->getRoleByGroup($group->id)->id);
         }else{
-            $bases=$group->getAvailableInfoBases();
+            $bases=$group->getViewableInfoBases();
         }
         return view('group.show')->with([
             'group'=>$group,

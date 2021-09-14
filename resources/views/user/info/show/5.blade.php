@@ -23,7 +23,7 @@
     </table>
 </div>
 
-<div class="row">
+<div class="d-flex">
     <a class="btn btn-primary btn-block mx-auto" href="{{route('user.questionnaire.setting_form',$base->id)}}"><i class="material-icons">settings</i> アンケート設定</a>
 </div>
 

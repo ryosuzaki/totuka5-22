@@ -17,6 +17,7 @@ class DatabaseSeeder extends Seeder
             InfoTableSeeder::class,
             PermissionTableSeeder::class,
             TestSeeder::class,
+            MapSeeder::class,
             ]);
     }
 }

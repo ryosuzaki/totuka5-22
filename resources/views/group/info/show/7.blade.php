@@ -1,9 +1,9 @@
-<h4 class="text-center">履歴</h4>
+<h4 class="text-center">お知らせ一覧</h4>
 <div class="table-responsive">
     <table class="table text-nowrap table-hover">
         <thead>
             <tr>
-                <th style="width: 30%">送信日時</th>
+                <th style="width: 30%">日時</th>
                 <th style="width: 70%">タイトル</th>
             </tr>
         </thead>

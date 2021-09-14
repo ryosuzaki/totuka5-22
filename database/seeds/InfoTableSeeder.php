@@ -77,7 +77,7 @@ class InfoTableSeeder extends Seeder
             'name' => 'お知らせ',
             'default'=>[],
             'model'=>Group::class,
-            'available'=>true,
+            'viewable'=>true,
             'detail'=>'お知らせ',
             'edit'=>['name'=>'送信','icon'=>'<i class="material-icons">mail_outline</i>'],
         ]);
@@ -110,7 +110,7 @@ class InfoTableSeeder extends Seeder
             'id' => 11,
             'name' => '避難/救助状況',
             'default'=>[],
-            'available'=>false,
+            'viewable'=>false,
             'model'=>Group::class,
             'edit'=>[],
         ]);
@@ -119,7 +119,7 @@ class InfoTableSeeder extends Seeder
             'id' => 12,
             'name' => '健康アンケート',
             'default'=>[],
-            'available'=>false,
+            'viewable'=>false,
             'model'=>Group::class,
             'edit'=>[],
         ]);

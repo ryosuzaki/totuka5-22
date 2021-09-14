@@ -26,15 +26,11 @@ class MapController extends Controller
         return view('group.components.map.map')->with(["groups"=>$groups]);
     }
     //
-    public function mapShelterAndDangerSpot(){
-        return $this->mapMultipleTypes(["shelter","danger_spot"]);
-    }
-    //
     public function getInfoWindowHtml(Group $group){
         if(Auth::user()->hasGroup($group->id)){
-            $bases=$group->getAvailableInfoBasesByRole(Auth::user()->getRoleByGroup($group->id)->id);
+            $bases=$group->getViewableInfoBasesByRole(Auth::user()->getRoleByGroup($group->id)->id);
         }else{
-            $bases=$group->getAvailableInfoBases();
+            $bases=$group->getViewableInfoBases();
         }
         return response()->view('group.components.map.infowindow.'.$group->getTypeName(), [
             'group'=>$group,
@@ -42,5 +38,19 @@ class MapController extends Controller
             'bases'=>$bases,
             'index'=>0,
         ]);
+    }
+    //
+    public function mapShelterAndDangerSpot(){
+        $types=["shelter","danger_spot"];
+        $groups=[];
+        foreach($types as $type){
+            $tmp_groups=GroupType::findByIdOrName($type)->groups()->get();
+            foreach($tmp_groups as $group){
+                if($group->isLocationSet()){
+                    $groups[]=$group;
+                }
+            }
+        }
+        return view('group.components.map.disaster_map')->with(["groups"=>$groups]);
     }
 }
