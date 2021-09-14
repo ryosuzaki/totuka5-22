@@ -41,14 +41,18 @@ class InfoTableSeeder extends Seeder
             'detail'=>'地点情報を表示します',
         ]);
 
-        InfoTemplate::create([
+         InfoTemplate::create([
             'id' => 4,
-            'name' => '基本情報',
+            'name' => '利用者情報',
             'default'=>['you_sex'=>'','you_year'=>'','you_month'=>'','you_day'=>'','you_post'=>'','you_addr1'=>'','you_addr2'=>'','you_tel'=>'',
+            'fami_name'=>'','fami_year'=>'','fami_month'=>'','fami_day'=>'','fami_posi'=>'','fami_post'=>'','fami_addr1'=>'','fami_addr2'=>'','fami_tel'=>'','fami_mail'=>'',
+            'shelter'=>'','temp'=>'','height'=>'','medicine'=>'','allergy'=>'','medical'=>'','surgery'=>'','hospital'=>'','tools'=>'',
+            'housemate'=>'','hindrance'=>'','hindrance_contents'=>'','volt'=>'','volt_contents'=>'','service'=>'','use_service'=>'','institution'=>'','comment'=>''
             ],
             'model'=>User::class,
-            'detail'=>'基本情報',
+            'detail'=>'利用者情報',
         ]);
+
 
         InfoTemplate::create([
             'id' => 5,
