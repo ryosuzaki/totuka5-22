@@ -74,6 +74,9 @@
         padding: 3px 5px !important;
       }
 
+      label{
+        color:#555;
+      }
     </style>
   </head>
   <body>
