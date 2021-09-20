@@ -46,8 +46,8 @@ class GroupTableSeeder extends Seeder
             'name'=>'nursing_home',
             'formatted_name'=>'介護施設',
             'use_location'=>false,
-            'required_info'=>[1,11,12],
-            'user_info'=>[10,9,8,4,5,6],
+            'required_info'=>[1,config('kaigohack.rescue.group_rescue_info_template_id'),12],
+            'user_info'=>[4,5,config('kaigohack.rescue.user_rescue_info_template_id')],
             'creator_permissions'=>[
                 'group.*',
                 'group_info_bases.*',

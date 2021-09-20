@@ -10,75 +10,41 @@
     <input type="hidden" name="info[rescuer]" value="{{$info['rescuer']}}">
     <input type="hidden" name="info[last_answer]" value="{{now()}}">
     <div>
-        <label>避難状況</label>
-        <div class="form-check form-check-radio">
-        <label class="form-check-label">
-            <input class="form-check-input btn-check" type="radio" name="info[evacuation]" value="避難済み"> 避難済み
-            <span class="circle">
-                <span class="check"></span>
-            </span>
-        </label>
-        </div>
-
-        <div class="form-check form-check-radio">
-        <label class="form-check-label">
-            <input class="form-check-input" type="radio" name="info[evacuation]" value="避難中" checked> 避難中
-            <span class="circle">
-                <span class="check"></span>
-            </span>
-        </label>
-        </div>
-
-        <div class="form-check form-check-radio">
-        <label class="form-check-label">
-            <input class="form-check-input" type="radio" name="info[evacuation]" value="要救助"> 要救助
-            <span class="circle">
-                <span class="check"></span>
-            </span>
-        </label>
+        <p class="h3 text-center">避難状況</p>
+        <input type="hidden" name="info[feeling]" value="">
+        <div class=" btn-group-toggle" data-toggle="buttons">
+            <label class="btn btn-outline-primary btn-block">
+                <input type="radio" name="info[evacuation]" value = "避難済み" class="form-check-input">
+                <p class="h2">避難済み</p>
+            </label>
+            <label class="btn btn-outline-primary btn-block ">
+                <input type="radio" name="info[evacuation]" value = "避難中" class="form-check-input">
+                <p class="h2">避難中</p>
+            </label>
+            <label class="btn btn-outline-primary btn-block">
+                <input type="radio" name="info[evacuation]" value = "要救助" class="form-check-input">
+                <p class="h2">要救助</p>
+            </label>
         </div>
     </div>
 
-    <div class="form-group mt-4">
-        <label for="shelter">避難した場所</label>
-        <input id="shelter" type="text" class="form-control form-control-lg" name="info[shelter]" value="{{$info['shelter']}}">
-    </div>
-
-    <input type="hidden" name="info[location][latitude]" value="">
-    <input type="hidden" name="info[location][longitude]" value="">
-    
     <input type="hidden" name="info[location][latitude]" id="latitude">
     <input type="hidden" name="info[location][longitude]" id="longitude">
-    <div class="form-check my-4">
-        <label class="form-check-label">
-            <input class="form-check-input" type="checkbox" id="send_location">
-            現在地の位置情報を送る
-            <span class="form-check-sign">
-                <span class="check"></span>
-            </span>
-        </label>
-    </div>
+
     <script type="module">
         $(function(){
-            $('#send_location').change(function() {
-                if($(this).prop('checked')){
-                    if (navigator.geolocation) {
-                        navigator.geolocation.getCurrentPosition(
-                        (position) => {
-                            $('#latitude').val(position.coords.latitude); 
-                            $('#longitude').val(position.coords.longitude); 
-                        });
-                    }
-                }else{
-                    $('#latitude').val(''); 
-                    $('#longitude').val('');
-                }
-            })
+            if (navigator.geolocation) {
+                navigator.geolocation.getCurrentPosition(
+                (position) => {
+                    $('#latitude').val(position.coords.latitude); 
+                    $('#longitude').val(position.coords.longitude); 
+                });
+            }
         })
     </script>
-
-    <div class="form-group mt-4">
-        <label for="comment">コメント</label>
+    
+    <div class="form-group mt-3">
+        <p class="h3 text-center">コメント</p>
         <textarea class="form-control" id="comment" name="info[comment]" rows="5"></textarea>
     </div>
 

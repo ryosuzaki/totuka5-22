@@ -56,17 +56,17 @@ class InfoTableSeeder extends Seeder
 
         InfoTemplate::create([
             'id' => 5,
-            'name' => '健康アンケート',
+            'name' => '健康記録',
             'default'=>['not_use_items'=>[],'feeling'=>'回答なし','comment'=>'','syokuyoku'=>'','otuzi'=>'','taion'=>'','taiju'=>'','ketuatu_saikou'=>'','ketuatu_saitei'=>'','warui_bui'=>['']],
             'model'=>User::class,
-            'detail'=>'健康アンケート',
+            'detail'=>'健康',
             'edit'=>['name'=>'回答','icon'=>'<i class="material-icons">question_answer</i>'],
         ]);
 
         InfoTemplate::create([
-            'id' => 6,
+            'id' => config('kaigohack.rescue.user_rescue_info_template_id'),
             'name' => '避難/救助状況',
-            'default'=>['rescue'=>config('kaigohack.rescue.unrescue'),'group'=>"",'rescuer'=>"",'evacuation'=>'回答なし','shelter'=>'','last_answer'=>'','comment'=>'','location'=>['latitude'=>'','longitude'=>'']],
+            'default'=>['rescue'=>config('kaigohack.rescue.unrescue'),'group'=>"",'rescuer'=>"",'evacuation'=>'回答なし','last_answer'=>'','comment'=>'','location'=>['latitude'=>'','longitude'=>'']],
             'model'=>User::class,
             'detail'=>'救助状況',
             'edit'=>['name'=>'回答','icon'=>'<i class="material-icons">question_answer</i>'],
@@ -105,9 +105,9 @@ class InfoTableSeeder extends Seeder
             'model'=>User::class,
             'detail'=>'福祉',
         ]);
-
+        
         InfoTemplate::create([
-            'id' => 11,
+            'id' => config('kaigohack.rescue.group_rescue_info_template_id'),
             'name' => '避難/救助状況',
             'default'=>[],
             'viewable'=>false,
@@ -117,7 +117,7 @@ class InfoTableSeeder extends Seeder
 
         InfoTemplate::create([
             'id' => 12,
-            'name' => '健康アンケート',
+            'name' => '健康記録',
             'default'=>[],
             'viewable'=>false,
             'model'=>Group::class,

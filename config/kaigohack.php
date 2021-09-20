@@ -21,8 +21,8 @@ return [
         'rescue'=>'救助中',
         'unrescue'=>'救助者がいません',
         'rescued'=>'救助完了',
-        'user_resuce_info_template_id'=>6,
-        'group_resuce_info_template_id'=>11,
+        'user_rescue_info_template_id'=>6,
+        'group_rescue_info_template_id'=>11,
     ],
 
     //
