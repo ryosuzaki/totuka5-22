@@ -15,7 +15,6 @@ $info=$base->info()->info;
 	<table class="table text-nowrap"> 
         <tr><td style="width: 30%">回答日時</td><td style="width: 70%">{{$info["last_answer"]}}</td></tr>
 		<tr><td>避難状況</td><td>{{$info["evacuation"]}}</td></tr>
-        <tr><td>避難した場所</td><td>{{$info["shelter"]}}</td></tr>
         <tr><td>位置情報</td><td>{{$info["location"]["latitude"]}} {{$info["location"]["longitude"]}}</td></tr>	
 		<tr><td>コメント</td><td>{{$info["comment"]}}</td></tr>	
 	</table>

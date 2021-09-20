@@ -30,7 +30,6 @@
     <table class="card">
         <tr class="card-text">
             <td><label><input type="checkbox" id="time_check" onclick="checkbox_cell(this,'time')" checked="checked">回答日時</label></td>
-            <td><label><input type="checkbox" id="shelter_check" onclick="checkbox_cell(this,'shelter')" checked="checked">避難した避難所</label></td>
             <td><label><input type="checkbox" id="where_check" onclick="checkbox_cell(this,'where')" checked="checked">位置情報</label></td>
             <td><label><input type="checkbox" id="comment_check" onclick="checkbox_cell(this,'comment')" checked="checked">コメント</label></td>
         </tr>
@@ -48,8 +47,7 @@
 			dataType: 'html',
 		})
 		.done((response)=>{
-			table=$(response).find("#sorter{{$base->index}}").html();
-			$("#sorter{{$base->index}}").html(table);
+			$("#embed_info{{$base->index}}").html(response);
 		})
 		.fail((error)=>{
 			console.log(error)
@@ -65,7 +63,6 @@
             <th id="time">回答日時</th>
             <th>避難状況</th>
             <th>救助状況</th>
-            <th id="shelter">避難した場所</th>
             <th id="where">位置情報</th>
             <th id="comment">コメント</th>
         </tr>
@@ -80,7 +77,7 @@
             @foreach ($users as $user)
 
 				@php
-				$info_base=$user->getInfoBaseByTemplate(config('kaigohack.rescue.user_info_template_id'));
+				$info_base=$user->getInfoBaseByTemplate(config('kaigohack.rescue.user_rescue_info_template_id'));
 				@endphp
 
 				@if(!empty($info_base))
@@ -142,20 +139,20 @@
 						@endif
 					@endif
 					</td>
-					<td id="shelter_check">{{$info->info['shelter']}}</td>
 					<td id="where_check">{{$info->info["location"]["latitude"]}} {{$info->info["location"]["longitude"]}}</td>
 					<td id="comment_check">{{$info->info['comment']}}</td>
 				</tr>
 				@endif
             @endforeach
+			
         </tbody>
     </table>
 </div>
 
 <script>
-    $(document).ready(function() { 
-        $("#sorter{{$base->index}}").tablesorter();
-    });
+	$(document).ready(function() { 
+		$("#sorter{{$base->index}}").tablesorter();
+	});
 </script>
 <script>
 	//一致した行のみ表示
