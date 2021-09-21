@@ -177,7 +177,7 @@
             <input type="text" class="form-control" name="info[shelter]" value="{{$base->info()->info['shelter']}}">
 
             <div><p class="h5 mt-4 mb-0">【平熱】℃</p>
-                <input type="number" class="form-control" name="info[temp]" value="{{$base->info()->info['temp']}}" placeholder="℃">
+                <input type="number" class="form-control" step="0.1" name="info[temp]" value="{{$base->info()->info['temp']}}" placeholder="℃">
             </div>
             <div><p class="h5 mt-4 mb-0">【身長】cm</p>
                 <input type="number" class="form-control" name="info[height]" value="{{$base->info()->info['height']}}" placeholder="cm">
