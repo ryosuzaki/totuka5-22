@@ -15,9 +15,9 @@ class RescueController extends Controller
 {
     //
     public function rescue(Group $group,User $user){
-        info(config('kaigohack.rescue.user_rescue_info_template_id'));
+        
         $user_base=$user->getInfoBaseByTemplate(config('kaigohack.rescue.user_rescue_info_template_id'));
-        info($user_base);
+        
         $user_info=$user_base->info();
         $group_base=$group->getInfoBaseByTemplate(config('kaigohack.rescue.group_rescue_info_template_id'));
         if($user_info->info['rescue']==config('kaigohack.rescue.rescue')){
