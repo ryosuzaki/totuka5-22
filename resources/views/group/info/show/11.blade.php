@@ -139,7 +139,7 @@
 						@endif
 					@endif
 					</td>
-					<td id="where_check">{{$info->info["location"]["latitude"]}} {{$info->info["location"]["longitude"]}}</td>
+					<td id="where_check"><a href="#">マップに移動</a></td>
 					<td id="comment_check">{{$info->info['comment']}}</td>
 				</tr>
 				@endif
