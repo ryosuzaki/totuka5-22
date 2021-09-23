@@ -113,7 +113,7 @@
 					<td>
 					@if($rescue==config('kaigohack.rescue.rescue'))
 						<a href="{{route('group.show',$rescue_group->id)}}">{{$rescue_group->name}}</a>の{{$rescuer->name}}が救助中
-						@if($rescue_group==$group&&$rescuer->id==Auth::id())
+						@if($rescue_group->id==$group->id&&$rescuer->id==Auth::id())
 						<a class="btn btn-danger btn-sm text-white m-0" id="unrescue{{$user->id}}"><i class="material-icons">close</i> 救助をやめる</a>
 						<button type="button" data-toggle="modal" data-target="#rescued_modal{{$user->id}}" class="btn btn-success btn-sm text-white m-0"><i class="material-icons">done</i> 救助を完了</button>
 						<div class="modal fade" id="rescued_modal{{$user->id}}" tabindex="-1" role="dialog" aria-labelledby="rescuedLabel" aria-hidden="true">
