@@ -10,6 +10,7 @@ use App\Models\Group\GroupType;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Gate;
 use Validator;
+use Illuminate\Validation\Rule;
 
 
 class UserController extends Controller
@@ -44,14 +45,14 @@ class UserController extends Controller
      */
     public function update(Request $request)
     {
+        $user=Auth::user();
         $validator = Validator::make($request->all(),[
             'name' => ['required', 'string', 'max:255'],
-            'email' => ['required', 'string', 'email', 'max:255','unique:users,email'],
+            'email' => ['required', 'string', 'email', 'max:255',Rule::unique('users','email')->ignore($user)],
         ]);
         if ($validator->fails()) {
             return back()->withErrors($validator)->withInput();
         }
-        $user=Auth::user();
         $user->fill([
             'name'=>$request['name'],
             'email'=>$request['email'],
