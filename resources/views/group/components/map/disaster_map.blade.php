@@ -33,6 +33,21 @@
 <!-- end html for disaster map -->
 
 
+<div class="modal" id="not_available_geolocation_modal" tabindex="-1" role="dialog">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-body">
+        <p>デバイスの位置情報をONにしてください。</p>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-primary" onclick="location.reload();">再読み込み</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+
 <script type="module">
 $(document).ready(function() { 
   $("footer").addClass("d-none");
@@ -322,7 +337,7 @@ class kaigoHackMap{
         resolve();
       },(error)=>{
         if(error.code==1){
-          alert("デバイスの位置情報をONにしてください。");
+          $('#not_available_geolocation_modal').modal(options);
         }else{
           console.log(error);
         }
