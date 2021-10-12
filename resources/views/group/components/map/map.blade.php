@@ -1,7 +1,7 @@
 @extends('template')
 
 @section('content')
-<div id="map"></div>
+<div id="map" style="height:auto;"></div>
 
 <button id="move_to_my_location" class="btn btn-white text-dark" style="padding:0;width:40px;height:40px;margin: 10px;position: absolute;bottom: 180px;right: 0px;z-index:-1;"><i class="material-icons m-0" style="font-size: 1.5rem;">my_location</i></button>
 
