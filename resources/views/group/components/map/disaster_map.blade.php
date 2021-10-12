@@ -40,7 +40,7 @@
         <p>デバイスの位置情報をONにしてください。</p>
       </div>
       <div class="modal-footer">
-        <button type="button" class="btn btn-primary" onclick="location.reload();">再読み込み</button>
+        <button type="button" class="btn btn-default" onclick="location.reload();">再読み込み</button>
       </div>
     </div>
   </div>
