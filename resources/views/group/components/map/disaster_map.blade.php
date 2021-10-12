@@ -337,7 +337,7 @@ class kaigoHackMap{
         resolve();
       },(error)=>{
         if(error.code==1){
-          //$('#not_available_geolocation_modal').modal("show");
+          $('#not_available_geolocation_modal').modal("show");
         }else{
           console.log(error);
         }
