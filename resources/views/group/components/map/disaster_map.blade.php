@@ -37,7 +37,7 @@
   <div class="modal-dialog" role="document">
     <div class="modal-content">
       <div class="modal-body">
-        <p>デバイスの位置情報をONにしてください。</p>
+        <p class="h5">デバイスの位置情報をONにして、ページを再読み込みしてください。</p>
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-primary" onclick="location.reload();">再読み込み</button>
@@ -337,7 +337,7 @@ class kaigoHackMap{
         resolve();
       },(error)=>{
         if(error.code==1){
-          $('#not_available_geolocation_modal').modal(options);
+          $('#not_available_geolocation_modal').modal("show");
         }else{
           console.log(error);
         }
@@ -368,6 +368,8 @@ class kaigoHackMap{
   }
 }
 </script>
+
+
 
 <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAfcU4Wb2-U_fOZlkCssBdjAx0tF7vDcwE&region=JP&language=ja&callback=initMap"></script>
 @endsection
