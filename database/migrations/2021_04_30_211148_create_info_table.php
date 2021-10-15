@@ -33,12 +33,12 @@ class CreateInfoTable extends Migration
             $table->timestamps();
             $table->boolean('viewable')->default(true);
             $table->string('edit');
-            $table->string('name')->index();
+            $table->string('name');
         });
 
         Schema::create('info_templates', function (Blueprint $table) {
             $table->unsignedBigInteger('id');
-            $table->string('name')->index();
+            $table->string('name');
             $table->string('detail')->default('');
             $table->string('model');
             $table->timestamps();
