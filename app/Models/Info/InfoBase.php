@@ -63,7 +63,7 @@ class InfoBase extends Model
         ]);
     }
     //
-    public function changeName($name){
+    public function changeName(string $name){
         return $this->fill(['name'=>$name])->save();
     }
     //
