@@ -23,7 +23,7 @@
                     @foreach($bases as $base)
                     <tr>
                         <td><a href="{{route('info_template.show',$base->infoTemplate()->first()->id)}}">{{$base->name}}</a></td>
-                        <td>@if($base->viewable)一般公開　@else　権限を持つユーザーのみ　@endif</td>                              
+                        <td>@if($base->viewable)一般公開@else権限を持つユーザーのみ@endif</td>                              
                         <td>
                         <a class="btn btn-primary btn-sm btn-round m-0 text-white" href="{{route('group.info_base.edit',[$group->id,$base->id])}}"><i class="material-icons">edit</i> 変更</a>
                             <button type="button" data-toggle="modal" data-target="#delete{{$base->id}}". class="btn btn-danger btn-round btn-sm m-0 text-white"><i class="material-icons">remove_circle_outline</i> 削除</button>
