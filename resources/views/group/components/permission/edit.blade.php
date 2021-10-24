@@ -86,7 +86,7 @@
                     @foreach($group->infoBases()->get() as $base)
                     <div class="permissions">
                         <p class="h5 mt-4">{{$base->name}}</p>
-                        @if(!$base->available)
+                        @if(!$base->viewable)
                         <div class="form-check">
                             <label class="form-check-label col-12">
                                 <input class="form-check-input" type="checkbox" name="permissions[]" value="group_info.{{$base->index}}.view">
