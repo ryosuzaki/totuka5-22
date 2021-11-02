@@ -49,7 +49,7 @@
 
 
 <script type="module">
-$(document).ready(function() { 
+$(document).ready(function() {
   $("footer").addClass("d-none");
   //
   var under_content_height=$(window).height()*4/5;
@@ -371,5 +371,5 @@ class kaigoHackMap{
 
 
 
-<script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAfcU4Wb2-U_fOZlkCssBdjAx0tF7vDcwE&region=JP&language=ja&callback=initMap"></script>
+<script async defer src="https://maps.googleapis.com/maps/api/js?key={{ $gmp_api_key }}&region=JP&language=ja&callback=initMap"></script>
 @endsection
