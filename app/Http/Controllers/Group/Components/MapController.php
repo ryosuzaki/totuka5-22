@@ -43,6 +43,7 @@ class MapController extends Controller
     public function mapShelterAndDangerSpot(){
         $types=["shelter","danger_spot"];
         $groups=[];
+        $gmp_api_key = config('gmp_api_key.gmp_api_key');
         foreach($types as $type){
             $tmp_groups=GroupType::findByIdOrName($type)->groups()->get();
             foreach($tmp_groups as $group){
@@ -51,6 +52,9 @@ class MapController extends Controller
                 }
             }
         }
-        return view('group.components.map.disaster_map')->with(["groups"=>$groups]);
+        return view('group.components.map.disaster_map')->with([
+            "groups"=>$groups,
+            "gmp_api_key" => $gmp_api_key,
+        ]);
     }
 }
