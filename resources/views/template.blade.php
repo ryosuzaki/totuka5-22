@@ -15,10 +15,10 @@
     <!-- Material Kit CSS -->
     <link href="{{asset('material-kit-master/assets/css/material-kit.css?v=2.0.4')}}" rel="stylesheet" />
     <!-- tablesorter -->
-    <script type="module" src="https://cdnjs.cloudflare.com/ajax/libs/jquery.tablesorter/2.31.0/js/jquery.tablesorter.min.js"></script>        
+    <script type="module" src="https://cdnjs.cloudflare.com/ajax/libs/jquery.tablesorter/2.31.0/js/jquery.tablesorter.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.2/Chart.min.js"></script>
 
-    
+
     <style type="text/css">
       .tablesorter td,.tablesorter th{
         padding-right:1.5rem;
@@ -86,7 +86,7 @@
         <div class="navbar-translate">
           <a class="navbar-brand" href="{{route('home')}}">戸塚ハッカソン</a>
 
-          
+
           <div>
           @auth
           @php
@@ -105,13 +105,13 @@
                 <span class="navbar-toggler-icon"></span>
             </button>
           </div>
-          
+
         </div>
-  
+
         <div class="collapse navbar-collapse">
           <ul class="navbar-nav mr-auto">
             <li class="nav-item">
-              <a class="nav-link" href="{{route('group.map.shelter_and_danger_spot')}}"><i class="material-icons">run_circle</i>災害時マップ</a>
+              <a class="nav-link" href="#"><i class="material-icons">run_circle</i>災害時マップ(※開発中)</a>
             </li>
           </ul>
           <ul class="navbar-nav">
@@ -125,7 +125,7 @@
                 </li>
               @endif
             @else
-            <li class="nav-item dropdown"> 
+            <li class="nav-item dropdown">
               <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
                 <i class="material-icons">person</i>{{Auth::user()->name}}<span class="caret"></span>
               </a>
@@ -150,7 +150,7 @@
             </li>
 
             <li class="nav-item dropdown">
-        
+
               <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
                 <i class="material-icons">notifications</i>通知
                 @if($total>0)<span class="ml-2 badge badge-pill badge-danger">{{$total}}</span>@endif
@@ -169,9 +169,9 @@
               </div>
             </li>
 
-            
+
             @endguest
-            
+
           </ul>
         </div>
     </div>
